@@ -1,3 +1,13 @@
+This code was written for and open sourced by Difinium
+in 2000 and 2001.  I recently re-discovered the old
+repository on SourceForge and decided to bring it
+over here for safe keeping. This is probably of
+absolutely no use to anyone anymore.
+
+The code was written to be a unified communication
+system. It makes use of C++ and Corba to do its
+thing.
+
 ========================================================
 TUCAN: The Unified Communications Architecture Network
 ========================================================
