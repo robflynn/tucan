@@ -1,0 +1,220 @@
+////////////////////////////////////////////////////////////
+// TucanEmailFetcher (idl definition)
+// Copyright (C) 2000,2001 Difinium
+////////////////////////////////////////////////////////////
+// Filename:		TucanEmailFetcher.idl
+// Description:		idl definition of TucanEmailFetcher
+// Created at:		Thu Feb  1 16:46:15 PST 2001
+////////////////////////////////////////////////////////////
+
+/**
+	The TucanEmailFetcher interface provides a way for downloading E-mail messages
+	over a standard POP3 connection.
+*/
+
+interface TucanEmailFetcher
+{
+	/**
+		The getAuth() method will return a copy of the objects auth object.  If an error 
+		occurs in this method then a TucanException should be raised.
+	*/
+
+	TucanAuth getAuth()
+		raises(TucanException);
+
+	/**
+		The setAuth() method allows for the auth object for the object to be set.  This is
+		method is intended for internal use and should not be used by clients because
+		proper authentication is required for proper functionality.  If an error occurs this
+		method should raise a TucanException.
+	*/
+	void setAuth(in TucanAuth myAuth)
+		raises(TucanException);
+	
+
+	/**
+		The setServer() method will set the mail server to the string that it is passed.  An exception
+		will be raised if an error occurs.
+	*/
+
+	void setServer(in string server)
+		raises(TucanException);
+
+	/** 
+		The getServer() method will return the current mail server for the object.  An exception
+		will be raised if an error occurs.
+	*/
+
+	string getServer()
+		raises(TucanException);
+
+	/**
+		The setPort() method will set the mail port to the string that it is passed.  An exception
+		will be raised if an error occurs.
+	*/
+
+	void setPort(in short port)
+		raises(TucanException);
+
+	/** 
+		The getPort() method will return the current mail port for the object.  An exception
+		will be raised if an error occurs.
+	*/
+
+	short getPort()
+		raises(TucanException);
+
+	/**
+		The setProtocol() method will set the current protocol of the mail checker. 
+		An excpetion will be raised if an error occurs.
+	*/
+
+	void setProtocol(in string proto)
+		raises(TucanException);
+
+	/**
+		The getProtocol() method will return the current protocol of the mail checker. 
+		An excpetion will be raised if an error occurs.
+	*/
+
+	string getProtocol()
+		raises(TucanException);
+
+	
+
+	/**
+		The getName() method will set the mail user name to the string that it is passed.  An exception
+		will be raised if an error occurs.
+	*/
+
+	void setName(in string name)
+		raises(TucanException);
+
+	/**
+		The getName() method will return the current object's mail user name.  An exception will
+		be raised in an error occurs.
+	*/
+
+	string getName()
+		raises(TucanException);
+
+	
+	/**	
+		The setPassword() method will set the mail user's password to the string that it is passed.  An
+		exception will be raised if an error occurs.
+	*/
+
+	void setPassword(in string password)
+		raises(TucanException);
+
+	/**
+		The getPassword() method will return the mail user's password.  An exception will be raised
+		 if an error occurs.
+	*/
+
+	string getPassword()
+		raises(TucanException);
+
+	/**
+		The getMessageCount() method will return the number of messages that are currently in the user's
+		inbox on the mail server.  An exception will be raised if an error occurs.
+	*/
+
+	short getMessageCount()
+		raises(TucanException);
+	
+	/**
+		The getMessageSize() method will return the size, in bytes, of the message specified.  An exception
+		will be raised if an error occurs.
+	*/
+
+	short getMessageSize(in short num)
+		raises(TucanException);
+	/**
+		The getMessageId() method will return the Unique ID of the message specified.  An exception
+		will be raised if an error occurs.
+	*/
+
+	string getMessageId(in short num)
+		raises(TucanException);
+
+	/**
+		The isRead() method will return a 1 or 0 depending on whether or not a message has been
+		previously transfered.
+	*/
+
+	short isRead(in short num)
+		raises(TucanException);
+
+	/**
+		The transfer() method will transfer the specified message from the mail server to the local host
+		and will store it in the user's inbox.  An exception will be raised if an error occurs.
+	*/
+
+	short transfer(in short num)
+		raises(TucanException);
+
+	/**
+		The transferAll() method will transfer all messages from the mail server to the local host and will
+		store them in the user's inbox.  An exception will be raised if an error occurs.
+	*/
+
+	void transferAll()
+		raises(TucanException);
+
+	/** 
+		The deleteMessage() method will delete the specified message from the server.  On error,
+		a tucan exception will be raised.
+	*/
+	
+	void deleteMessage(in short num)
+	    raises(TucanException);
+
+	/** 
+		The deleteAllMessages() method will delete all messages from the server.  On error,
+		a tucan exception will be raised.
+	*/
+	
+	void deleteAllMessages()
+	    raises(TucanException);
+
+
+	/**
+		The open() method will create a connection to the mail server that the user specified.
+		An exception will be raised if an error occurs
+	*/
+	
+	void open()
+		raises(TucanException);
+
+	/**
+		The close() method will close a connection to the mail server that the user specified.
+		An exception will be raised if an error occurs
+	*/
+	
+	void close()
+		raises(TucanException);
+
+
+	/**
+		The destory() method removes the object reference from memory.  All clients should
+		make sure that they call the destroy() method so that memory leaks do not occur. If
+		an error occurs in this method then a TucanException should be raised.
+	*/
+
+	void destroy()
+		raises(TucanException);
+};
+
+interface TucanEmailFetcherFactory
+{
+	/**
+		The create() method returns a new reference to a mail checking object.  The factory is
+		used so that multiple folders can exists at the same time on the system.  If an error
+		occurs in this method it should raise a TucanException.
+	*/
+
+	TucanEmailFetcher create()
+		raises(TucanException);
+
+};

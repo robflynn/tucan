@@ -1,0 +1,448 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<HTML>
+<HEAD>
+   <TITLE>interface  TucanFolder</TITLE>
+   <META NAME="GENERATOR" CONTENT="DOC++ 3.4.6">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+
+<H2>interface  <A HREF="#DOC.DOCU">TucanFolder</A></H2></H2><BLOCKQUOTE> The TucanFolder interface provides a base implementation for a folder in the Tucan architecture.</BLOCKQUOTE>
+<HR>
+
+<H2>Inheritance:</H2>
+<H3>TucanFolder
+</H3>
+<HR>
+
+<DL>
+<P><DL>
+<DT><H3>Public Methods</H3><DD><DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>boolean <B><A HREF="#DOC.25.1">exists</A></B>() raises(TucanException)
+<DD><I> The exists() method returns a boolean value telling the client whether or not the folder actually exists on the system.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>boolean <B><A HREF="#DOC.25.2">create</A></B>() raises(TucanException)
+<DD><I> The create() method is used to actually create the folder on the  system if it does not exist.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>boolean <B><A HREF="#DOC.25.3">deleteFolder</A></B>() raises(TucanException)
+<DD><I> The deleteFolder() method is used to remove the folder from the system.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>TucanMessageSeq <B><A HREF="#DOC.25.4">expunge</A></B>() raises(TucanException)
+<DD><I> The expunge method will expung all messages in the folder that are marked for deletion.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif><!1><A HREF="TucanFolder.html">TucanFolder</A> <B><A HREF="#DOC.25.5">getFolder</A></B>(in string <!1><A HREF="TucanAttribute.html#DOC.14.1">name</A>) raises(TucanException)
+<DD><I> The getFolder() method allows for a client to get folders that exist within the current folder if there are any.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.25.6">setParent</A></B>(in <!1><A HREF="TucanFolder.html">TucanFolder</A> folder) raises(TucanException)
+<DD><I> The setParent() method allows you to set the parent folder of the current folder.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif><!1><A HREF="TucanFolder.html">TucanFolder</A> <B><A HREF="#DOC.25.7">getParent</A></B>() raises(TucanException)
+<DD><I> The getParent() method will return, if possible, the parent folder of the current folder.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif><!1><A HREF="TucanFolder.html">TucanFolder</A> <B><A HREF="#DOC.25.8">getNewFolderObject</A></B>() raises(TucanException)
+<DD><I> The getNewFolderObject() method will return an empty folder object.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>TucanStringList <B><A HREF="#DOC.25.9">listFolders</A></B>() raises(TucanException)
+<DD><I> The listFolders() method returns a list of strings that represent the names of the folder that exist within the current folder if there are any.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>TucanFolderSeq <B><A HREF="#DOC.25.10">list</A></B>() raises(TucanException)
+<DD><I> The list() method will return a list of folder objects that represent the folders in the current folder if there are any.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>boolean <B><A HREF="#DOC.25.11">renameTo</A></B>(in string <!1><A HREF="TucanAttribute.html#DOC.14.1">name</A>) raises(TucanException)
+<DD><I> The renameTo() method will change the current name of the folder to the name that is passed to the method.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>string <B><A HREF="#DOC.25.12">getName</A></B>() raises(TucanException)
+<DD><I> The getName() method will return the current name of the folder.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.25.13">setName</A></B>(in string <!1><A HREF="TucanAttribute.html#DOC.14.1">name</A>) raises(TucanException)
+<DD><I> The setName() method is used to set the name of the folder.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>string <B><A HREF="#DOC.25.14">getFullName</A></B>() raises(TucanException)
+<DD><I> The getFullName() method should return the pathname to the current folder.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.25.15">setFullName</A></B>(in string <!1><A HREF="TucanAttribute.html#DOC.14.1">name</A>) raises(TucanException)
+<DD><I> The setFullName() method sets the current path to the folder.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif><!1><A HREF="TucanMessage.html">TucanMessage</A> <B><A HREF="#DOC.25.16">getMessage</A></B>(in long msgnum) raises(TucanException)
+<DD><I> The getMessage() method will retreive the message in the folder corresponding to  the message number that is passed to it.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>TucanMessageSeq <B><A HREF="#DOC.25.17">getMessages</A></B>() raises(TucanException)
+<DD><I> The getMessages() method returns a list of all of the messages in the folder new and old.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>TucanMessageSeq <B><A HREF="#DOC.25.18">getNewMessages</A></B>() raises(TucanException)
+<DD><I> The getNewMessages() method will return a list of all of the new messages in that folder.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>TucanMessageSeq <B><A HREF="#DOC.25.19">getMessagesInRange</A></B>(in long start, in long stop) raises(TucanException)
+<DD><I> The getMessagesInRange() method will return a list of messages which is determined by the start and stop range that is passed to it.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif><!1><A HREF="TucanMessage.html">TucanMessage</A> <B><A HREF="#DOC.25.20">getNewMessageObject</A></B>() raises(TucanException)
+<DD><I> The getNewMessageObject() method returns a message object that can then be edited and handled in whatever way desired.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>long <B><A HREF="#DOC.25.21">getMessageCount</A></B>() raises(TucanException)
+<DD><I> The getMessageCount() method will return the number of messages in the folder.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>long <B><A HREF="#DOC.25.22">getNewMessageCount</A></B>() raises(TucanException)
+<DD><I> The getNewMessageCount() method will return the number of new messages in the folder.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>boolean <B><A HREF="#DOC.25.23">hasNewMessages</A></B>() raises(TucanException)
+<DD><I> The hasNewMessages() method will return a boolean value as to whether or not the  folder contains new messages.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.25.24">moveMessage</A></B>(in long msgnum, in <!1><A HREF="TucanFolder.html">TucanFolder</A> folder) raises(TucanException)
+<DD><I> The moveMessage() method moves a message between folders in a store.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.25.25">moveMessages</A></B>(in TucanLongList msgnums, in <!1><A HREF="TucanFolder.html">TucanFolder</A> folder) raises(TucanException)
+<DD><I> The moveMessages() method will move the messages in the list to the denoted folder.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.25.26">copyMessage</A></B>(in long msgnum, in <!1><A HREF="TucanFolder.html">TucanFolder</A> folder) raises(TucanException)
+<DD><I> The copyMessage() method will copy the message denoted by the msg number sent to it to the desired folder in the store.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.25.27">copyMessages</A></B>(in TucanLongList msgnums, in <!1><A HREF="TucanFolder.html">TucanFolder</A> folder) raises(TucanException)
+<DD><I> The copyMessages() method will copy the messages denoted by the list sent to it to the desired folder.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.25.28">appendMessage</A></B>(in <!1><A HREF="TucanMessage.html">TucanMessage</A> msg) raises(TucanException)
+<DD><I> The appendMessage() method will add the message that it is passed to the current folder.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.25.29">appendMessages</A></B>(in TucanMessageSeq msgs) raises(TucanException)
+<DD><I> The appendMessages() method will add the messages passed to it to the current folder.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.25.30">deleteMessage</A></B>(in long msgnum) raises(TucanException)
+<DD><I> The deleteMessage() method will delete the specified message from the folder.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif><!1><A HREF="TucanAuth.html">TucanAuth</A> <B><A HREF="#DOC.25.31">getAuth</A></B>() raises(TucanException)
+<DD><I> The getAuth() method will return a copy of the folders auth object which can then be used if a folder needs access to that information.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.25.32">setAuth</A></B>(in <!1><A HREF="TucanAuth.html">TucanAuth</A> auth) raises(TucanException)
+<DD><I> The setAuth() method allows for the auth object for the folder to be set.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>long <B><A HREF="#DOC.25.33">getMessageFlags</A></B>(in long msgnum) raises(TucanException)
+<DD><I> The getFlags() method will return the flags that a message contains</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.25.34">setMessageFlags</A></B>(in long msgnum, in long <!1><A HREF="TucanMessageHeader.html#DOC.12.5">flags</A>) raises(TucanException)
+<DD><I>The setFlags() method will set the messages flags to the flags specified.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.25.35">setMessageFlag</A></B>(in long msgnum, in long flag) raises(TucanException)
+<DD><I>The setMessageFlag() method will set specified flag as on for the message.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.25.36">unsetMessageFlag</A></B>(in long msgnum, in long flag) raises(TucanException)
+<DD><I>The unsetMessageFlag() method will disable a  specified flag as on for the message.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.25.37">destroy</A></B>() raises(TucanException)
+<DD><I> The destory() method removes the object reference from memory.</I>
+</DL></P>
+
+</DL>
+
+<A NAME="DOC.DOCU"></A>
+<HR>
+<H2>Documentation</H2>
+<BLOCKQUOTE>
+The TucanFolder interface provides a base implementation for a
+folder in the Tucan architecture.  By itself it provides absolutley
+no functionality.  It must be inherited from and the the methods
+implemented in the child.  Folder are a more detailed container of
+messages than a store which is more general.  Folders do not actually
+have to pyhsically exist on the system they can be virtual.  Also
+folder could contain messages in a database or in a directory etc...</BLOCKQUOTE>
+<DL>
+
+<A NAME="exists"></A>
+<A NAME="DOC.25.1"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>boolean exists() raises(TucanException)</B></TT>
+<DD>
+The exists() method returns a boolean value telling the client whether or not
+the folder actually exists on the system.  If something strange happens then
+this method will raise a TucanException.
+<DL><DT><DD></DL><P>
+<A NAME="create"></A>
+<A NAME="DOC.25.2"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>boolean create() raises(TucanException)</B></TT>
+<DD>
+The create() method is used to actually create the folder on the 
+system if it does not exist.  This would be used to make a virtual
+folder permanent.  If something strange occurs in this method then
+a TucanException will be raised.
+<DL><DT><DD></DL><P>
+<A NAME="deleteFolder"></A>
+<A NAME="DOC.25.3"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>boolean deleteFolder() raises(TucanException)</B></TT>
+<DD>
+The deleteFolder() method is used to remove the folder from the system.  If
+a folder containing folders is deleted then all of the folders in the folder
+will be deleted as well.  If something strange takes place in this method then
+a TucanException will be raised.
+<DL><DT><DD></DL><P>
+<A NAME="expunge"></A>
+<A NAME="DOC.25.4"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>TucanMessageSeq expunge() raises(TucanException)</B></TT>
+<DD>
+The expunge method will expung all messages in the folder that are marked for
+deletion.  A message's flags are how a folder determines whether or not a message
+should be deleted.  For more on the flags Look at TucanMessage or TucanFlags.  If
+something strange happens then this method will raise a TucanException.
+<DL><DT><DD></DL><P>
+<A NAME="getFolder"></A>
+<A NAME="DOC.25.5"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B><!1><A HREF="TucanFolder.html">TucanFolder</A> getFolder(in string <!1><A HREF="TucanAttribute.html#DOC.14.1">name</A>) raises(TucanException)</B></TT>
+<DD>
+The getFolder() method allows for a client to get folders that exist within the
+current folder if there are any.  If the client needs to discover what folders
+exist then they can use the listFolders() method which will return a list of the
+names that can then be used to retrieve the desired folder.  If an error occurs in
+this method then a TucanException will be raised.
+<DL><DT><DD></DL><P>
+<A NAME="setParent"></A>
+<A NAME="DOC.25.6"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void setParent(in <!1><A HREF="TucanFolder.html">TucanFolder</A> folder) raises(TucanException)</B></TT>
+<DD>
+The setParent() method allows you to set the parent folder of the current folder.
+This will allow your applications to support folder's within folders.  If an error
+occurs, a TucanException will be raised.
+<DL><DT><DD></DL><P>
+<A NAME="getParent"></A>
+<A NAME="DOC.25.7"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B><!1><A HREF="TucanFolder.html">TucanFolder</A> getParent() raises(TucanException)</B></TT>
+<DD>
+The getParent() method will return, if possible, the parent folder of the current
+folder.  If a client needs to determine which folder the current folder belongs in,
+they should use this method.  If an error occurs, a TucanException will be raised.
+<DL><DT><DD></DL><P>
+<A NAME="getNewFolderObject"></A>
+<A NAME="DOC.25.8"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B><!1><A HREF="TucanFolder.html">TucanFolder</A> getNewFolderObject() raises(TucanException)</B></TT>
+<DD>
+The getNewFolderObject() method will return an empty folder object.  This method
+is mainly intended for internal uses but there may be a time when you need to grab
+a new folder object from within a folder.  If an error occurs a TucanExcpetion will
+be raised.
+<DL><DT><DD></DL><P>
+<A NAME="listFolders"></A>
+<A NAME="DOC.25.9"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>TucanStringList listFolders() raises(TucanException)</B></TT>
+<DD>
+The listFolders() method returns a list of strings that represent the names of the
+folder that exist within the current folder if there are any. If an error occurs
+within this folder then a TucanException will be raised.
+<DL><DT><DD></DL><P>
+<A NAME="list"></A>
+<A NAME="DOC.25.10"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>TucanFolderSeq list() raises(TucanException)</B></TT>
+<DD>
+The list() method will return a list of folder objects that represent the folders
+in the current folder if there are any.  This method is different from listFolders
+in that it actually returns a list if the objects instead of the name.  If an error
+occurs in this method then a TucanException will be raised.
+<DL><DT><DD></DL><P>
+<A NAME="renameTo"></A>
+<A NAME="DOC.25.11"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>boolean renameTo(in string <!1><A HREF="TucanAttribute.html#DOC.14.1">name</A>) raises(TucanException)</B></TT>
+<DD>
+The renameTo() method will change the current name of the folder to the name that is
+passed to the method.  If something strange occurs then a TucanException will be
+raised.
+<DL><DT><DD></DL><P>
+<A NAME="getName"></A>
+<A NAME="DOC.25.12"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>string getName() raises(TucanException)</B></TT>
+<DD>
+The getName() method will return the current name of the folder.  If an error occurs
+in this method then a TucanException will be raised.
+<DL><DT><DD></DL><P>
+<A NAME="setName"></A>
+<A NAME="DOC.25.13"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void setName(in string <!1><A HREF="TucanAttribute.html#DOC.14.1">name</A>) raises(TucanException)</B></TT>
+<DD>
+The setName() method is used to set the name of the folder.  If an error occurs while
+trying to do this then a TucanException will be raised.
+<DL><DT><DD></DL><P>
+<A NAME="getFullName"></A>
+<A NAME="DOC.25.14"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>string getFullName() raises(TucanException)</B></TT>
+<DD>
+The getFullName() method should return the pathname to the current folder.  This
+could be a path ot an actual directory or a path to an database etc... If an
+error occurs in this method then a TucanException will be raised.
+<DL><DT><DD></DL><P>
+<A NAME="setFullName"></A>
+<A NAME="DOC.25.15"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void setFullName(in string <!1><A HREF="TucanAttribute.html#DOC.14.1">name</A>) raises(TucanException)</B></TT>
+<DD>
+The setFullName() method sets the current path to the folder.  This should be a
+proper pathname.  If an error occurs then a TucanException will be raised.
+<DL><DT><DD></DL><P>
+<A NAME="getMessage"></A>
+<A NAME="DOC.25.16"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B><!1><A HREF="TucanMessage.html">TucanMessage</A> getMessage(in long msgnum) raises(TucanException)</B></TT>
+<DD>
+The getMessage() method will retreive the message in the folder corresponding to 
+the message number that is passed to it.  If that message does not exist or if an
+error occurs then a TucanException will be raised.
+<DL><DT><DD></DL><P>
+<A NAME="getMessages"></A>
+<A NAME="DOC.25.17"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>TucanMessageSeq getMessages() raises(TucanException)</B></TT>
+<DD>
+The getMessages() method returns a list of all of the messages in the folder new and
+old.  If an error occurs this method should raise a TucanException.
+<DL><DT><DD></DL><P>
+<A NAME="getNewMessages"></A>
+<A NAME="DOC.25.18"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>TucanMessageSeq getNewMessages() raises(TucanException)</B></TT>
+<DD>
+The getNewMessages() method will return a list of all of the new messages in that
+folder.  It is up to the implementation to decide what is considered as a new 
+message because that could be different for different services.  If an error occurs
+this method should raise a TucanException.
+<DL><DT><DD></DL><P>
+<A NAME="getMessagesInRange"></A>
+<A NAME="DOC.25.19"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>TucanMessageSeq getMessagesInRange(in long start, in long stop) raises(TucanException)</B></TT>
+<DD>
+The getMessagesInRange() method will return a list of messages which is determined
+by the start and stop range that is passed to it.  This method should raise a
+TucanException if any error occur.
+<DL><DT><DD></DL><P>
+<A NAME="getNewMessageObject"></A>
+<A NAME="DOC.25.20"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B><!1><A HREF="TucanMessage.html">TucanMessage</A> getNewMessageObject() raises(TucanException)</B></TT>
+<DD>
+The getNewMessageObject() method returns a message object that can then be edited
+and handled in whatever way desired.  If there is a problem then a TucanException
+will be raised.
+<DL><DT><DD></DL><P>
+<A NAME="getMessageCount"></A>
+<A NAME="DOC.25.21"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>long getMessageCount() raises(TucanException)</B></TT>
+<DD>
+The getMessageCount() method will return the number of messages in the folder.  If
+an erro occurs then a TucanException should be raised.
+<DL><DT><DD></DL><P>
+<A NAME="getNewMessageCount"></A>
+<A NAME="DOC.25.22"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>long getNewMessageCount() raises(TucanException)</B></TT>
+<DD>
+The getNewMessageCount() method will return the number of new messages in the folder.
+If an error occurs this folder should raise a TucanException.
+<DL><DT><DD></DL><P>
+<A NAME="hasNewMessages"></A>
+<A NAME="DOC.25.23"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>boolean hasNewMessages() raises(TucanException)</B></TT>
+<DD>
+The hasNewMessages() method will return a boolean value as to whether or not the 
+folder contains new messages.  If an error occurs then this method should raise a
+TucanException.
+<DL><DT><DD></DL><P>
+<A NAME="moveMessage"></A>
+<A NAME="DOC.25.24"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void moveMessage(in long msgnum, in <!1><A HREF="TucanFolder.html">TucanFolder</A> folder) raises(TucanException)</B></TT>
+<DD>
+The moveMessage() method moves a message between folders in a store.  If an error
+occurs while moving a message then a TucanException should be raised.
+<DL><DT><DD></DL><P>
+<A NAME="moveMessages"></A>
+<A NAME="DOC.25.25"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void moveMessages(in TucanLongList msgnums, in <!1><A HREF="TucanFolder.html">TucanFolder</A> folder) raises(TucanException)</B></TT>
+<DD>
+The moveMessages() method will move the messages in the list to the denoted folder.
+If an error occurs then a TucanException should be raised.
+<DL><DT><DD></DL><P>
+<A NAME="copyMessage"></A>
+<A NAME="DOC.25.26"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void copyMessage(in long msgnum, in <!1><A HREF="TucanFolder.html">TucanFolder</A> folder) raises(TucanException)</B></TT>
+<DD>
+The copyMessage() method will copy the message denoted by the msg number sent to it to the
+desired folder in the store.  If an error occurs in this method then a TucanException
+should be raised.
+<DL><DT><DD></DL><P>
+<A NAME="copyMessages"></A>
+<A NAME="DOC.25.27"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void copyMessages(in TucanLongList msgnums, in <!1><A HREF="TucanFolder.html">TucanFolder</A> folder) raises(TucanException)</B></TT>
+<DD>
+The copyMessages() method will copy the messages denoted by the list sent to it to the
+desired folder.  If an error occurs while copying this folder should raise a TucanException.
+<DL><DT><DD></DL><P>
+<A NAME="appendMessage"></A>
+<A NAME="DOC.25.28"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void appendMessage(in <!1><A HREF="TucanMessage.html">TucanMessage</A> msg) raises(TucanException)</B></TT>
+<DD>
+The appendMessage() method will add the message that it is passed to the current folder.
+If an error occurs in this method then a TucanException should be raised.
+<DL><DT><DD></DL><P>
+<A NAME="appendMessages"></A>
+<A NAME="DOC.25.29"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void appendMessages(in TucanMessageSeq msgs) raises(TucanException)</B></TT>
+<DD>
+The appendMessages() method will add the messages passed to it to the current folder.
+If an error occurs this method should raise a TucanException.
+<DL><DT><DD></DL><P>
+<A NAME="deleteMessage"></A>
+<A NAME="DOC.25.30"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void deleteMessage(in long msgnum) raises(TucanException)</B></TT>
+<DD>
+The deleteMessage() method will delete the specified message from the folder.  It is up
+to the client to store a backup copy of this message if they so desire.  If an error occurs,
+a TucanException will be raised.
+<DL><DT><DD></DL><P>
+<A NAME="getAuth"></A>
+<A NAME="DOC.25.31"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B><!1><A HREF="TucanAuth.html">TucanAuth</A> getAuth() raises(TucanException)</B></TT>
+<DD>
+The getAuth() method will return a copy of the folders auth object which can then
+be used if a folder needs access to that information.  If an error occurs in this
+method then a TucanException should be raised.
+<DL><DT><DD></DL><P>
+<A NAME="setAuth"></A>
+<A NAME="DOC.25.32"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void setAuth(in <!1><A HREF="TucanAuth.html">TucanAuth</A> auth) raises(TucanException)</B></TT>
+<DD>
+The setAuth() method allows for the auth object for the folder to be set.  This is
+method is intended for internal use and should not be used by clients because
+proper authentication is required for proper functionality.  If an error occurs this
+method should raise a TucanException.
+<DL><DT><DD></DL><P>
+<A NAME="getMessageFlags"></A>
+<A NAME="DOC.25.33"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>long getMessageFlags(in long msgnum) raises(TucanException)</B></TT>
+<DD>
+The getFlags() method will return the flags that a message contains
+<DL><DT><DD></DL><P>
+<A NAME="setMessageFlags"></A>
+<A NAME="DOC.25.34"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void setMessageFlags(in long msgnum, in long <!1><A HREF="TucanMessageHeader.html#DOC.12.5">flags</A>) raises(TucanException)</B></TT>
+<DD>The setFlags() method will set the messages flags to the flags specified.  A Tucan
+exception will be raised if an error occurs, 
+<DL><DT><DD></DL><P>
+<A NAME="setMessageFlag"></A>
+<A NAME="DOC.25.35"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void setMessageFlag(in long msgnum, in long flag) raises(TucanException)</B></TT>
+<DD>The setMessageFlag() method will set specified flag as on for the message.  A TucanException
+will be raised if an error occurs,
+<DL><DT><DD></DL><P>
+<A NAME="unsetMessageFlag"></A>
+<A NAME="DOC.25.36"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void unsetMessageFlag(in long msgnum, in long flag) raises(TucanException)</B></TT>
+<DD>The unsetMessageFlag() method will disable a  specified flag as on for the message.  A TucanException
+will be raised if an error occurs,
+<DL><DT><DD></DL><P>
+<A NAME="destroy"></A>
+<A NAME="DOC.25.37"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void destroy() raises(TucanException)</B></TT>
+<DD>
+The destory() method removes the object reference from memory.  All clients should
+make sure that they call the destroy() method so that memory leaks do not occur. If
+an error occurs in this method then a TucanException should be raised.
+<DL><DT><DD></DL><P></DL>
+<HR>
+<DL><DT><B>Direct child classes:
+</B><DD><A HREF="TucanVoiceFolder.html">TucanVoiceFolder</A><BR>
+<A HREF="TucanFaxFolder.html">TucanFaxFolder</A><BR>
+<A HREF="TucanEmailFolder.html">TucanEmailFolder</A><BR>
+<A HREF="TucanCalendarFolder.html">TucanCalendarFolder</A><BR>
+<A HREF="TucanBbsFolder.html">TucanBbsFolder</A><BR>
+<A HREF="TucanAddressBookFolder.html">TucanAddressBookFolder</A><BR>
+</DL>
+
+<DL><DT><DD></DL><P><P><I><A HREF="index.html">Alphabetic index</A></I> <I><A HREF="HIER.html">Hierarchy of classes</A></I></P><HR>
+<BR>
+This page was generated with the help of <A HREF="http://www.linuxsupportline.com/~doc++">DOC++</A>.
+</BODY>
+</HTML>

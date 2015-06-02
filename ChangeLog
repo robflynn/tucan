@@ -1,0 +1,171 @@
+========================================================
+TUCAN: The Unified Communications Architecture Network
+========================================================
+
+version 1.4 (Jul 30th, 2001):
+    * Fixed a permissions problem which lead to a nice memory leak
+    * Rewrote some things with Email, Voice, and Fax  to make loading of
+      messages much faster.
+    * Made some changes to the e-mail fetcher
+    * Various code cleanups
+
+version 1.3 (Jul 10th, 2001):
+    * TUCAN no longer assumes /home/USERNAME/ as a user's home
+      directory
+
+version 1.2 (Jul 5th, 2001):
+    * Fixed up the spec file a little more
+    * Fixed a very nasty mem leak with TucanData
+    * Fixed a problem with TucanBBSTransport
+    * Added some procmail filters to handle incoming mail
+
+version 1.1 (Jun 19th, 2001):
+    * Fixed a segfault in TucanCalendarTransport when sending
+      an audio message.
+    * Fixed some things in the spec file and fixed a problem
+      with the init script not being included in the RPMS.
+    * Small problem with TucanCalendarMessage::getReceivedDate() fixed
+    * Fixed a problem with most of the message types not properly formatting
+      dates and time stamps. 
+    * Fixed a logic error in the way messages are "left on server"
+    * Improved TucanStore::listFolders() implementation
+    * Fixed a bug in TucanEmailMessage:appendMessage()
+    * Fixed a problem with setReplyTo in some of the Message objects
+    * Fixed a problem with myFrom being destroyed twice in some messages
+    * Implemented an SMTP transport layer.
+    * Fixed a buffer that was not being emptied causing corruption of messages
+    * Cleaned up IMAP code
+    * Fixed problem with body of a multipart message being listed twice
+      in some cases.
+    * BBS Corruption problem should be fixed
+    * Fixed a case sensitivity problem with encoding types
+    * Fixed problem with message/rfc822 messages not being sent properly when
+      being forwarded
+
+version 1.0 (Jun 01st, 2001):
+    * Init script properly points itself to the correct executable
+    * Fixed a memory leak in address book
+    * Fixed a problem with TucanParser leaving white space in key
+      names
+    * Added TucanEmailFetcher::getMessageId()
+    * Fixed a segfault with the message parser
+    * Downloaded emails won't duplicate themselves if flags change :)
+    * TucanUtilities got strwstrip() to strip whitespace from the beginning
+      and ending of a string.
+    * Fixed a bug in the TucanParse module
+    * Fixed a problem with multi part messages with only one part in TucanEmail
+    * Fixed a segfault for when a host name cannot be resolved in TucanPop 
+      and TucanIMAP
+    * TUCAN got an MBOX format parser
+    * Small problem with addressbook fixed.
+    * Fixed a possible small memory leak in TucanUserPrefs.
+    * Fixed a problem with TucanUserPrefs not properly closing the database 
+      connections on error.  
+    * TucanUtilities' base64 encoder was rewritten and now works properly.
+    * Fixed a problem with audio calendar entries
+    * Added TucanSession::setNewPinNumber() to change the user's pin. 
+    * TucanEmailFetcher has the ability to delete mail
+    * Fixed a bad file descriptor bug that prevented the config file from
+      being read after popping lots of mail.
+    * Fixed problem with fax mime types not being detected properly
+      due to message flags.
+    * Rewrote part of the init script to make it work properly.
+
+version 0.9 (Apr 27th, 2001):
+     * getNewMessageCount() works properly for Email, Voice, and Fax
+     * Fixed a problem with authorization not rejecting empty usernames
+     * Fix in TucanBbs for one character subjects
+     * Fix for voice calendar entries
+     * isAdmin() was added to TucanSession. It will report if the currently
+       authorized user has administration privledges.
+     * Included init script
+
+version 0.8 (Apr 20th, 2001):
+     * Added base64 encoding to TucanUtilities
+     * Added fax notification type to TucanCalendar
+     * Reworked the internals of TucanData.  It now accepts
+       TucanRawData as opposed to a CORBA::String for data.
+       It will also automatically encode the data unless 
+       otherwise specified.
+     * Fixed a sneaky memleak in TucanDb
+     * Fixed a DOS problem with TucanDb
+     * Fixed a race condition with appendMessage() in Email,
+       Voice, and Fax.
+     * Added uueDecode() method to TucanUtilities
+     * Fixed a few segfaults in the calendar backend.
+     * Other message types can successfully be transported via Email
+     * Created a Flags implementation for Messages
+     * Calendar handles voice messages
+
+version 0.7 (Apr 12th, 2001):
+     * Fixed a bug that prevents the IDL files from being
+       installed properly.
+     * Fixed a bug when transporting a BBS message without
+       a from address.
+     * Made setPid() and getPid() accept and return
+       CORBA::Long as opposed to CORBA::Short
+     * Reimplemented recipients to be more scalable.
+     * Fixed the IDL definitions of moveMessage() and moveMessages()
+       for TucanFolder.
+     * Completed current TucanEmail, Voice, and Fax method
+       implementations.
+     * Fixed a segfault and DOS problem with TucanDb
+     * Fax can send other text-based  through it's transport and can
+       transport to fax machines by using a recipient type of
+       "fax".
+     * Fixed pin number authentication
+     * Rewrote the exists() method for Email, Fax, and Voice.
+     * Fixed a bug with TucanMessage::addRecipients()
+
+version 0.6 (Apr 06th, 2001):
+     * Fixed segfault in TucanConfig when requesting
+       a nonexistent store.
+     * Added TucanUserPrefs interface
+     * Bulletin board Base Set implemented
+     * More methods filled in
+     * Improved installation script
+     * Changed the Data object to contain setData() and
+       getData().  setData() was removed from TucanMessage
+     * Voice calendar entry support added
+     * Added escape() method to TucanUtilities
+
+version 0.5 (Mar 23rd, 2001):
+     * Fixed a memory leaks in the Folders for
+       email, voice, fax, and calendar.
+     * Fixed xerces-c detection
+     * Email, Voice, Fax, and Calendar got 
+       TucanFolder::deleteMessage(int)
+     * Fixed TucanAddress for all stores (small leak)
+
+version 0.4 (Mar 06th, 2001):
+     * Fixed multipart message parsing with EmailFolder
+     * Fixed a bug in TucanParse.cc
+     * EmailFolder now decodes quoted-printable
+       transfer encodings
+     * AddressBook segfault is fixed
+     * AddressBook got a transport layer
+     * getSentDate() now works happily
+     * Fixed a few small leaks including one leak
+       intializing Xerces-C
+     * Added more exception handling into TucanSession
+     * No longer use uid.sh
+
+version 0.3 (Feb 27th, 2001):
+     * Voice mail base set completed
+     * Fax base set completed
+     * Address Book base set completed
+     * Fixed a problem with the pop3 library
+     * Added IMAP4 Support
+
+version 0.2 (Feb 15th, 2001):
+     * Calendar base set is now complete
+     * Multipart TucanData types are supported
+     * TucanEmailTransport handles multipart messages
+     * Improved the autoconf functionality
+
+version 0.1 (Feb 6th, 2001):
+     * Initial Release
+
+========================================================
+(c) 2000, 2001 Difinium
+========================================================

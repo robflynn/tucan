@@ -1,0 +1,151 @@
+#!/usr/bin/env python
+
+######################################################
+# test_tucan
+#
+# This is a script for testing Tucan functionality. It
+# takes command line parameters so that the user can
+# specify what it is they want to test and how many
+# times they want to test it.
+#
+# ./test_tucan [options]
+#
+# Command line options:
+#
+# -b	Specify the backend ... e.g TucanEmail
+# -i	The number of testing iterations
+######################################################
+
+import sys, string, os
+from threading import *
+
+# parse_args() takes in a list of arguments
+# and parses them putting them into a dictionary
+
+def parse_args(args):
+	
+	arg_dict = {}
+	i = 0
+	
+	for line in args:
+
+		tmp = string.find(line, '-')
+
+		if not tmp:
+			
+			arg_dict[line] = args[i + 1]
+
+		i = i + 1
+
+	return arg_dict	
+
+# list_backends() will return a list of
+# the backends that are available for testing
+
+def list_backends():
+
+	list = os.listdir('.')
+
+	tmp_list = []
+
+	for line in list:
+		
+		if line == 'CVS':
+			
+			pass	
+
+		else:
+
+			if os.path.isdir(line):
+				tmp_list.append(line)
+
+	return tmp_list
+
+def main():
+	
+	# This get our arguments form the command line
+	
+	my_args = sys.argv[1:]
+
+	arg_dict = parse_args(my_args)
+
+	# Determine what args we got and set up some values
+
+	if arg_dict.has_key('-b'):
+		
+		backend = arg_dict['-b']
+
+	else:
+
+		backend = 'All'
+
+	if arg_dict.has_key('-i'):
+		
+		iterations = string.atoi(arg_dict['-i'])
+
+	else:
+
+		iterations = 1
+
+	# Get list of available backends
+
+	avail_list = list_backends()
+
+	if len(avail_list) == 0:
+
+		print "No backends available"
+
+	if not backend in avail_list and backend != 'All':
+
+		print "%s is not an available backend" % backend
+		sys.exit(-1)
+
+	# Start spawning the actual backend test
+
+	if backend != 'All':
+
+		for i in range(iterations):
+			
+			os.system("%s/%s" % (backend, backend))
+	
+	# We need to spawn threads for all of the backends
+
+	else:
+
+		# Make sure that we do this the proper number of times
+
+		for i in range(iterations):
+		
+			thread_list = []
+
+			# Create our threads and store them in a list
+
+			for j in avail_list:
+			
+				tmp_target = '%s/%s' % (j, j)
+				tmp = Thread(target=os.system(tmp_target))
+				thread_list.append(tmp)
+
+			# Start all of our threads
+
+			for j in thread_list:
+
+				j.start()
+
+			# Are they done excuting?
+
+			while 1:
+			
+				test = 0
+
+				for j in thread_list:
+
+					if not j.isAlive():
+					
+						test = test + 1
+
+				if test == len(thread_list):
+
+					break
+
+if __name__ == '__main__': main()

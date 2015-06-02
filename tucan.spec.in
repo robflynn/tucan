@@ -1,0 +1,254 @@
+%define name	@PACKAGE@
+%define version	@VERSION@
+%define release	1
+%define prefix	/usr
+
+Summary: A CORBA based abstract messaging API 
+Name: %{name}
+Version: %{version}
+Release: %{release}
+Copyright: GPL
+Group: Development/Libraries
+Source: %{name}-%{version}.tar.gz
+Source1: tucan
+Source2: procmail.tucan
+Source3: tucan_acct_setup.py
+URL: http://www.difinium.com
+Distribution: RedHat Linux
+Vendor: Difinium
+Packager: TUCAN Devel Team <tucan@difinium.com>
+BuildRoot: /var/tmp/%{name}-%{version}-root
+Requires: omniORB postgresql postgresql-devel expect procmail xerces-c >= 1.4
+
+%description
+Tucan is an API for performing abstract messaging in Linux.
+It is built on top of omniORB3.  It is written using C++.
+TUCAN currently supports e-mail, voice mail, fax, calendar/scheduler,
+an address book, and a BBS system.  It also has interfaces for POP3 as 
+well as IMAP. More implementations coming soon!  TUCAN is da bomb! :)
+
+%prep
+%setup
+
+%build
+CFLAGS="$RPM_OPT_FLAGS" ./configure --prefix=%{prefix}
+make
+
+%install
+rm -rf $RPM_BUILD_ROOT
+mkdir -p ${RPM_BUILD_ROOT}/etc/rc.d/init.d
+mkdir -p ${RPM_BUILD_ROOT}/etc/skel
+mkdir -p ${RPM_BUILD_ROOT}/usr/share/tucan
+make prefix=$RPM_BUILD_ROOT%{prefix} install-strip
+install -c -m 755 %SOURCE1 $RPM_BUILD_ROOT/etc/rc.d/init.d/tucan
+install -c -m 755 %SOURCE2 $RPM_BUILD_ROOT/etc/skel/.procmailrc
+install -c -m 755 %SOURCE3 $RPM_BUILD_ROOT/usr/share/tucan/tucan_acct_setup.py
+
+%files
+%defattr(-,root,root)
+%doc NEWS COPYING AUTHORS README docs/html/*.html docs/html/*.gif
+%{prefix}/bin/tucan
+%{prefix}/bin/authorize
+%{prefix}/share/config/TucanConfig.xml
+%{prefix}/share/tucan/db_install.py
+%{prefix}/share/tucan/tucan_acct_setup.py
+%{prefix}/share/tucan/testing/test_tucan
+%{prefix}/share/tucan/testing/README
+%{prefix}/share/tucan/testing/TucanAddressBook/TucanAddressBook
+%{prefix}/share/tucan/testing/TucanEmail/TucanEmail
+%{prefix}/share/idl/tucan/*.idl
+%{prefix}/bin/tucan_procmail_filter.py
+
+%config /etc/rc.d/init.d/tucan
+%config /etc/skel/.procmailrc
+
+%clean
+rm -r $RPM_BUILD_ROOT
+
+%changelog
+* Mon Jul 30 2001 Rob Flynn <rob@difinium.com) (1.4 release)
+- Fixed a permissions problem which lead to a nice memory leak
+- Rewrote some things with Email, Voice, and Fax  to make loading of messages much faster.
+- Made some changes to the e-mail fetcher
+- Various code cleanups
+
+* Tue Jul 10 2001 Rob Flynn <rob@difinium.com) (1.3 release)
+- TUCAN no longer assumes /home/USERNAME/ as a user's home directory
+
+* Tue Jul 05 2001 Rob Flynn <rob@difinium.com) (1.2-3 release)
+- Fixed up the spec file a little so a post-redhat-install script can be run.
+
+* Tue Jul 05 2001 Rob Flynn <rob@difinium.com) (1.2 release)
+- Fixed up the spec file a little more
+- Fixed a very nasty mem leak with TucanData
+- Fixed a problem with TucanBBSTransport
+- Added some procmail filters to handle incoming mail
+
+* Tue Jun 19 2001 Rob Flynn <rob@difinium.com) (1.1 release)
+- Fixed a segfault in TucanCalendarTransport when sending an audio message.
+- Fixed some things in the spec file and fixed a problem with the init script not being included in the RPMS.
+- Small problem with TucanCalendarMessage::getReceivedDate() fixed
+- Fixed a problem with most of the message types not properly formatting dates and time stamps. 
+- Fixed a logic error in the way messages are "left on server"
+- Improved TucanStore::listFolders() implementation
+- Fixed a bug in TucanEmailMessage:appendMessage()
+- Fixed a problem with setReplyTo in some of the Message objects
+- Fixed a problem with myFrom being destroyed twice in some messages
+- Implemented an SMTP transport layer.
+- Fixed a buffer that was not being emptied causing corruption of messages
+- Cleaned up IMAP code
+- Fixed problem with body of a multipart message being listed twice in some cases.
+- BBS Corruption problem should be fixed
+- Fixed a case sensitivity problem with encoding types
+- Fixed problem with message/rfc822 messages not being sent properly when being forwarded
+
+* Fri Jun 01 2001 Rob Flynn <rob@difinium.com) (1.0 release)
+- Init script properly points itself to the correct executable
+- Fixed a memory leak in address book
+- Fixed a problem with TucanParser leaving white space in key names
+- Added TucanEmailFetcher::getMessageId()
+- Fixed a segfault with the message parser
+- Downloaded emails won't duplicate themselves if flags change :)
+- TucanUtilities got strwstrip() to strip whitespace from the beginning and ending of a string.
+- Fixed a bug in the TucanParse module
+- Fixed a problem with multi part messages with only one part in TucanEmail
+- Fixed a segfault for when a host name cannot be resolved in TucanPop and TucanIMAP
+- TUCAN got an MBOX format parser
+- Small problem with addressbook fixed.
+- Fixed a possible small memory leak in TucanUserPrefs.
+- Fixed a problem with TucanUserPrefs not properly closing the database connections on error.  
+- TucanUtilities' base64 encoder was rewritten and now works properly.
+- Fixed a problem with audio calendar entries
+- Added TucanSession::setNewPinNumber() to change the user's pin. 
+- TucanEmailFetcher has the ability to delete mail
+- Fixed a bad file descriptor bug that prevented the config file from being read after popping lots of mail.
+- Fixed problem with fax mime types not being detected properly due to message flags.
+- Rewrote part of the init script to make it work properly.
+
+* Fri Apr 27 2001 Rob Flynn <rob@difinium.com) (0.9 release)
+- getNewMessageCount() works properly for Email, Voice, and Fax
+- Fixed a problem with authorization not rejecting empty usernames
+- Fix in TucanBbs for one character subjects
+- Fix for voice calendar entries
+- isAdmin() was added to TucanSession. It will report if the currently authorized user has administration privledges.
+- Included init script
+
+* Thu Apr 20 2001 Rob Flynn <rob@difinium.com) (0.8 release)
+- Added base64 encoding to TucanUtilities
+- Added fax notification type to TucanCalendar
+- Reworked the internals of TucanData.  It now accepts TucanRawData as opposed to a CORBA::String for data. It will also automatically encode the data unless otherwise specified.
+- Fixed a sneaky memleak in TucanDb
+- Fixed a DOS problem with TucanDb
+- Fixed a race condition with appendMessage() in Email, Voice, and Fax.
+- Added uueDecode() method to TucanUtilities
+- Fixed a few segfaults in the calendar backend.
+- Other message types can successfully be transported via Email
+- Created a Flags implementation for Messages
+- Calendar handles voice messages
+
+* Thu Apr 12 2001 Rob Flynn <rob@difinium.com) (0.7 release)
+- Fixed a bug that prevents the IDL files from being installed properly.
+- Fixed a bug when transporting a BBS message without a from address.
+- Made setPid() and getPid() accept and return CORBA::Long as opposed to CORBA::Short
+- Reimplemented recipients to be more scalable.
+- Fixed the IDL definitions of moveMessage() and moveMessages() for TucanFolder.
+- Completed current TucanEmail, Voice, and Fax method implementations.
+- Fixed a segfault and DOS problem with TucanDb
+- Fax can send other text-based  through it's transport and can transport to fax machines by using a recipient type of "fax".
+- Fixed pin number authentication
+- Rewrote the exists() method for Email, Fax, and Voice.
+- Fixed a bug with TucanMessage::addRecipients()
+
+* Fri Apr 06 2001 Rob Flynn <rob@difinium.com) (0.6 release)
+- Fixed segfault in TucanConfig when requesting a nonexistent store.
+- Added TucanUserPrefs interface
+- Bulletin board Base Set implemented
+- More methods filled in
+- Improved installation script
+- Changed the Data object to contain setData() and getData().  setData() was removed from TucanMessage
+- Voice calendar entry support added
+- Added escape() method to TucanUtilities
+
+* Fri Mar 23 2001 Rob Flynn <rob@difinium.com> (0.5 release)
+- Fixed a memory leaks in the Folders for email, voice, fax, and calendar.
+- Fixed xerces-c detection
+- Email, Voice, Fax, and Calendar got TucanFolder::deleteMessage(int)
+- Fixed TucanAddress for all stores (small leak)
+
+* Tue Mar 06 2001 Rob Flynn <rob@difinium.com> (0.4 release)
+- Fixed multipart message parsing with EmailFolder
+- Fixed a bug in TucanParse.cc
+- EmailFolder now decodes quoted-printable transfer encodings
+- AddressBook segfault is fixed
+- AddressBook got a transport layer
+- getSentDate() now works happily
+- Fixed a few small leaks including one leak intializing Xerces-C
+- Added more exception handling into TucanSession
+- No longer use uid.sh
+
+* Tue Feb 27 2001 Rob Flynn <rob@difinium.com> (0.3 release)
+- Voice mail base set completed
+- Fax base set completed
+- Address Book base set completed
+- Fixed a problem with the pop3 library
+- Added IMAP4 Support
+
+* Wed Feb 15 2001 Rob Flynn <rob@difinium.com> (0.2 release)
+- Calendar base set is now complete
+- Multipart TucanData types are supported
+- TucanEmailTransport handles multipart messages
+- Improved the autoconf functionality
+
+* Tue Feb 6 2001 Rob Flynn <rob@difinium.com> (0.1 release)
+- Initial public release
+
+%post
+install -c -d /etc/skel/tucan_email -m 770
+install -c -d /etc/skel/tucan_email/inbox -m 700
+install -c -d /etc/skel/fax -m 770
+install -c -d /etc/skel/fax/inbox -m 770
+install -c -d /etc/skel/vm -m 770
+install -c -d /etc/skel/vm/inbox -m 770
+install -c -d /etc/skel/cal -m 770
+
+
+/usr/sbin/groupadd -r tucan
+/usr/sbin/adduser -c "Tucan" -r -d /var/tucan -m -g tucan tucan
+RNDPASS=`/usr/bin/mkpasswd tucan`
+cat %{prefix}/share/config/TucanConfig.xml | sed s/twocan/$RNDPASS/g > %{prefix}/share/config/TucanConfig.xml.new
+rm %{prefix}/share/config/TucanConfig.xml
+mv %{prefix}/share/config/TucanConfig.xml.new %{prefix}/share/config/TucanConfig.xml
+
+/sbin/chkconfig --add tucan
+
+echo "--------------------------------------------------------------"
+echo "|  Your installation of TUCAN is now complete."
+echo "| " 
+echo "|  In order to properly run TUCAN, you most now import the"
+echo "|  default database. To import the database, please follow"
+echo "|  these commands:"
+echo "| "
+echo "|  su -     (yes, the - is required)"
+echo "|  [enter your root password, if prompted]"
+echo "|  %{prefix}/share/tucan/db_install.py"
+echo "| "
+echo "|  Before doing this, please make sure that the postgres"
+echo "|  server is running."
+echo "|"
+echo "|  Also, each user directory should have a /tucan_email"
+echo "|  subdirectory as well as an /tucan_email/inbox/ directory"
+echo "|  Any new users will have these created automagically."
+echo "| "
+echo "|                            - TUCAN devel team"
+echo "--------------------------------------------------------------"
+
+%preun
+/etc/rc.d/init.d/tucan stop
+/sbin/chkconfig --del tucan
+
+%postun
+/usr/sbin/userdel tucan
+/usr/sbin/groupdel tucan
+rm -rf /etc/skel/tucan_email
+rm -rf /etc/skel/fax
+rm -rf /etc/skel/vm

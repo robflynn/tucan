@@ -1,0 +1,135 @@
+////////////////////////////////////////////////////////////
+// TucanSession (idl definition)
+// Copyright (C) 2000, Difinium
+////////////////////////////////////////////////////////////
+// Filename:        TucanSession.idl
+// Description:     idl definition of TucanSession
+// Created at:      Thu Jun 29 11:44:51 PDT 2000
+////////////////////////////////////////////////////////////
+
+/**
+	TucanSession is the class that acts as the starting point
+	for all messaging on the TUCAN system.  It handles authentication
+	and other things that are critical to the functionality of
+	TUCAN.  It is very important to note that a client must obtain 
+	a TucanAuth object and set the values for it correctly before 
+	a session can be authorized.  If a session is not authorized 
+	then none of the methods for obtaining messages will work.
+*/
+interface TucanSession 
+{
+	/**
+		The getAuth() method returns TucanAuth objects.  The client 
+		can then go and set the attributes for the the auth object 
+		so that they can authorize the session.  If for 
+		some reason an error in the method occurs then it will raise 
+		a TucanException.
+       */
+	TucanAuth getAuth()
+		raises(TucanException);
+	/**
+		The authorize() method takes a TucanAuth object as a parameter
+		so that it can use the attributes in the TucanAuth object to
+		try and authorize the session.  If for some reason the username,
+		password, or pin number are incorrect then the session will not
+		be authorized and the client will not be able to retrieve messages
+		until the session has been authorized.  It is important to note
+		that both a password and pin number are not required but one must
+		be present.  This method can raise two different exceptions.  
+		If there is an error authenticating then it will raise a 
+		TucanAuthException, but if for some reason some other strange error 
+		occurs it will raise a TucanException.
+	*/
+	void authorize(in TucanAuth auth)
+		raises(TucanException, TucanAuthException);
+	/**
+		The getDefaultStore() method returns a servant object of the default tucan store.
+		The default store is determined by the default entry in the tucan
+		configuration data which is stored in TucanConfig.xml.  If you
+		are using a default TUCAN setup then this method should return
+		a TucanEmailStore object.  This method can raise two different
+		exceptions.  If the client is trying to get a store but has not yet
+		authorized then it will raise a TucanAuthException, but if something
+		else strange happens then it will raise a TucanException.
+	*/
+	TucanStore getDefaultStore()
+		raises(TucanException, TucanAuthException);
+	/**
+		The getStoreByProtocol() method returns a servant store object based
+		upon the value of the protocol that is passed to it.  This protocol
+		dirrectly relates to entries in the TUCAN config data which is in
+		TucanConfig.xml.  For example if I wanted a Bulletin Board store then
+		I would pass the protocol value of "bbs" based upon the TucanConfig.xml
+		file.  This is handy so that the system can be extended with new capabilities
+		but the same session code will still work.  This method can raise two
+		exceptions.  If the client is trying to get a store but has not yet
+		authorized then a TucanAuthException will be raised, but if something else
+		strange happens then a TucanException will be raised.
+	*/
+	TucanStore getStoreByProtocol(in string proto)
+		raises(TucanException, TucanAuthException);
+	/**
+		The getDefaultTransport() method returns a servant object of the default 
+		transport.  The default transport is determined by the default entry
+		in the tucan configuration data which is stored in TucanConfig.xml.
+		If you are using a default TUCAN setup then this method should return
+		a TucanEmailTransport object.  This method can raise two different
+		exceptions.  If the client is trying to get a transport but has not
+		yet authorized then a TucanAuthException will be raised, but if something
+		else strange happens then a TucanEception will be raised.
+	*/
+	TucanTransport getDefaultTransport()
+		raises(TucanException, TucanAuthException);
+	/**
+		The getTransportByProtocol() method returns a servant transport object
+		based upon the value of the protocol that is passed to it.  This protocol
+		directly relates to entries in the TUCAN configuration data which is in
+		TucanConfig.xml.  This method can raise two different exceptions.  If the
+		client is trying to get a transport but has not yet authorized then a
+		TucanAuthException will be raised, but if something else strange takes place
+		then a TucanException will be raised.
+	*/
+	TucanTransport getTransportByProtocol(in string proto)
+		raises(TucanException, TucanAuthException);
+
+
+	/**
+	   The isAdmin() method will return a boolean value denoting whether or not the user
+	   has administration privledges on the system.  A TucanException will be raised if an
+	   error occurs. 
+	*/
+
+	boolean isAdmin()
+		raises(TucanException, TucanAuthException);
+
+	/**
+		The setNewPinNumber() method will change the pin number for the currently 
+		authorized user.  A TucanException will be raised if an error occurs.
+	*/
+
+	void setNewPinNumber(in long newpin)
+		raises(TucanException, TucanAuthException);
+
+	/**
+		The destroy() method simply removes the session servant object out of memory.
+		It is important that all clients call this method when they are done so
+		that memory leaks do not occur.
+	*/
+	void destroy()
+		raises(TucanException);
+};
+/**
+	TucanSessionFactory is an object that is responsible for handing out TucanSession
+	servants.  This is done so that one server can hand out many of the same type of
+	servants and know that all servants will be different object references.
+*/
+interface TucanSessionFactory 
+{
+	/**
+		The create() method returns a TucanSession servant.  This is so that many 
+		different sessions can be held by multiple users at the same time.  If
+		something strange takes place then this method will raise a TucanException.
+	*/
+	TucanSession create()
+		raises(TucanException);
+};

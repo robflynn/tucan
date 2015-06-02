@@ -1,0 +1,13 @@
+////////////////////////////////////////////////////////////
+// TucanFaxAddress (idl definition)
+//
+// Copyright (C) 2000, Difinium
+////////////////////////////////////////////////////////////
+// Filename:        TucanFaxAddress.idl
+// Description:     idl definition of TucanFaxAddress
+// Created at:      Wed Aug  9 16:51:39 PDT 2000
+////////////////////////////////////////////////////////////
+
+interface TucanFaxAddress : TucanAddress {};
+
+interface TucanFaxAddressFactory : TucanAddressFactory {}; 

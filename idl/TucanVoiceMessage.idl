@@ -1,0 +1,13 @@
+////////////////////////////////////////////////////////////
+// TucanVoiceMessage (idl definition)
+//
+// Copyright (C) 2000, Difinium
+////////////////////////////////////////////////////////////
+// Filename:        TucanVoiceMessage.idl
+// Description:     idl definition of TucanVoiceMessage
+// Created at:      Thu Jul 27 15:57:28 PDT 2000
+////////////////////////////////////////////////////////////
+
+interface TucanVoiceMessage : TucanMessage {};
+
+interface TucanVoiceMessageFactory : TucanMessageFactory {}; 

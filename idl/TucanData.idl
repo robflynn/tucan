@@ -1,0 +1,171 @@
+////////////////////////////////////////////////////////////
+// TucanData (idl definition)
+// Copyright (C) 2000, Difinium
+////////////////////////////////////////////////////////////
+// Filename:        TucanData.idl
+// Description:     idl definition of TucanData
+// Created at:      Fri Jun 30 11:00:10 PDT 2000
+////////////////////////////////////////////////////////////
+
+/** 
+	TucanData is a wrapper class for storing the data for a
+	message in different formats.  This is handy so that clients
+	can get access to the data in formats that might be better
+	suited for different presentation mediums.  So of the methods
+	may not be supported just yet but if that is the case they will
+	throw a TucanException reporting that the method is not implemented.
+*/
+
+interface TucanData 
+{
+
+	/**
+		TucanPart is a struct that contains two attributes: type and data.
+		Both attributes are of type string and represent one part of a multipart
+		data object.
+	*/
+	
+	struct TucanPart
+	{
+		string type;
+		TucanRawData data;
+		string encoding;
+		TucanStringList header;
+	};
+
+	/**
+		The getText() method will send back the only the normal text in
+		the body of the message.  So this would be used if a client only
+		wanted the text and wished to disregard anything else that might
+		be attached to the message.
+	*/
+	string getText()
+		raises(TucanException);
+	void setText(in string text)
+		raises(TucanException);
+	/**
+		The getXML() method will return the data of the message marked up
+		in a standard way for all Tucan Messages.  This format has not yet
+		been determined but when it is it will be documented for all to see.
+		If anything strange takes place then this method will raise a 
+		TucanException.
+	*/
+	string getXML()
+		raises(TucanException);
+	void setXML(in string xml)
+		raises(TucanException);
+	/**
+		The getMime() method will return the data of the message in mime format.
+		This is used mainly for email and such but can also be used for other
+		messages on the system.  If something strange takes place then this method
+		will raise a TucanException.
+	*/
+	string getMime()
+		raises(TucanException);
+	void setMime(in string mime)
+		raises(TucanException);
+
+	/**
+		The getData() method returns the raw data for the message.  What
+		this data is totally depends on the implementation.  It could be
+		sound data or text etc... If an error occurs in this method then
+		a TucanException should be raised.
+	*/
+	TucanRawData getData()
+		raises(TucanException);
+
+	/**
+		The setData() method allows for the raw data of the message to be
+		set.  In most cases this would only be used internally but it is
+		possible that a client would need to use this as well.  If an error
+		occurs then this method should raise a TucanException.
+	*/
+	void setData(in TucanRawData data)
+		raises(TucanException);
+
+	/**
+		The getPath() method is a method that will simply return the path to the
+		message on the system.  This is handy because it may be helpful for the client
+		to know were a message resides.  This could be in a user directory or in a
+		database on the system or somewhere else.  If something strange takes place
+		this method will raise a TucanException.
+	*/
+
+	string getPath()
+		raises(TucanException);
+
+	void setPath(in string path)
+		raises(TucanException);
+
+	string getSize()
+		raises(TucanException);
+
+	void setSize(in string size)
+		raises(TucanException);
+
+	string getContentType()
+		raises(TucanException);
+
+	void setContentType(in string type)
+		raises(TucanException);
+
+	/**
+		The getPartCount() method will return an integer representing the total number of
+		parts that belongs to the current data object.  A TucanException will be raised if
+		an error occurs
+	*/
+
+	long getPartCount()
+		raises(TucanException);
+
+	/**
+		The addPart() method takes two arguments of type string: a content type, and the message
+		data.  It will increase the part count for the message and will store the information for
+		later retrieval.  A TucanException will be raised if an error occurs,
+	*/
+
+	void addPart(in string type, in TucanStringList header, in TucanRawData data)
+		raises(TucanException);
+
+	/**
+		The listParts() method will return a TucanStringList of the content types of each part
+		that belongs to a data object.  A TucanException will be raised if an error occurs.
+	*/
+
+	TucanStringList listParts()
+		raises(TucanException);
+
+	/**
+		The getPart() method takes an integer and returns a TucanPart struct that represents
+		the part requested.  A TucanException will be raised if an error occurs
+	*/
+		
+	TucanPart getPart(in long num)
+		raises(TucanException);
+	
+	/**
+		The destroy() method removes the object from memory.  All clients need to make sure
+		that the destroy() method is being called when they are done with the data object so that
+		memory leaks do not occur.  If an error occurs in this method a TucanException should
+		be raised.
+	*/
+
+	void destroy()
+		raises(TucanException);
+};
+
+/**
+	The TucanMessageFactory interface is a base implementation of a message factory for
+	services to inherit from and implement.
+*/
+
+interface TucanDataFactory
+{
+	/** The create() method returns a reference to a new data object for use.  This approach
+	    is used so that multiple instances of data objects can exist at the same time.  If an
+	    error occurs then a TucanException should be raised.
+	 */
+	
+	TucanData create()
+		raises(TucanException);
+};

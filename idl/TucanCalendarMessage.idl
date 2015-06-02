@@ -1,0 +1,25 @@
+////////////////////////////////////////////////////////////
+// TucanCalendarMessage (idl definition)
+//
+// Copyright (C) 2000, Difinium
+////////////////////////////////////////////////////////////
+// Filename:        TucanCalendarMessage.idl
+// Description:     idl definition of TucanCalendarMessage
+// Created at:      Thu Jul 27 15:57:28 PDT 2000
+////////////////////////////////////////////////////////////
+
+interface TucanCalendarMessage : TucanMessage 
+{
+	string getTime();
+	void setTime(in string time);
+	string getNotifyDate();
+	void setNotifyDate(in string date);
+	string getNotifyTime();
+	void setNotifyTime(in string time);
+	void setNotified(in boolean notified);
+	boolean isNotified();	
+	string getNotification();
+	void setNotification(in string notification);
+};
+
+interface TucanCalendarMessageFactory : TucanMessageFactory {}; 

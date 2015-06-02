@@ -1,0 +1,354 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<HTML>
+<HEAD>
+   <TITLE>interface  TucanMessage</TITLE>
+   <META NAME="GENERATOR" CONTENT="DOC++ 3.4.6">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+
+<H2>interface  <A HREF="#DOC.DOCU">TucanMessage</A></H2></H2><BLOCKQUOTE> The TucanMessage interface provides a base message for use on the TUCAN messaging system.</BLOCKQUOTE>
+<HR>
+
+<H2>Inheritance:</H2>
+<H3>TucanMessage
+</H3>
+<HR>
+
+<DL>
+<P><DL>
+<DT><H3>Public Methods</H3><DD><DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>TucanRawData <B><A HREF="#DOC.27.1">getData</A></B>() raises(TucanException)
+<DD><I> The getData() method returns the raw data for the message.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif><!1><A HREF="TucanData.html">TucanData</A> <B><A HREF="#DOC.27.2">getDataObject</A></B>() raises(TucanException)
+<DD><I> The getDataObject() method is another way to get access to the data  encapsulated in the message.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.27.3">setDataObject</A></B>(in <!1><A HREF="TucanData.html">TucanData</A> data) raises(TucanException)
+<DD><I> The setDataObject() method allows you to set the data object of a message.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif><!1><A HREF="TucanData.html">TucanData</A> <B><A HREF="#DOC.27.4">getNewDataObject</A></B>() raises(TucanException)
+<DD><I> The getNewDataObject() method will return a new data object for use by a the message or the client wichever it may be.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif><!1><A HREF="TucanAddress.html">TucanAddress</A> <B><A HREF="#DOC.27.5">getFrom</A></B>() raises(TucanException)
+<DD><I> The getFrom() method will return a TucanAddress object that simply wraps the from address of the message.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.27.6">setFrom</A></B>(in <!1><A HREF="TucanAddress.html">TucanAddress</A> fromname) raises(TucanException)
+<DD><I> The setFrom() method will set the from address of the message based upon the TucanAddress that is passed to it.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif><!1><A HREF="TucanAddress.html">TucanAddress</A> <B><A HREF="#DOC.27.7">getNewAddressObject</A></B>() raises(TucanException)
+<DD><I> the getNewAddressObject() method will return a new address object for use by a the message or the client wichever it may be.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>TucanAddressSeq <B><A HREF="#DOC.27.8">getRecipients</A></B>(in string type) raises(TucanException)
+<DD><I> The getRecipients() method will return a list of TucanAddress representing the recipients based upon the type passed to it.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.27.9">setRecipients</A></B>(in string type, in TucanAddressSeq addresses) raises(TucanException)
+<DD><I> The setRecipients() method will set the recipient address denoted by type to the addresses that are passed to it.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.27.10">setRecipient</A></B>(in string type, in <!1><A HREF="TucanAddress.html">TucanAddress</A> address) raises(TucanException)
+<DD><I> The setRecipient() method will set the recipient address denoted by type to the address that is passed to it.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>TucanAddressSeq <B><A HREF="#DOC.27.11">getAllRecipients</A></B>() raises(TucanException)
+<DD><I> The getAllRecipients() method will return a list of TucanAddresses representing all of the recipients address for the message.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.27.12">addRecipient</A></B>(in string type, in <!1><A HREF="TucanAddress.html">TucanAddress</A> address) raises(TucanException)
+<DD><I> The addRecipient() method will append the address that is passed to it to the recipient type that is passed.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.27.13">addRecipients</A></B>(in string type, in TucanAddressSeq addresses) raises(TucanException)
+<DD><I> The addRecipients() method will append the addresses passed to it to the recipient type that is passed to it.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif><!1><A HREF="TucanAddress.html">TucanAddress</A> <B><A HREF="#DOC.27.14">getReplyTo</A></B>() raises(TucanException)
+<DD><I> The getReplyTo() method will return a list of address that represent the reply to address or addresses for the message.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.27.15">setReplyTo</A></B>(in <!1><A HREF="TucanAddress.html">TucanAddress</A> address) raises(TucanException)
+<DD><I> The setReplyTo() method will set the reply to address to the address that is passed to it.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>string <B><A HREF="#DOC.27.16">getSubject</A></B>() raises(TucanException)
+<DD><I> The getSubject() method will return the the subject of the message.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.27.17">setSubject</A></B>(in string <!1><A HREF="TucanMessageHeader.html#DOC.12.2">subject</A>) raises(TucanException)
+<DD><I> The setSubject() method sets the subject of the message to the string that is passed to it.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>string <B><A HREF="#DOC.27.18">getSentDate</A></B>(in string format) raises(TucanException)
+<DD><I> The getSentDate() method returns the sentDate of the message.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.27.19">setSentDate</A></B>(in string <!1><A HREF="TucanMessageHeader.html#DOC.12.4">date</A>) raises(TucanException)
+<DD><I> The setSentDate() method will set the sent date for the message to the string that is passed to it.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>string <B><A HREF="#DOC.27.20">getReceivedDate</A></B>(in string format) raises(TucanException)
+<DD><I> The getRecievedDate() method will return the recieved date for the message.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.27.21">setReceivedDate</A></B>(in string <!1><A HREF="TucanMessageHeader.html#DOC.12.4">date</A>) raises(TucanException)
+<DD><I> The setRecievedDate() method will set the recieved date for the message to the string that is passed to it.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.27.22">setMessageNumber</A></B>(in long msgnum) raises(TucanException)
+<DD><I> The setMessageNumber() method wii set the message number for the message.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>boolean <B><A HREF="#DOC.27.23">isFlagSet</A></B>(in long flag) raises(TucanException)
+<DD><I> The isFlagSet() method will return a boolean value as to whether or not the message has a specific flag set.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.27.24">setFlags</A></B>(in long <!1><A HREF="TucanMessageHeader.html#DOC.12.5">flags</A>) raises(TucanException)
+<DD><I>The setFlags() method will set the messages flags to the flags specified.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.27.25">setFlagOn</A></B>(in long flag) raises(TucanException)
+<DD><I>The setFlagOn() method will set specified flag as on for the message.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.27.26">setFlagOff</A></B>(in long flag) raises(TucanException)
+<DD><I>The setFlagOff() method will disable a  specified flag as on for the message.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif><!1><A HREF="TucanMessage.html">TucanMessage</A> <B><A HREF="#DOC.27.27">reply</A></B>(in boolean replytoall) raises(TucanException)
+<DD><I> The reply() method will return a new message object that is set to be a reply to the current message.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.27.28">destroy</A></B>() raises(TucanException)
+<DD><I> The destroy() method removes the object from memory.</I>
+</DL></P>
+
+</DL>
+
+<A NAME="DOC.DOCU"></A>
+<HR>
+<H2>Documentation</H2>
+<BLOCKQUOTE>
+The TucanMessage interface provides a base message for use on
+the TUCAN messaging system.  By itself it provides absolutely
+no functionality but instead it must be implemented and extended
+by a chlid to provide functionality.  Ideally most implementation
+would at least implement the base methods so that those messages
+could then be passed to other services on the system and actually
+be handled properly.</BLOCKQUOTE>
+<DL>
+
+<A NAME="getData"></A>
+<A NAME="DOC.27.1"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>TucanRawData getData() raises(TucanException)</B></TT>
+<DD>
+The getData() method returns the raw data for the message.  What
+this data is totally depends on the implementation.  It could be
+sound data or text etc... If an error occurs in this method then
+a TucanException should be raised.
+<DL><DT><DD></DL><P>
+<A NAME="getDataObject"></A>
+<A NAME="DOC.27.2"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B><!1><A HREF="TucanData.html">TucanData</A> getDataObject() raises(TucanException)</B></TT>
+<DD>
+The getDataObject() method is another way to get access to the data 
+encapsulated in the message.  The method will return a data object that
+can then give the client the message data in various formats like mime,
+xml, etc... If an error occurs within this method then a TucanException
+should be raised.
+<DL><DT><DD></DL><P>
+<A NAME="setDataObject"></A>
+<A NAME="DOC.27.3"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void setDataObject(in <!1><A HREF="TucanData.html">TucanData</A> data) raises(TucanException)</B></TT>
+<DD>
+The setDataObject() method allows you to set the data object of
+a message.  This is where all data associated with a message
+will be stored. If an error occurs a TucanException should be raised.
+<DL><DT><DD></DL><P>
+<A NAME="getNewDataObject"></A>
+<A NAME="DOC.27.4"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B><!1><A HREF="TucanData.html">TucanData</A> getNewDataObject() raises(TucanException)</B></TT>
+<DD>
+The getNewDataObject() method will return a new data object for use by
+a the message or the client wichever it may be.  If an error occurs in this
+method then a TucanException will be raised.
+<DL><DT><DD></DL><P>
+<A NAME="getFrom"></A>
+<A NAME="DOC.27.5"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B><!1><A HREF="TucanAddress.html">TucanAddress</A> getFrom() raises(TucanException)</B></TT>
+<DD>
+The getFrom() method will return a TucanAddress object that simply wraps
+the from address of the message.  This address could be an email address
+or some other string etc... If am error occurs in this method then a 
+TucanException should be raised.
+<DL><DT><DD></DL><P>
+<A NAME="setFrom"></A>
+<A NAME="DOC.27.6"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void setFrom(in <!1><A HREF="TucanAddress.html">TucanAddress</A> fromname) raises(TucanException)</B></TT>
+<DD>
+The setFrom() method will set the from address of the message based upon
+the TucanAddress that is passed to it.  If an error occurs in this method
+then a TucanException should be raised.
+<DL><DT><DD></DL><P>
+<A NAME="getNewAddressObject"></A>
+<A NAME="DOC.27.7"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B><!1><A HREF="TucanAddress.html">TucanAddress</A> getNewAddressObject() raises(TucanException)</B></TT>
+<DD>
+the getNewAddressObject() method will return a new address object for use by
+a the message or the client wichever it may be.  If an error occurs in this
+method then a TucanException will be raised.
+<DL><DT><DD></DL><P>
+<A NAME="getRecipients"></A>
+<A NAME="DOC.27.8"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>TucanAddressSeq getRecipients(in string type) raises(TucanException)</B></TT>
+<DD>
+The getRecipients() method will return a list of TucanAddress representing the
+recipients based upon the type passed to it.  Type would be "TO", "CC", etc..
+If an error occurs this method should raise a TucanException.
+<DL><DT><DD></DL><P>
+<A NAME="setRecipients"></A>
+<A NAME="DOC.27.9"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void setRecipients(in string type, in TucanAddressSeq addresses) raises(TucanException)</B></TT>
+<DD>
+The setRecipients() method will set the recipient address denoted by type to
+the addresses that are passed to it.  If an error occurs then a TucanException
+should be raised.
+<DL><DT><DD></DL><P>
+<A NAME="setRecipient"></A>
+<A NAME="DOC.27.10"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void setRecipient(in string type, in <!1><A HREF="TucanAddress.html">TucanAddress</A> address) raises(TucanException)</B></TT>
+<DD>
+The setRecipient() method will set the recipient address denoted by type to the
+address that is passed to it.  If an error occurs then a TucanException should
+be raised.
+<DL><DT><DD></DL><P>
+<A NAME="getAllRecipients"></A>
+<A NAME="DOC.27.11"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>TucanAddressSeq getAllRecipients() raises(TucanException)</B></TT>
+<DD>
+The getAllRecipients() method will return a list of TucanAddresses representing
+all of the recipients address for the message.  If an error occurs then a
+TucanException will be raised.
+<DL><DT><DD></DL><P>
+<A NAME="addRecipient"></A>
+<A NAME="DOC.27.12"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void addRecipient(in string type, in <!1><A HREF="TucanAddress.html">TucanAddress</A> address) raises(TucanException)</B></TT>
+<DD>
+The addRecipient() method will append the address that is passed to it to the
+recipient type that is passed.  If an error occurs then a TucanException should
+be raised.
+<DL><DT><DD></DL><P>
+<A NAME="addRecipients"></A>
+<A NAME="DOC.27.13"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void addRecipients(in string type, in TucanAddressSeq addresses) raises(TucanException)</B></TT>
+<DD>
+The addRecipients() method will append the addresses passed to it to the recipient
+type that is passed to it.  If an error occurs then this method should raise a
+TucanException.
+<DL><DT><DD></DL><P>
+<A NAME="getReplyTo"></A>
+<A NAME="DOC.27.14"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B><!1><A HREF="TucanAddress.html">TucanAddress</A> getReplyTo() raises(TucanException)</B></TT>
+<DD>
+The getReplyTo() method will return a list of address that represent the reply
+to address or addresses for the message.  If an error occurs then a TucanException
+should be raised.
+<DL><DT><DD></DL><P>
+<A NAME="setReplyTo"></A>
+<A NAME="DOC.27.15"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void setReplyTo(in <!1><A HREF="TucanAddress.html">TucanAddress</A> address) raises(TucanException)</B></TT>
+<DD>
+The setReplyTo() method will set the reply to address to the address that is passed
+to it.  If an error occurs then a TucanException should be raised.
+<DL><DT><DD></DL><P>
+<A NAME="getSubject"></A>
+<A NAME="DOC.27.16"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>string getSubject() raises(TucanException)</B></TT>
+<DD>
+The getSubject() method will return the the subject of the message.  If an error
+occurs in this method a TucanException should be raised.
+<DL><DT><DD></DL><P>
+<A NAME="setSubject"></A>
+<A NAME="DOC.27.17"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void setSubject(in string <!1><A HREF="TucanMessageHeader.html#DOC.12.2">subject</A>) raises(TucanException)</B></TT>
+<DD>
+The setSubject() method sets the subject of the message to the string that is
+passed to it.  If an error occurs in this method a TucanException should be raised.
+<DL><DT><DD></DL><P>
+<A NAME="getSentDate"></A>
+<A NAME="DOC.27.18"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>string getSentDate(in string format) raises(TucanException)</B></TT>
+<DD>
+The getSentDate() method returns the sentDate of the message.  This method will
+format the date based upon the format string passed to it.  If an error occurs
+in this method then a TucanException should be raised.
+<DL><DT><DD></DL><P>
+<A NAME="setSentDate"></A>
+<A NAME="DOC.27.19"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void setSentDate(in string <!1><A HREF="TucanMessageHeader.html#DOC.12.4">date</A>) raises(TucanException)</B></TT>
+<DD>
+The setSentDate() method will set the sent date for the message to the string that
+is passed to it.  If an error occurs in this method a TucanException should be
+raised.
+<DL><DT><DD></DL><P>
+<A NAME="getReceivedDate"></A>
+<A NAME="DOC.27.20"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>string getReceivedDate(in string format) raises(TucanException)</B></TT>
+<DD>
+The getRecievedDate() method will return the recieved date for the message.  This
+method will format the date based upon the stirng that is passed to it.  If
+an error occurs then a TucanException should be raised.
+<DL><DT><DD></DL><P>
+<A NAME="setReceivedDate"></A>
+<A NAME="DOC.27.21"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void setReceivedDate(in string <!1><A HREF="TucanMessageHeader.html#DOC.12.4">date</A>) raises(TucanException)</B></TT>
+<DD>
+The setRecievedDate() method will set the recieved date for the message to the
+string that is passed to it.  If an error occurs then a TucanException will be
+raised.
+<DL><DT><DD></DL><P>
+<A NAME="setMessageNumber"></A>
+<A NAME="DOC.27.22"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void setMessageNumber(in long msgnum) raises(TucanException)</B></TT>
+<DD>
+The setMessageNumber() method wii set the message number for the message.  This
+method is meant mainly for internal use.  If an error occurs then a TucanException
+should be raised.
+<DL><DT><DD></DL><P>
+<A NAME="isFlagSet"></A>
+<A NAME="DOC.27.23"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>boolean isFlagSet(in long flag) raises(TucanException)</B></TT>
+<DD>
+The isFlagSet() method will return a boolean value as to whether or not the message has
+a specific flag set.  If an error occurs then a TucanException should be
+raised.
+<DL><DT><DD></DL><P>
+<A NAME="setFlags"></A>
+<A NAME="DOC.27.24"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void setFlags(in long <!1><A HREF="TucanMessageHeader.html#DOC.12.5">flags</A>) raises(TucanException)</B></TT>
+<DD>The setFlags() method will set the messages flags to the flags specified.  A Tucan
+exception will be raised if an error occurs, 
+<DL><DT><DD></DL><P>
+<A NAME="setFlagOn"></A>
+<A NAME="DOC.27.25"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void setFlagOn(in long flag) raises(TucanException)</B></TT>
+<DD>The setFlagOn() method will set specified flag as on for the message.  A TucanException
+will be raised if an error occurs,
+<DL><DT><DD></DL><P>
+<A NAME="setFlagOff"></A>
+<A NAME="DOC.27.26"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void setFlagOff(in long flag) raises(TucanException)</B></TT>
+<DD>The setFlagOff() method will disable a  specified flag as on for the message.  A TucanException
+will be raised if an error occurs,
+<DL><DT><DD></DL><P>
+<A NAME="reply"></A>
+<A NAME="DOC.27.27"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B><!1><A HREF="TucanMessage.html">TucanMessage</A> reply(in boolean replytoall) raises(TucanException)</B></TT>
+<DD>
+The reply() method will return a new message object that is set to be a reply to the
+current message.  If am error occurs then a TucanException should be raised.
+<DL><DT><DD></DL><P>
+<A NAME="destroy"></A>
+<A NAME="DOC.27.28"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void destroy() raises(TucanException)</B></TT>
+<DD>
+The destroy() method removes the object from memory.  All clients need to make sure
+that the destroy() method is being called when they are done with the message so that
+memory leaks do not occur.  If an error occurs in this method a TucanException should
+be raised.
+<DL><DT><DD></DL><P></DL>
+<HR>
+<DL><DT><B>Direct child classes:
+</B><DD><A HREF="TucanVoiceMessage.html">TucanVoiceMessage</A><BR>
+<A HREF="TucanFaxMessage.html">TucanFaxMessage</A><BR>
+<A HREF="TucanEmailMessage.html">TucanEmailMessage</A><BR>
+<A HREF="TucanCalendarMessage.html">TucanCalendarMessage</A><BR>
+<A HREF="TucanBbsMessage.html">TucanBbsMessage</A><BR>
+<A HREF="TucanAddressBookMessage.html">TucanAddressBookMessage</A><BR>
+</DL>
+
+<DL><DT><DD></DL><P><P><I><A HREF="index.html">Alphabetic index</A></I> <I><A HREF="HIER.html">Hierarchy of classes</A></I></P><HR>
+<BR>
+This page was generated with the help of <A HREF="http://www.linuxsupportline.com/~doc++">DOC++</A>.
+</BODY>
+</HTML>

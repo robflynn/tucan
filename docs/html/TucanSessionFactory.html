@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<HTML>
+<HEAD>
+   <TITLE>interface  TucanSessionFactory</TITLE>
+   <META NAME="GENERATOR" CONTENT="DOC++ 3.4.6">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+
+<H2>interface  <A HREF="#DOC.DOCU">TucanSessionFactory</A></H2></H2><BLOCKQUOTE> TucanSessionFactory is an object that is responsible for handing out TucanSession servants.</BLOCKQUOTE>
+<HR>
+
+<DL>
+<P><DL>
+<DT><H3>Public Methods</H3><DD><DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif><!1><A HREF="TucanSession.html">TucanSession</A> <B><A HREF="#DOC.34.1">create</A></B>() raises(TucanException)
+<DD><I> The create() method returns a TucanSession servant.</I>
+</DL></P>
+
+</DL>
+
+<A NAME="DOC.DOCU"></A>
+<HR>
+<H2>Documentation</H2>
+<BLOCKQUOTE>
+TucanSessionFactory is an object that is responsible for handing out TucanSession
+servants.  This is done so that one server can hand out many of the same type of
+servants and know that all servants will be different object references.</BLOCKQUOTE>
+<DL>
+
+<A NAME="create"></A>
+<A NAME="DOC.34.1"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B><!1><A HREF="TucanSession.html">TucanSession</A> create() raises(TucanException)</B></TT>
+<DD>
+The create() method returns a TucanSession servant.  This is so that many 
+different sessions can be held by multiple users at the same time.  If
+something strange takes place then this method will raise a TucanException.
+<DL><DT><DD></DL><P></DL>
+
+<HR><DL><DT><B>This class has no child classes.</B></DL>
+
+<DL><DT><DD></DL><P><P><I><A HREF="index.html">Alphabetic index</A></I> <I><A HREF="HIER.html">Hierarchy of classes</A></I></P><HR>
+<BR>
+This page was generated with the help of <A HREF="http://www.linuxsupportline.com/~doc++">DOC++</A>.
+</BODY>
+</HTML>

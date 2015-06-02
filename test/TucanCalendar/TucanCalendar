@@ -1,0 +1,126 @@
+#!/usr/bin/python
+
+###############################################
+# TucanCalendar
+#
+# Test script for testing the functionality
+# of the Calendar backend
+###############################################
+
+from omniORB import CORBA
+import sys, time, string
+sys.path.insert(0, "/usr/local/tucan")
+import _GlobalIDL
+
+# Please enter a proper username and password
+USERNAME = "username"
+PASSWORD = "password"
+
+# This is the number of entries that will be created
+NUM_OF_MESSAGES = 100
+
+# Initialize the ORB and get the ior string
+orb = CORBA.ORB_init(sys.argv, CORBA.ORB_ID)
+ior = open('/tmp/tucan_session.ior').readline()
+
+# Get our factory object and then create the session
+fact = orb.string_to_object(ior)
+
+try:
+	session = fact.create()
+
+	# Authorize our session
+	auth = session.getAuth()
+	auth.setUserName(USERNAME)
+	auth.setPassword(PASSWORD)
+	session.authorize(auth)
+
+	# Get a calendar store
+	store = session.getStoreByProtocol('calendar')
+	transport = session.getTransportByProtocol('calendar')
+
+	# First lets create some messages
+	folder = store.getNewFolderObject()
+	
+	temp_date = time.strftime("%m/%d/%Y", time.localtime(time.time()))
+	current_month, current_day, current_year = string.split(temp_date, "/")
+
+	#Time to create and send all of our messages
+	for i in range(NUM_OF_MESSAGES):
+		temp_msg = folder.getNewMessageObject()
+		temp_data = temp_msg.getNewDataObject()
+		temp_data.setText('Test Entry')
+		temp_data.setContentType('text/plain')
+		temp_msg.setDataObject(temp_data)
+		temp_msg.setNotification('phone')
+		temp_msg.setTime('12:30')
+		temp_msg.setNotifyTime('12:30')
+		temp_msg.setNotifyDate('12/12/2001')
+		temp_msg.setReceivedDate('%s/%s/%s' % (current_month, current_day, current_year))
+		temp_address = temp_msg.getNewAddressObject()
+		temp_address.setAddress(USERNAME)
+		temp_msg.setRecipient('to', temp_address)
+		transport.send(temp_msg)
+		temp_msg.destroy()
+
+	# Now lets test the functionality 
+	store_name = store.getName()
+	list_1 = store.listFolders()
+
+	temp_folder = store.getFolder(list_1[0])
+	folder_bool = temp_folder.exists()
+
+	# Begin to test our messaging capability
+	msg_count = temp_folder.getMessageCount()
+	folder_new_msg = temp_folder.getNewMessageCount()
+	folder_new_msg_bool = temp_folder.hasNewMessages()
+	
+	i = 1
+
+	# In this loop lets test the message objects 
+	while(msg_count > 0):
+		temp_msg = temp_folder.getMessage(msg_count)
+
+		# Test the calendar specific stuff
+		msg_time = temp_msg.getTime()
+		msg_notify_date = temp_msg.getNotifyDate()
+		msg_notify_time = temp_msg.getNotifyTime()
+		msg_is_notified = temp_msg.isNotified()
+		msg_notification = temp_msg.getNotification()
+		
+		# Test the general message stuff
+		msg_from = temp_msg.getFrom()
+		msg_subject = temp_msg.getSubject()
+		msg_sent_date = temp_msg.getSentDate("%m/%d/%Y")
+		msg_recv_date = temp_msg.getReceivedDate("%m/%d/%Y")
+		msg_num = temp_msg.getMessageNumber()
+	
+		temp_folder.deleteMessage(msg_count)
+		temp_msg.destroy()
+		msg_count = msg_count - 1
+
+	# We must destroy things
+	temp_folder.destroy()
+	folder.destroy()
+	transport.destroy()
+	store.destroy()
+	auth.destroy()
+	session.destroy()
+
+except _GlobalIDL.TucanException, ex:
+	print ex
+	# We must destroy things
+	transport.destroy()
+	temp_folder.destroy()
+	folder.destroy()
+	store.destroy()
+	auth.destroy()
+	session.destroy()
+
+except _GlobalIDL.TucanAuthException, ex:
+	print "Username: %s" % (ex[0])
+	print "Password: %s" % (ex[1])
+	print "Pinnumber: %d" % (ex[2])
+	print ex[3]
+	auth.destroy()
+	session.destroy()

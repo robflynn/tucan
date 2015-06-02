@@ -1,0 +1,29 @@
+////////////////////////////////////////////////////////////
+// TucanSMTPTransport (idl definition)
+//
+// Copyright (C) 2000, Difinium
+////////////////////////////////////////////////////////////
+// Filename:        TucanSMTPTransport.idl
+// Description:     idl definition of TucanSMTPTransport
+// Created at:      Fri Jun  8 16:18:00 PDT 2001
+////////////////////////////////////////////////////////////
+
+interface TucanSMTPTransport : TucanTransport {
+/**
+	The setPort method will set the port associated with 
+	the SMTP transport object. 
+*/
+
+	void setPort(in short port);
+
+/**
+	The setServer method will set the server that the
+	SMTP transport object will connect to.  A server must
+	be given before a send() command will work. A TucanException
+	will be raised if an error occurs.
+*/
+
+	void setServer(in string server);
+};
+
+interface TucanSMTPTransportFactory : TucanTransportFactory {}; 

@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<HTML>
+<HEAD>
+   <TITLE>interface  TucanMessageFactory</TITLE>
+   <META NAME="GENERATOR" CONTENT="DOC++ 3.4.6">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+
+<H2>interface  <A HREF="#DOC.DOCU">TucanMessageFactory</A></H2></H2><BLOCKQUOTE> The TucanMessageFactory interface is a base implementation of a message factory for services to inherit from and implement</BLOCKQUOTE>
+<HR>
+
+<H2>Inheritance:</H2>
+<H3>TucanMessageFactory
+</H3>
+<HR>
+
+<DL>
+<P><DL>
+<DT><H3>Public Methods</H3><DD><DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif><!1><A HREF="TucanMessage.html">TucanMessage</A> <B><A HREF="#DOC.28.1">create</A></B>() raises(TucanException)
+<DD><I> The create() method returns references to new message object for use.</I>
+</DL></P>
+
+</DL>
+
+<A NAME="DOC.DOCU"></A>
+<HR>
+<H2>Documentation</H2>
+<BLOCKQUOTE>
+The TucanMessageFactory interface is a base implementation of a message factory for
+services to inherit from and implement</BLOCKQUOTE>
+<DL>
+
+<A NAME="create"></A>
+<A NAME="DOC.28.1"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B><!1><A HREF="TucanMessage.html">TucanMessage</A> create() raises(TucanException)</B></TT>
+<DD>
+The create() method returns references to new message object for use.  This approach
+is used so that multiple instances of messages can exist at the same time.  If an
+error occurs then a TucanException should be raised.
+<DL><DT><DD></DL><P></DL>
+<HR>
+<DL><DT><B>Direct child classes:
+</B><DD><A HREF="TucanVoiceMessageFactory.html">TucanVoiceMessageFactory</A><BR>
+<A HREF="TucanFaxMessageFactory.html">TucanFaxMessageFactory</A><BR>
+<A HREF="TucanEmailMessageFactory.html">TucanEmailMessageFactory</A><BR>
+<A HREF="TucanCalendarMessageFactory.html">TucanCalendarMessageFactory</A><BR>
+<A HREF="TucanBbsMessageFactory.html">TucanBbsMessageFactory</A><BR>
+<A HREF="TucanAddressBookMessageFactory.html">TucanAddressBookMessageFactory</A><BR>
+</DL>
+
+<DL><DT><DD></DL><P><P><I><A HREF="index.html">Alphabetic index</A></I> <I><A HREF="HIER.html">Hierarchy of classes</A></I></P><HR>
+<BR>
+This page was generated with the help of <A HREF="http://www.linuxsupportline.com/~doc++">DOC++</A>.
+</BODY>
+</HTML>

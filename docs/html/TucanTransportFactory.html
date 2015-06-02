@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<HTML>
+<HEAD>
+   <TITLE>interface  TucanTransportFactory</TITLE>
+   <META NAME="GENERATOR" CONTENT="DOC++ 3.4.6">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+
+<H2>interface  <A HREF="#DOC.DOCU">TucanTransportFactory</A></H2></H2><BLOCKQUOTE> The TucanTransportFactory interface is a base definition for services to inherit from and implement.</BLOCKQUOTE>
+<HR>
+
+<H2>Inheritance:</H2>
+<H3>TucanTransportFactory
+</H3>
+<HR>
+
+<DL>
+<P><DL>
+<DT><H3>Public Methods</H3><DD><DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif><!1><A HREF="TucanTransport.html">TucanTransport</A> <B><A HREF="#DOC.32.1">create</A></B>()
+<DD><I> The create() method will create a new reference to a transport object and return it.</I>
+</DL></P>
+
+</DL>
+
+<A NAME="DOC.DOCU"></A>
+<HR>
+<H2>Documentation</H2>
+<BLOCKQUOTE>
+The TucanTransportFactory interface is a base definition for services
+to inherit from and implement.  It handles the creation of new object
+references.</BLOCKQUOTE>
+<DL>
+
+<A NAME="create"></A>
+<A NAME="DOC.32.1"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B><!1><A HREF="TucanTransport.html">TucanTransport</A> create()</B></TT>
+<DD>
+The create() method will create a new reference to a transport object
+and return it.  This is useful so that multiple transports can exist
+at the same time.  If an error occurs in this method a TucanException
+should be raised.
+<DL><DT><DD></DL><P></DL>
+<HR>
+<DL><DT><B>Direct child classes:
+</B><DD><A HREF="TucanVoiceTransportFactory.html">TucanVoiceTransportFactory</A><BR>
+<A HREF="TucanSMTPTransportFactory.html">TucanSMTPTransportFactory</A><BR>
+<A HREF="TucanFaxTransportFactory.html">TucanFaxTransportFactory</A><BR>
+<A HREF="TucanEmailTransportFactory.html">TucanEmailTransportFactory</A><BR>
+<A HREF="TucanCalendarTransportFactory.html">TucanCalendarTransportFactory</A><BR>
+<A HREF="TucanBbsTransportFactory.html">TucanBbsTransportFactory</A><BR>
+<A HREF="TucanAddressBookTransportFactory.html">TucanAddressBookTransportFactory</A><BR>
+</DL>
+
+<DL><DT><DD></DL><P><P><I><A HREF="index.html">Alphabetic index</A></I> <I><A HREF="HIER.html">Hierarchy of classes</A></I></P><HR>
+<BR>
+This page was generated with the help of <A HREF="http://www.linuxsupportline.com/~doc++">DOC++</A>.
+</BODY>
+</HTML>

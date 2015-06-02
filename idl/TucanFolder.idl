@@ -1,0 +1,303 @@
+////////////////////////////////////////////////////////////
+// TucanFolder (idl definition)
+// Copyright (C) 2000, Difinium
+////////////////////////////////////////////////////////////
+// Filename:        TucanFolder.idl
+// Description:     idl definition of TucanFolder
+// Created at:      Thu Jun 29 14:38:27 PDT 2000
+////////////////////////////////////////////////////////////
+
+/**
+	The TucanFolder interface provides a base implementation for a
+	folder in the Tucan architecture.  By itself it provides absolutley
+	no functionality.  It must be inherited from and the the methods
+	implemented in the child.  Folder are a more detailed container of
+	messages than a store which is more general.  Folders do not actually
+	have to pyhsically exist on the system they can be virtual.  Also
+	folder could contain messages in a database or in a directory etc...
+*/
+interface TucanFolder 
+{
+	//Methods
+	/**
+		The exists() method returns a boolean value telling the client whether or not
+		the folder actually exists on the system.  If something strange happens then
+		this method will raise a TucanException.
+	*/
+	boolean exists()
+		raises(TucanException);
+	/**
+		The create() method is used to actually create the folder on the 
+		system if it does not exist.  This would be used to make a virtual
+		folder permanent.  If something strange occurs in this method then
+		a TucanException will be raised.
+	*/
+	boolean create()
+		raises(TucanException);
+	/**
+		The deleteFolder() method is used to remove the folder from the system.  If
+		a folder containing folders is deleted then all of the folders in the folder
+		will be deleted as well.  If something strange takes place in this method then
+		a TucanException will be raised.
+	*/
+	boolean deleteFolder()
+		raises(TucanException);
+	/**
+		The expunge method will expung all messages in the folder that are marked for
+		deletion.  A message's flags are how a folder determines whether or not a message
+		should be deleted.  For more on the flags Look at TucanMessage or TucanFlags.  If
+		something strange happens then this method will raise a TucanException.
+	*/
+	TucanMessageSeq expunge()
+		raises(TucanException);
+	/**
+		The getFolder() method allows for a client to get folders that exist within the
+		current folder if there are any.  If the client needs to discover what folders
+		exist then they can use the listFolders() method which will return a list of the
+		names that can then be used to retrieve the desired folder.  If an error occurs in
+		this method then a TucanException will be raised.
+	*/
+	TucanFolder getFolder(in string name)
+		raises(TucanException);
+
+	/**
+		The setParent() method allows you to set the parent folder of the current folder.
+		This will allow your applications to support folder's within folders.  If an error
+		occurs, a TucanException will be raised.
+	*/
+
+	void setParent(in TucanFolder folder)
+		raises(TucanException);
+
+	/**
+		The getParent() method will return, if possible, the parent folder of the current
+		folder.  If a client needs to determine which folder the current folder belongs in,
+		they should use this method.  If an error occurs, a TucanException will be raised.
+	*/
+
+	TucanFolder getParent()
+		raises(TucanException);
+
+	/**
+		The getNewFolderObject() method will return an empty folder object.  This method
+		is mainly intended for internal uses but there may be a time when you need to grab
+		a new folder object from within a folder.  If an error occurs a TucanExcpetion will
+		be raised.
+	*/
+
+	TucanFolder getNewFolderObject()
+		raises(TucanException);
+	/**
+		The listFolders() method returns a list of strings that represent the names of the
+		folder that exist within the current folder if there are any. If an error occurs
+		within this folder then a TucanException will be raised.
+	*/
+	TucanStringList listFolders()
+		raises(TucanException);
+	/**
+		The list() method will return a list of folder objects that represent the folders
+		in the current folder if there are any.  This method is different from listFolders
+		in that it actually returns a list if the objects instead of the name.  If an error
+		occurs in this method then a TucanException will be raised.
+	*/
+	TucanFolderSeq list()
+		raises(TucanException);
+	/**
+		The renameTo() method will change the current name of the folder to the name that is
+		passed to the method.  If something strange occurs then a TucanException will be
+		raised.
+	*/
+	boolean renameTo(in string name)
+		raises(TucanException);
+	/**
+		The getName() method will return the current name of the folder.  If an error occurs
+		in this method then a TucanException will be raised.
+	*/
+	string getName()
+		raises(TucanException);
+	/**
+		The setName() method is used to set the name of the folder.  If an error occurs while
+		trying to do this then a TucanException will be raised.
+	*/
+	void setName(in string name)
+		raises(TucanException);
+	/**
+		The getFullName() method should return the pathname to the current folder.  This
+		could be a path ot an actual directory or a path to an database etc... If an
+		error occurs in this method then a TucanException will be raised.
+	*/
+	string getFullName()
+		raises(TucanException);
+	/**
+		The setFullName() method sets the current path to the folder.  This should be a
+		proper pathname.  If an error occurs then a TucanException will be raised.
+	*/
+	void setFullName(in string name)
+		raises(TucanException);
+	/**
+		The getMessage() method will retreive the message in the folder corresponding to 
+		the message number that is passed to it.  If that message does not exist or if an
+		error occurs then a TucanException will be raised.
+	*/
+	TucanMessage getMessage(in long msgnum)
+		raises(TucanException);
+	/**
+		The getMessages() method returns a list of all of the messages in the folder new and
+		old.  If an error occurs this method should raise a TucanException.
+	*/
+	TucanMessageSeq getMessages()
+		raises(TucanException);
+	/**
+		The getNewMessages() method will return a list of all of the new messages in that
+		folder.  It is up to the implementation to decide what is considered as a new 
+		message because that could be different for different services.  If an error occurs
+		this method should raise a TucanException.
+	*/
+	TucanMessageSeq getNewMessages()
+		raises(TucanException);
+	/**
+		The getMessagesInRange() method will return a list of messages which is determined
+		by the start and stop range that is passed to it.  This method should raise a
+		TucanException if any error occur.
+	*/
+	TucanMessageSeq getMessagesInRange(in long start, in long stop)
+		raises(TucanException);
+	/**
+		The getNewMessageObject() method returns a message object that can then be edited
+		and handled in whatever way desired.  If there is a problem then a TucanException
+		will be raised.
+	*/
+	TucanMessage getNewMessageObject()
+		raises(TucanException);
+	/**
+		The getMessageCount() method will return the number of messages in the folder.  If
+		an erro occurs then a TucanException should be raised.
+	*/
+	long getMessageCount()
+		raises(TucanException);
+	/**
+		The getNewMessageCount() method will return the number of new messages in the folder.
+		If an error occurs this folder should raise a TucanException.
+	*/
+	long getNewMessageCount()
+		raises(TucanException);
+	/** 
+		The hasNewMessages() method will return a boolean value as to whether or not the 
+		folder contains new messages.  If an error occurs then this method should raise a
+		TucanException.
+	*/
+	boolean hasNewMessages()
+		raises(TucanException);
+	/**
+		The moveMessage() method moves a message between folders in a store.  If an error
+		occurs while moving a message then a TucanException should be raised.
+	*/
+	void moveMessage(in long msgnum, in TucanFolder folder)
+		raises(TucanException);
+	/**
+		The moveMessages() method will move the messages in the list to the denoted folder.
+		If an error occurs then a TucanException should be raised.
+	*/
+	void moveMessages(in TucanLongList msgnums, in TucanFolder folder)
+		raises(TucanException);
+	/**
+		The copyMessage() method will copy the message denoted by the msg number sent to it to the
+		desired folder in the store.  If an error occurs in this method then a TucanException
+		should be raised.
+	*/
+	void copyMessage(in long msgnum, in TucanFolder folder)
+		raises(TucanException);
+	/**
+		The copyMessages() method will copy the messages denoted by the list sent to it to the
+		desired folder.  If an error occurs while copying this folder should raise a TucanException.
+	*/
+	void copyMessages(in TucanLongList msgnums, in TucanFolder folder)
+		raises(TucanException);
+	/**
+		The appendMessage() method will add the message that it is passed to the current folder.
+		If an error occurs in this method then a TucanException should be raised.
+	*/
+	void appendMessage(in TucanMessage msg)
+		raises(TucanException);
+	/**
+		The appendMessages() method will add the messages passed to it to the current folder.
+		If an error occurs this method should raise a TucanException.
+	*/
+	void appendMessages(in TucanMessageSeq msgs)
+		raises(TucanException);
+
+	/**
+		The deleteMessage() method will delete the specified message from the folder.  It is up
+		to the client to store a backup copy of this message if they so desire.  If an error occurs,
+		a TucanException will be raised.
+	*/
+	
+	void deleteMessage(in long msgnum)
+		raises(TucanException);
+
+	/**
+		The getAuth() method will return a copy of the folders auth object which can then
+		be used if a folder needs access to that information.  If an error occurs in this
+		method then a TucanException should be raised.
+	*/
+	TucanAuth getAuth()
+		raises(TucanException);
+	/**
+		The setAuth() method allows for the auth object for the folder to be set.  This is
+		method is intended for internal use and should not be used by clients because
+		proper authentication is required for proper functionality.  If an error occurs this
+		method should raise a TucanException.
+	*/
+	void setAuth(in TucanAuth auth)
+		raises(TucanException);
+
+	/**
+		The getFlags() method will return the flags that a message contains.
+	*/
+
+	long  getMessageFlags(in long msgnum)
+		raises(TucanException);
+
+	/** The setFlags() method will set the messages flags to the flags specified.  A Tucan
+      	exception will be raised if an error occurs, 
+	*/
+
+	void setMessageFlags(in long msgnum, in long flags)
+		raises(TucanException);
+
+	/** The setMessageFlag() method will set specified flag as on for the message.  A TucanException
+	    will be raised if an error occurs,
+	*/
+
+	void setMessageFlag(in long msgnum, in long flag)
+		raises(TucanException);
+
+	/** The unsetMessageFlag() method will disable a  specified flag as on for the message.  A TucanException
+	    will be raised if an error occurs,
+	*/
+
+	void unsetMessageFlag(in long msgnum, in long flag)
+		raises(TucanException);
+	/**
+		The destory() method removes the object reference from memory.  All clients should
+		make sure that they call the destroy() method so that memory leaks do not occur. If
+		an error occurs in this method then a TucanException should be raised.
+	*/
+	void destroy()
+		raises(TucanException);
+};
+
+/**
+	The TucanFolderFactory provides a base implementation for services to inherit from.
+	This is so that the system can be extended and base functionality still insured.
+*/
+interface TucanFolderFactory
+{
+	/**
+		The create() method returns a new reference to a folder object.  The factory is
+		used so that multiple folders can exists at the same time on the system.  If an error
+		occurs in this method it should raise a TucanException.
+	*/
+	TucanFolder create()
+		raises(TucanException);
+};

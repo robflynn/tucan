@@ -1,0 +1,12 @@
+////////////////////////////////////////////////////////////
+// TucanBbsTransport (idl definition)
+// Copyright (C) 2000, Difinium
+////////////////////////////////////////////////////////////
+// Filename:        TucanBbsTransport.idl
+// Description:     idl definition of TucanAddress
+// Created at:      Thu Jun 29 16:40:51 PDT 2000
+////////////////////////////////////////////////////////////
+
+interface TucanBbsTransport : TucanTransport {};
+
+interface TucanBbsTransportFactory : TucanTransportFactory {}; 

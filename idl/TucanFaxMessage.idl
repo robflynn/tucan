@@ -1,0 +1,13 @@
+////////////////////////////////////////////////////////////
+// TucanFaxMessage (idl definition)
+//
+// Copyright (C) 2000, Difinium
+////////////////////////////////////////////////////////////
+// Filename:        TucanFaxMessage.idl
+// Description:     idl definition of TucanFaxMessage
+// Created at:      Wed Aug  9 16:51:39 PDT 2000
+////////////////////////////////////////////////////////////
+
+interface TucanFaxMessage : TucanMessage {};
+
+interface TucanFaxMessageFactory : TucanMessageFactory {}; 

@@ -1,0 +1,67 @@
+////////////////////////////////////////////////////////////
+// TucanDirectory (idl definition)
+//
+// Copyright (C) 2000, Difinium
+////////////////////////////////////////////////////////////
+// Filename:        TucanDirectory.idl
+// Description:     idl definition of TucanDirectory
+// Created at:      Wed Sep  6 11:31:03 PDT 2000
+////////////////////////////////////////////////////////////
+
+interface TucanDirectory 
+{
+	struct AddressCard 
+	{
+		string uid;
+		string FirstName;
+		string LastName;
+		string NickName;
+		string Title;
+		string Email;
+		string Street;
+		string City;
+		string State;
+		string Zip;
+		string Country;
+		string Phone;
+		string Homepage;
+		string Org;
+		string Other;
+	};
+	
+	typedef sequence<AddressCard> AddressCardSeq;
+
+	//Attributes
+	readonly attribute short handle;
+	readonly attribute short port;
+	readonly attribute short jobnum;
+	readonly attribute string myServerName;
+	readonly attribute string myServerRoot;
+	readonly attribute AddressCardSeq myResults;
+	
+	//Methods
+	void setAuth(in TucanAuth myAuth);
+	TucanAuth getAuth();
+	boolean open();
+	boolean close();
+	void setServerName(in string name);
+	string getServerName();
+	void setPort(in short port);
+	short getPort();
+	void setServerRoot(in string root);
+	string getServerRoot();
+	void setTimeLimit(in short limit);
+	short getTimeLimit();
+	void setSizeLimit(in short limit);
+	short getSizeLimit();
+	boolean search(in string searchstring);
+	AddressCardSeq result();
+	void setField(in string uid, in string field, in string value);
+	string getField(in string uid, in string field);
+	void destroy(); 
+};
+
+interface TucanDirectoryFactory 
+{
+	TucanDirectory create();
+};

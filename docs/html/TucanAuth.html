@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<HTML>
+<HEAD>
+   <TITLE>interface  TucanAuth</TITLE>
+   <META NAME="GENERATOR" CONTENT="DOC++ 3.4.6">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+
+<H2>interface  <A HREF="#DOC.DOCU">TucanAuth</A></H2></H2><BLOCKQUOTE> TucanAuth is the class wrapper for user data that is needed for the authentication process.</BLOCKQUOTE>
+<HR>
+
+<DL>
+<P><DL>
+<DT><H3>Public Methods</H3><DD><DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>string <B><A HREF="#DOC.21.1">getUid</A></B>() raises(TucanException, TucanAuthException)
+<DD><I>The getUid() method returns the uid of the current user</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.21.2">setUid</A></B>(in string uid) raises(TucanException, TucanAuthException)
+<DD><I>The setUid() method is used internally to set the uid of user</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>string <B><A HREF="#DOC.21.3">getUserName</A></B>() raises(TucanException, TucanAuthException)
+<DD><I>The getUserName() method returns the username for the current user</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.21.4">setUserName</A></B>(in string <!1><A HREF="TucanAttribute.html#DOC.14.1">name</A>) raises(TucanException, TucanAuthException)
+<DD><I>The setUserName() method allows for clients to set the username</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>string <B><A HREF="#DOC.21.5">getPassword</A></B>() raises(TucanException, TucanAuthException)
+<DD><I>The getPassword() method returns the password of the current user</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.21.6">setPassword</A></B>(in string password) raises(TucanException, TucanAuthException)
+<DD><I>The setPassword() method allows for clients to set the password</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>long <B><A HREF="#DOC.21.7">getPinNumber</A></B>() raises(TucanException, TucanAuthException)
+<DD><I>The getPinNumber() method returns the pin number of the current user</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.21.8">setPinNumber</A></B>(in long pin) raises(TucanException, TucanAuthException)
+<DD><I>The setPinNumber() method allows for clients to set the pin number</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.21.9">destroy</A></B>() raises(TucanException)
+<DD><I> The destroy() method removes the TucanAuth servant object from memory.</I>
+</DL></P>
+
+</DL>
+
+<A NAME="DOC.DOCU"></A>
+<HR>
+<H2>Documentation</H2>
+<BLOCKQUOTE>
+TucanAuth is the class wrapper for user data that is needed
+for the authentication process.  It has the capabilty of
+taking a pin number or a password for authentication but
+both are not needed.  So if you only want to use the passward
+capabilites then do so and do not concern yourself with the
+pin numbers.  A TucanAuth object is generally only gotten
+from a TucanSession object so make sure that you have become
+familar with that interface as well.</BLOCKQUOTE>
+<DL>
+
+<A NAME="getUid"></A>
+<A NAME="DOC.21.1"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>string getUid() raises(TucanException, TucanAuthException)</B></TT>
+<DD>The getUid() method returns the uid of the current user
+<DL><DT><DD></DL><P>
+<A NAME="setUid"></A>
+<A NAME="DOC.21.2"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void setUid(in string uid) raises(TucanException, TucanAuthException)</B></TT>
+<DD>The setUid() method is used internally to set the uid of user
+<DL><DT><DD></DL><P>
+<A NAME="getUserName"></A>
+<A NAME="DOC.21.3"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>string getUserName() raises(TucanException, TucanAuthException)</B></TT>
+<DD>The getUserName() method returns the username for the current user
+<DL><DT><DD></DL><P>
+<A NAME="setUserName"></A>
+<A NAME="DOC.21.4"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void setUserName(in string <!1><A HREF="TucanAttribute.html#DOC.14.1">name</A>) raises(TucanException, TucanAuthException)</B></TT>
+<DD>The setUserName() method allows for clients to set the username
+<DL><DT><DD></DL><P>
+<A NAME="getPassword"></A>
+<A NAME="DOC.21.5"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>string getPassword() raises(TucanException, TucanAuthException)</B></TT>
+<DD>The getPassword() method returns the password of the current user
+<DL><DT><DD></DL><P>
+<A NAME="setPassword"></A>
+<A NAME="DOC.21.6"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void setPassword(in string password) raises(TucanException, TucanAuthException)</B></TT>
+<DD>The setPassword() method allows for clients to set the password
+<DL><DT><DD></DL><P>
+<A NAME="getPinNumber"></A>
+<A NAME="DOC.21.7"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>long getPinNumber() raises(TucanException, TucanAuthException)</B></TT>
+<DD>The getPinNumber() method returns the pin number of the current user
+<DL><DT><DD></DL><P>
+<A NAME="setPinNumber"></A>
+<A NAME="DOC.21.8"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void setPinNumber(in long pin) raises(TucanException, TucanAuthException)</B></TT>
+<DD>The setPinNumber() method allows for clients to set the pin number
+<DL><DT><DD></DL><P>
+<A NAME="destroy"></A>
+<A NAME="DOC.21.9"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void destroy() raises(TucanException)</B></TT>
+<DD>
+The destroy() method removes the TucanAuth servant object from
+memory.  Clients should always call the destroy method so that
+memory leaks do not take place.
+<DL><DT><DD></DL><P></DL>
+
+<HR><DL><DT><B>This class has no child classes.</B></DL>
+
+<DL><DT><DD></DL><P><P><I><A HREF="index.html">Alphabetic index</A></I> <I><A HREF="HIER.html">Hierarchy of classes</A></I></P><HR>
+<BR>
+This page was generated with the help of <A HREF="http://www.linuxsupportline.com/~doc++">DOC++</A>.
+</BODY>
+</HTML>

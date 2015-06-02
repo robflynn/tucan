@@ -1,0 +1,65 @@
+////////////////////////////////////////////////////////////
+// TucanAddress (idl definition)
+// Copyright (C) 2000, Difinium
+////////////////////////////////////////////////////////////
+// Filename:        TucanAddress.idl
+// Description:     idl definition of TucanAddress
+// Created at:      Thu Jun 29 16:40:51 PDT 2000
+////////////////////////////////////////////////////////////
+
+/**
+	TucanAddress provides a base class for different services
+	to inherit from and implement.  Each service needs to 
+	implement it own address so that messages from that service
+	can be passed to other services and be handled properly.
+*/
+interface TucanAddress 
+{
+	/**
+		The getAddress() method returns the current
+		address that is being held by the servant.  If something
+		strange happens then this method will raise a TucanException.
+	*/
+	string getAddress()
+		raises(TucanException);
+	/**
+		The setAddress() method provides a way for the client to
+		set the address that is being held by the servant.  If something
+		strange takes place then a TucanException will be raised.
+	*/
+	void setAddress(in string address)
+		raises(TucanException);
+	/**
+		The equals() method provides an interface for comparing the
+		current address that is being wrapped by this servant object
+		to the address being wrapped by another servant.  If something
+		strange takes place in this method then a TucanException will be
+		raised.
+	*/
+	boolean equals(in TucanAddress address)
+		raises(TucanException);
+	/**
+		The destroy() method removes the servant from memory and should
+		always be called by the client when they are finished with the
+		address servant so that memory leaks do not occur.
+	*/
+	void destroy()
+		raises(TucanException);
+};
+
+/**
+	TucanAddressFactory provides a base factory implementation for servants
+	to inherit from.  This is done so that addresses can be given out by their
+	base class TucanAddress.  This is handy when extending the system.
+*/
+interface TucanAddressFactory
+{
+	/** 
+		The create() method will return a new reference to a TucanAddress 
+		object.  This is so that many different addresses can exists at the
+		same time.  If something strange goes wrong this method will raise a
+		TucanException.
+	*/
+	TucanAddress create()
+		raises(TucanException);
+};

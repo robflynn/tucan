@@ -1,0 +1,19 @@
+////////////////////////////////////////////////////////////
+// TucanBbsFolder (idl definition)
+//
+// Copyright (C) 2000, Difinium
+////////////////////////////////////////////////////////////
+// Filename:        TucanBbsFolder.idl
+// Description:     idl definition of TucanBbsFolder
+// Created at:      Wed Jul 19 14:44:25 PDT 2000 
+////////////////////////////////////////////////////////////
+
+interface TucanBbsFolder : TucanFolder 
+{
+	long getPid();
+	void setPid(in long pid);
+	short getBid();
+	void setBid(in short bid);
+};
+
+interface TucanBbsFolderFactory : TucanFolderFactory {}; 

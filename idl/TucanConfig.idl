@@ -1,0 +1,29 @@
+////////////////////////////////////////////////////////////
+// TucanConfig (idl definition)
+// Copyright (C) 2000, Difinium
+////////////////////////////////////////////////////////////
+// Filename:        TucanConfig.idl
+// Description:     idl definition of TucanAddress
+// Created at:      Thu Jun 29 16:40:51 PDT 2000
+////////////////////////////////////////////////////////////
+
+/**
+	TucanConfig is a class for getting access to the TUCAN configuration
+	data.  This data is stored in the TucanConfig.xml file.  There are
+	libraries that can be used if you are building a new server and need
+	access to config data, but if for some reason you have a client that
+	needs access to this information the you can use this interface.
+*/
+interface TucanConfig 
+{
+	/**
+		The get() method takes in two strings.  The first string describes
+		the service that you are searching for and the attribute string
+		describe what attribute in the service you need.  For example if you
+		need a Buletin Board store you would pass "bbs" as the search string
+		and "store" as the attribute.  If anything strange takes place in this
+		method then it will throw a TucanException.
+	*/
+	string get(in string search, in string attr)
+		raises(TucanException);
+};

@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<HTML>
+<HEAD>
+   <TITLE>interface  TucanAddress</TITLE>
+   <META NAME="GENERATOR" CONTENT="DOC++ 3.4.6">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+
+<H2>interface  <A HREF="#DOC.DOCU">TucanAddress</A></H2></H2><BLOCKQUOTE> TucanAddress provides a base class for different services to inherit from and implement.</BLOCKQUOTE>
+<HR>
+
+<H2>Inheritance:</H2>
+<H3>TucanAddress
+</H3>
+<HR>
+
+<DL>
+<P><DL>
+<DT><H3>Public Methods</H3><DD><DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>string <B><A HREF="#DOC.19.1">getAddress</A></B>() raises(TucanException)
+<DD><I> The getAddress() method returns the current address that is being held by the servant.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.19.2">setAddress</A></B>(in string address) raises(TucanException)
+<DD><I> The setAddress() method provides a way for the client to set the address that is being held by the servant.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>boolean <B><A HREF="#DOC.19.3">equals</A></B>(in <!1><A HREF="TucanAddress.html">TucanAddress</A> address) raises(TucanException)
+<DD><I> The equals() method provides an interface for comparing the current address that is being wrapped by this servant object to the address being wrapped by another servant.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.19.4">destroy</A></B>() raises(TucanException)
+<DD><I> The destroy() method removes the servant from memory and should always be called by the client when they are finished with the address servant so that memory leaks do not occur</I>
+</DL></P>
+
+</DL>
+
+<A NAME="DOC.DOCU"></A>
+<HR>
+<H2>Documentation</H2>
+<BLOCKQUOTE>
+TucanAddress provides a base class for different services
+to inherit from and implement.  Each service needs to 
+implement it own address so that messages from that service
+can be passed to other services and be handled properly.</BLOCKQUOTE>
+<DL>
+
+<A NAME="getAddress"></A>
+<A NAME="DOC.19.1"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>string getAddress() raises(TucanException)</B></TT>
+<DD>
+The getAddress() method returns the current
+address that is being held by the servant.  If something
+strange happens then this method will raise a TucanException.
+<DL><DT><DD></DL><P>
+<A NAME="setAddress"></A>
+<A NAME="DOC.19.2"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void setAddress(in string address) raises(TucanException)</B></TT>
+<DD>
+The setAddress() method provides a way for the client to
+set the address that is being held by the servant.  If something
+strange takes place then a TucanException will be raised.
+<DL><DT><DD></DL><P>
+<A NAME="equals"></A>
+<A NAME="DOC.19.3"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>boolean equals(in <!1><A HREF="TucanAddress.html">TucanAddress</A> address) raises(TucanException)</B></TT>
+<DD>
+The equals() method provides an interface for comparing the
+current address that is being wrapped by this servant object
+to the address being wrapped by another servant.  If something
+strange takes place in this method then a TucanException will be
+raised.
+<DL><DT><DD></DL><P>
+<A NAME="destroy"></A>
+<A NAME="DOC.19.4"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void destroy() raises(TucanException)</B></TT>
+<DD>
+The destroy() method removes the servant from memory and should
+always be called by the client when they are finished with the
+address servant so that memory leaks do not occur
+<DL><DT><DD></DL><P></DL>
+<HR>
+<DL><DT><B>Direct child classes:
+</B><DD><A HREF="TucanVoiceAddress.html">TucanVoiceAddress</A><BR>
+<A HREF="TucanFaxAddress.html">TucanFaxAddress</A><BR>
+<A HREF="TucanEmailAddress.html">TucanEmailAddress</A><BR>
+<A HREF="TucanCalendarAddress.html">TucanCalendarAddress</A><BR>
+<A HREF="TucanBbsAddress.html">TucanBbsAddress</A><BR>
+<A HREF="TucanAddressBookAddress.html">TucanAddressBookAddress</A><BR>
+</DL>
+
+<DL><DT><DD></DL><P><P><I><A HREF="index.html">Alphabetic index</A></I> <I><A HREF="HIER.html">Hierarchy of classes</A></I></P><HR>
+<BR>
+This page was generated with the help of <A HREF="http://www.linuxsupportline.com/~doc++">DOC++</A>.
+</BODY>
+</HTML>

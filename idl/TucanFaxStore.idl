@@ -1,0 +1,13 @@
+////////////////////////////////////////////////////////////
+// TucanFaxStore (idl definition)
+//
+// Copyright (C) 2000, Difinium
+////////////////////////////////////////////////////////////
+// Filename:        TucanFaxStore.idl
+// Description:     idl definition of TucanFaxStore
+// Created at:      Wed Aug  9 16:51:39 PDT 2000
+////////////////////////////////////////////////////////////
+
+interface TucanFaxStore : TucanStore {};
+
+interface TucanFaxStoreFactory : TucanStoreFactory {};

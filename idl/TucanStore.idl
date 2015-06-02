@@ -1,0 +1,108 @@
+////////////////////////////////////////////////////////////
+// TucanStore (idl definition)
+// Copyright (C) 2000, Difinium
+////////////////////////////////////////////////////////////
+// Filename:        TucanStore.idl
+// Description:     idl definition of TucanStore
+// Created at:      Thu Jun 29 13:44:54 PDT 2000
+////////////////////////////////////////////////////////////
+
+/**
+	The TucanStore interface provides a base class for services
+	on the system to inherit from.  By itself it provides
+	absolutely no functionality.  It must be inherited from and
+	the methods implemetned to provide functionality.  A Store is
+	meant to be a container for a certain type of message.  So
+	for example email message would typically reside in an email
+	folder and calendar messages in a calendar folder etc...
+*/
+interface TucanStore
+{
+	//Methods
+	/**
+		The getName() methods returns the name of the store object.  If 
+		something strange happens then this method will raise a TucanException.
+	*/
+	string getName()
+		raises(TucanException);
+	/**
+		The setName() method is used internally to set the name of the store.
+		Most clients should not interact with this method.  If something strange
+		happens then this method will raise a TucanException.
+	*/
+	void setName(in string name)
+		raises(TucanException);
+	/**
+		The getDefaultFolder() method will return the default folder for this
+		store.  This method could return a different folders based on the 
+		implementation.  If something strange occurs then a TucanException 
+		will be raised.
+	*/
+	TucanFolder getDefaultFolder()
+		raises(TucanException);
+	/**
+		The getFolder() method provides a way for a client to get access to a
+		particular folder that they might need.  Of course in order to request
+		a particular folder the client needs to know what folders exist so the
+		client may wish to use the listFolders() method to discover what folders
+		exist.  If something strange occurs while getting the folder a TucanException
+		will be raised.
+	*/
+	TucanFolder getFolder(in string name)
+		raises(TucanException);
+	/**
+		The getNewFolderObject() method is mainly used internally for the generation
+		of folder objects but it could also be used by clients that desire to create
+		a new folder in the store.  If there is a error in this method then a 
+		TucanException will be raised.
+	*/
+	TucanFolder getNewFolderObject()
+		raises(TucanException);
+	/**
+		The listFolders() method returns a list of the current folders in the store.
+		This method is provide so that clients can discover what folders exist before
+		they request a folder.  If something strange occurs then this method will raise
+		a TucanException.
+	*/
+	TucanStringList listFolders()
+		raises(TucanException);
+	/**
+		The getAuth() method is provided so that the current auth object for the store may be
+		retrieved.  This is there in case a user info needs to be access and the username
+		and password are required.  If there is a error in this method then a TucanException
+		will be raised.
+	*/
+	TucanAuth getAuth()
+		raises(TucanException);
+	/**
+		The setAuth()  method is provided so the the auth object for the store may be set.  
+		This method is primarily used internally and it would be foolish for a client to use
+		this method seeing as proper authentication is necessary for proper functionality.
+		If an error occurs then a TucanException will be raised.
+	*/
+	void setAuth(in TucanAuth auth)
+		raises(TucanException);
+	/**
+		The destroy() method is used to remove thecurrent object from memory.  It is wise
+		for all clients to ensure that the destroy() method is always being called when an
+		client is finished with the store so that memory leaks do not occur.  If something
+		goes wrong in this method then a TucanException will be raised.
+	*/
+	void destroy()
+		raises(TucanException);
+};
+
+/**
+	The TucanStoreFactory is a base class for actual store implementations to inherit
+	from.  This is done so that the system may be extended with ease.
+*/
+interface TucanStoreFactory
+{
+	/**
+		The create() method returns a new reference to a store object.  This is so that
+		multiple stores can exist on the same system at the same time.  If something 
+		strange happens then this method will raise a TucanException.
+	*/
+	TucanStore create()
+		raises(TucanException);
+};

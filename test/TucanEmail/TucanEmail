@@ -1,0 +1,134 @@
+#!/usr/bin/python
+
+from omniORB import CORBA
+import sys, os, time
+sys.path.insert(0, "/usr/local/tucan")
+import _GlobalIDL
+
+# Connect to our orb
+orb = CORBA.ORB_init(sys.argv, CORBA.ORB_ID)
+ior = open('/tmp/tucan_session.ior').readline()
+fact = orb.string_to_object(ior)
+
+# Please change these :)
+USERNAME = "username"
+PASSWORD = "password"
+
+# Create a factory
+session = fact.create()
+
+# Authorize ourselves
+auth = session.getAuth()
+auth.setUserName( USERNAME )
+auth.setPassword( PASSWORD )
+session.authorize(auth)
+
+
+store = session.getStoreByProtocol("email")
+
+list = store.listFolders()
+print "Folders: ", list
+
+for f in list:
+	print "Getting: ", f
+	folder = store.getFolder(f)
+
+	print folder
+
+	print "Messages: ", folder.getMessageCount()
+	print "New Messages: ", folder.getNewMessageCount()
+
+	print "Sending some mail"
+
+	for i in range(10):
+		m = folder.getNewMessageObject()
+		a = m.getNewAddressObject()
+		a.setAddress("rob@tgflinux.com")
+		m.setFrom(a)
+		a = m.getNewAddressObject()
+		a.setAddress("mattd@tgflinux.com")
+		m.setRecipient("to", a)
+		b = []
+		a = m.getNewAddressObject()
+		a.setAddress("jared@tgflinux.com")
+		b.append(a)
+		a = m.getNewAddressObject()
+		a.setAddress("mike@tgflinux.com")
+		b.append(a)
+		m.addRecipients("cc", b)
+		
+		m.setSubject("This is a test %d"  % (i))
+		
+		d = m.getNewDataObject()
+		d.setText("hahaha! I rock and roll, g funk!")
+
+		m.setDataObject(d)
+
+		folder.appendMessage(m)
+
+		m.destroy()
+		
+		time.sleep(.5)
+		
+	folder.destroy()
+
+	print "Mail sent"
+
+	print "Moving some of the messages to the folder blah"
+	blah = store.getFolder("blah")
+
+	if blah.exists():
+		print "Blah exists"
+	else:
+		print "Blah doesn't exist"
+		print "Creating Blah"
+		blah.create()
+
+	mc = folder.getMessageCount()
+	mc = mc / 2
+
+	print "Moving %d messages" % (mc)
+	for i in range(mc):
+		folder.moveMessage(i, blah)
+
+	blah.destroy()
+
+	print "messages moved"
+
+list = store.listFolders()
+print "Folders: ", list
+
+for f in list:
+	print "Getting: ", f
+	folder = store.getFolder(f)
+
+	print folder
+
+	print "Messages: ", folder.getMessageCount()
+	print "New Messages: ", folder.getNewMessageCount()
+
+	print "Getting all messages"
+	gm = folder.getMessages()
+	
+	print gm
+
+	for mm in gm:
+		mm.destroy()
+
+	mm = folder.getMessage(1)
+	print mm
+	mm.destroy()
+
+	mc = folder.getMessageCount()
+
+	print "Deleting the messages"
+	for j in range(mc):
+		folder.deleteMessage(1)
+
+	folder.destroy()
+
+
+store.destroy()
+auth.destroy()
+session.destroy()
+

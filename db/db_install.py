@@ -1,0 +1,88 @@
+#!/usr/bin/python
+
+import os, sys, pwd, popen2
+
+# First, we should create the tucan database
+os.system("authorize postgres 1 /usr/bin/createdb tucan > /dev/null 2>&1")
+
+# Now, create the nobody database user
+try:
+	list = pwd.getpwnam("tucan")
+except:
+	os.system("/usr/sbin/adduser tucan")
+	r,w = popen2.popen2("/usr/sbin/chpasswd")
+	w.write("tucan:twocan")
+	w.close()
+	r.close()
+	list = pwd.getpwnam("tucan")
+
+r,w = popen2.popen2("authorize postgres 1 /usr/bin/createuser -i %d -D -U tucan" % (list[2]))
+w.write("n")
+r.close()
+w.close()
+
+r,w = popen2.popen2("authorize postgres 1 /usr/bin/psql tucan > /dev/null 2>&1")
+w.write('CREATE TABLE "calendar" (\n')
+w.write('	"uid" int4,\n')
+w.write('	"date" date,\n')
+w.write('	"time" time,\n')
+w.write('	"cal_event" character varying(2048),\n')
+w.write('	"notify_method" int4,\n')
+w.write('	"notify_date" date,\n')
+w.write('	"notify_time" time,\n')
+w.write('	"notified" bool,\n')
+w.write('	"msg_type" character varying(24),\n')
+w.write('	"exp" int4);\n')
+w.write('REVOKE ALL on "calendar" from PUBLIC;\n')
+w.write('GRANT ALL on "calendar" to tucan;\n')
+w.write('\n')
+w.write('CREATE TABLE "addressbook" (\n')
+w.write('"uid" int4,\n')
+w.write('"group" character varying(100),\n')
+w.write('"card" int4,\n')
+w.write('"key" character varying(100),\n')
+w.write('"value" character varying(200));\n')
+w.write('REVOKE ALL on "addressbook" from PUBLIC;\n')
+w.write('GRANT ALL on "addressbook" to tucan;\n')
+
+w.write('CREATE TABLE "user_info" (\n')
+w.write('	"uid" int4 NOT NULL,\n')
+w.write('	"login_name" character varying(32),\n')
+w.write('	"full_name" character varying(128),\n')
+w.write('	"address" character varying(128),\n')
+w.write('	"phone" character varying(16),\n')
+w.write('	"phone_ext" character varying(48),\n')
+w.write('	"fax" character varying(16),\n')
+w.write('	"pager" character varying(16),\n')
+w.write('	"vr_dict" character varying(512),\n')
+w.write('	"passwd" character varying(32),\n')
+w.write('	"pin" int4,\n')
+w.write('	"email" character varying(64),\n')
+w.write('	"admin" boolean default FALSE);\n')
+w.write('REVOKE ALL on "user_info" from PUBLIC;\n')
+w.write('GRANT ALL on "user_info" to tucan;\n')
+w.write('CREATE TABLE "preferences" (\n')
+w.write('	"name" character varying(64),\n')
+w.write('	"key" character varying(64),\n')
+w.write('	"value" character varying(2048));\n')
+w.write('REVOKE ALL on "preferences" from PUBLIC;\n')
+w.write('GRANT ALL on "preferences" to tucan;\n')
+w.write('CREATE TABLE "bulletin" (\n')
+w.write('	"bid" int4,\n')
+w.write('	"pid" int4,\n')
+w.write('	"type" int4,\n')
+w.write('	"author" character varying(128),\n')
+w.write('	"email" character varying(256),\n')
+w.write('	"subject" character varying(128),\n')
+w.write('	"body" character varying(4096),\n')
+w.write('	"pdate" date,\n')
+w.write('	"ptime" time);\n')
+w.write('REVOKE ALL on "bulletin" from PUBLIC;\n')
+w.write('GRANT ALL on "bulletin" to tucan;\n')
+w.write('INSERT INTO "bulletin" VALUES (0, 0, 0, NULL, NULL, "General Discussion", NULL, CURRENT_DATE, CURRENT_TIME);\n')
+
+w.close()
+r.close()
+
+print ""
+print "The Tucan DB installation is now complete.\n"

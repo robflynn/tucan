@@ -1,0 +1,22 @@
+////////////////////////////////////////////////////////////
+// TucanAddressBookMessage (idl definition)
+// Copyright (C) 2000, Difinium
+////////////////////////////////////////////////////////////
+// Filename:        TucanAddressBookMessage.idl
+// Description:     idl definition of TucanAddressBookMessage
+// Created at:      Mon Nov 20 15:19:57 PST 2000
+////////////////////////////////////////////////////////////
+
+interface TucanAddressBookMessage : TucanMessage 
+{
+	string getAttribute(in string name);
+	void setAttribute(in string name, in string value);
+	TucanStringList listAttributes();
+	TucanAttributeSeq getAttributes();
+	string getGroup();
+	void setGroup(in string group);
+
+};
+
+interface TucanAddressBookMessageFactory : TucanMessageFactory {}; 
+

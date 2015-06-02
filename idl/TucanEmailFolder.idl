@@ -1,0 +1,19 @@
+////////////////////////////////////////////////////////////
+// TucanEmailFolder (idl definition)
+//
+// Copyright (C) 2000, Difinium
+////////////////////////////////////////////////////////////
+// Filename:        TucanEmailFolder.idl
+// Description:     idl definition of TucanEmailFolder
+// Created at:      Thu Jul 27 15:57:28 PDT 2000
+////////////////////////////////////////////////////////////
+
+interface TucanEmailFolder : TucanFolder {
+
+	/// The getMessageHeaders() method will return a TucanMessageHeaderSeq of the headers of
+	/// all messages in the current mail box.  This is kind of hackish, but it speeds things up a lot. 
+
+	TucanMessageHeaderSeq getMessageHeaders();
+};
+
+interface TucanEmailFolderFactory : TucanFolderFactory {}; 

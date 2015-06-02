@@ -1,0 +1,52 @@
+////////////////////////////////////////////////////////////
+// TucanTransport (idl definition)
+// Copyright (C) 2000, Difinium
+////////////////////////////////////////////////////////////
+// Filename:        TucanTransport.idl
+// Description:     idl definition of TucanTransport
+// Created at:      Fri Jun 30 09:47:50 PDT 2000
+////////////////////////////////////////////////////////////
+
+/**
+	The TucanTranport interface is a base definition for children
+	to inherit from and inplement.  This is a so that all messages
+	can be sent via multiple transport as long as base functionality
+	is preserved.  This is what really allows for Unified Messaging.
+*/
+interface TucanTransport 
+{
+	//Methods
+	/**
+		The send() method is what delivers the message to the proper
+		place.  It is important to note while implemetning this method
+		that the programmer take in to account that the message being
+		sent could be of another service but is still a TucanMessage.
+		If an error occurs then this methos should raise a TucanException.
+	*/
+	void send(in TucanMessage msg)
+		raises(TucanException);
+	/**
+		The destroy() method will remove the reference out of memory.  It
+		is important that all clients call the destroy() method when they
+		are done with the transport so that memory leaks do not occur.  If
+		an error occurs in this method it should raise a TucanException.
+	*/
+	void destroy()
+		raises(TucanException);
+};
+
+/**
+	The TucanTransportFactory interface is a base definition for services
+	to inherit from and implement.  It handles the creation of new object
+	references.
+*/
+interface TucanTransportFactory
+{
+	/**
+		The create() method will create a new reference to a transport object
+		and return it.  This is useful so that multiple transports can exist
+		at the same time.  If an error occurs in this method a TucanException
+		should be raised.
+	*/
+	TucanTransport create();
+};

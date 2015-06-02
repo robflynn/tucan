@@ -1,0 +1,12 @@
+////////////////////////////////////////////////////////////
+// TucanCalendarTransport (idl definition)
+// Copyright (C) 2000, Difinium
+////////////////////////////////////////////////////////////
+// Filename:        TucanCalendarTransport.idl
+// Description:     idl definition of TucanCalendarTransport
+// Created at:      Mon Nov 20 15:55:53 PST 2000 
+////////////////////////////////////////////////////////////
+
+interface TucanCalendarTransport : TucanTransport {};
+
+interface TucanCalendarTransportFactory : TucanTransportFactory {}; 

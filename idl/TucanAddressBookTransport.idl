@@ -1,0 +1,12 @@
+////////////////////////////////////////////////////////////
+// TucanAddressBookTransport (idl definition)
+// Copyright (C) 2000, Difinium
+////////////////////////////////////////////////////////////
+// Filename:        TucanAddressBookTransport.idl
+// Description:     idl definition of TucanAddressBookTransport
+// Created at:      Mon Nov 20 15:25:29 PST 2000
+////////////////////////////////////////////////////////////
+
+interface TucanAddressBookTransport : TucanTransport {};
+
+interface TucanAddressBookTransportFactory : TucanTransportFactory {}; 

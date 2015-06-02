@@ -1,0 +1,267 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<HTML>
+<HEAD>
+   <TITLE>interface  TucanEmailFetcher</TITLE>
+   <META NAME="GENERATOR" CONTENT="DOC++ 3.4.6">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+
+<H2>interface  <A HREF="#DOC.DOCU">TucanEmailFetcher</A></H2></H2><BLOCKQUOTE> The TucanEmailFetcher interface provides a way for downloading E-mail messages over a standard POP3 connection</BLOCKQUOTE>
+<HR>
+
+<DL>
+<P><DL>
+<DT><H3>Public Methods</H3><DD><DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif><!1><A HREF="TucanAuth.html">TucanAuth</A> <B><A HREF="#DOC.99.1">getAuth</A></B>() raises(TucanException)
+<DD><I> The getAuth() method will return a copy of the objects auth object.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.99.2">setAuth</A></B>(in <!1><A HREF="TucanAuth.html">TucanAuth</A> myAuth) raises(TucanException)
+<DD><I> The setAuth() method allows for the auth object for the object to be set.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.99.3">setServer</A></B>(in string server) raises(TucanException)
+<DD><I> The setServer() method will set the mail server to the string that it is passed.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>string <B><A HREF="#DOC.99.4">getServer</A></B>() raises(TucanException)
+<DD><I> The getServer() method will return the current mail server for the object.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.99.5">setPort</A></B>(in short port) raises(TucanException)
+<DD><I> The setPort() method will set the mail port to the string that it is passed.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>short <B><A HREF="#DOC.99.6">getPort</A></B>() raises(TucanException)
+<DD><I> The getPort() method will return the current mail port for the object.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.99.7">setProtocol</A></B>(in string proto) raises(TucanException)
+<DD><I> The setProtocol() method will set the current protocol of the mail checker.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>string <B><A HREF="#DOC.99.8">getProtocol</A></B>() raises(TucanException)
+<DD><I> The getProtocol() method will return the current protocol of the mail checker.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.99.9">setName</A></B>(in string <!1><A HREF="TucanAttribute.html#DOC.14.1">name</A>) raises(TucanException)
+<DD><I> The getName() method will set the mail user name to the string that it is passed.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>string <B><A HREF="#DOC.99.10">getName</A></B>() raises(TucanException)
+<DD><I> The getName() method will return the current object's mail user name.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.99.11">setPassword</A></B>(in string password) raises(TucanException)
+<DD><I> The setPassword() method will set the mail user's password to the string that it is passed.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>string <B><A HREF="#DOC.99.12">getPassword</A></B>() raises(TucanException)
+<DD><I> The getPassword() method will return the mail user's password.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>short <B><A HREF="#DOC.99.13">getMessageCount</A></B>() raises(TucanException)
+<DD><I> The getMessageCount() method will return the number of messages that are currently in the user's inbox on the mail server.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>short <B><A HREF="#DOC.99.14">getMessageSize</A></B>(in short num) raises(TucanException)
+<DD><I> The getMessageSize() method will return the size, in bytes, of the message specified.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>string <B><A HREF="#DOC.99.15">getMessageId</A></B>(in short num) raises(TucanException)
+<DD><I> The getMessageId() method will return the Unique ID of the message specified.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>short <B><A HREF="#DOC.99.16">isRead</A></B>(in short num) raises(TucanException)
+<DD><I> The isRead() method will return a 1 or 0 depending on whether or not a message has been previously transfered</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>short <B><A HREF="#DOC.99.17">transfer</A></B>(in short num) raises(TucanException)
+<DD><I> The transfer() method will transfer the specified message from the mail server to the local host and will store it in the user's inbox.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.99.18">transferAll</A></B>() raises(TucanException)
+<DD><I> The transferAll() method will transfer all messages from the mail server to the local host and will store them in the user's inbox.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.99.19">deleteMessage</A></B>(in short num) raises(TucanException)
+<DD><I> The deleteMessage() method will delete the specified message from the server.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.99.20">deleteAllMessages</A></B>() raises(TucanException)
+<DD><I> The deleteAllMessages() method will delete all messages from the server.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.99.21">open</A></B>() raises(TucanException)
+<DD><I> The open() method will create a connection to the mail server that the user specified.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.99.22">close</A></B>() raises(TucanException)
+<DD><I> The close() method will close a connection to the mail server that the user specified.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.99.23">destroy</A></B>() raises(TucanException)
+<DD><I> The destory() method removes the object reference from memory.</I>
+</DL></P>
+
+</DL>
+
+<A NAME="DOC.DOCU"></A>
+<HR>
+<H2>Documentation</H2>
+<BLOCKQUOTE>
+The TucanEmailFetcher interface provides a way for downloading E-mail messages
+over a standard POP3 connection</BLOCKQUOTE>
+<DL>
+
+<A NAME="getAuth"></A>
+<A NAME="DOC.99.1"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B><!1><A HREF="TucanAuth.html">TucanAuth</A> getAuth() raises(TucanException)</B></TT>
+<DD>
+The getAuth() method will return a copy of the objects auth object.  If an error 
+occurs in this method then a TucanException should be raised.
+<DL><DT><DD></DL><P>
+<A NAME="setAuth"></A>
+<A NAME="DOC.99.2"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void setAuth(in <!1><A HREF="TucanAuth.html">TucanAuth</A> myAuth) raises(TucanException)</B></TT>
+<DD>
+The setAuth() method allows for the auth object for the object to be set.  This is
+method is intended for internal use and should not be used by clients because
+proper authentication is required for proper functionality.  If an error occurs this
+method should raise a TucanException.
+<DL><DT><DD></DL><P>
+<A NAME="setServer"></A>
+<A NAME="DOC.99.3"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void setServer(in string server) raises(TucanException)</B></TT>
+<DD>
+The setServer() method will set the mail server to the string that it is passed.  An exception
+will be raised if an error occurs.
+<DL><DT><DD></DL><P>
+<A NAME="getServer"></A>
+<A NAME="DOC.99.4"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>string getServer() raises(TucanException)</B></TT>
+<DD>
+The getServer() method will return the current mail server for the object.  An exception
+will be raised if an error occurs.
+<DL><DT><DD></DL><P>
+<A NAME="setPort"></A>
+<A NAME="DOC.99.5"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void setPort(in short port) raises(TucanException)</B></TT>
+<DD>
+The setPort() method will set the mail port to the string that it is passed.  An exception
+will be raised if an error occurs.
+<DL><DT><DD></DL><P>
+<A NAME="getPort"></A>
+<A NAME="DOC.99.6"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>short getPort() raises(TucanException)</B></TT>
+<DD>
+The getPort() method will return the current mail port for the object.  An exception
+will be raised if an error occurs.
+<DL><DT><DD></DL><P>
+<A NAME="setProtocol"></A>
+<A NAME="DOC.99.7"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void setProtocol(in string proto) raises(TucanException)</B></TT>
+<DD>
+The setProtocol() method will set the current protocol of the mail checker. 
+An excpetion will be raised if an error occurs.
+<DL><DT><DD></DL><P>
+<A NAME="getProtocol"></A>
+<A NAME="DOC.99.8"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>string getProtocol() raises(TucanException)</B></TT>
+<DD>
+The getProtocol() method will return the current protocol of the mail checker. 
+An excpetion will be raised if an error occurs.
+<DL><DT><DD></DL><P>
+<A NAME="setName"></A>
+<A NAME="DOC.99.9"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void setName(in string <!1><A HREF="TucanAttribute.html#DOC.14.1">name</A>) raises(TucanException)</B></TT>
+<DD>
+The getName() method will set the mail user name to the string that it is passed.  An exception
+will be raised if an error occurs.
+<DL><DT><DD></DL><P>
+<A NAME="getName"></A>
+<A NAME="DOC.99.10"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>string getName() raises(TucanException)</B></TT>
+<DD>
+The getName() method will return the current object's mail user name.  An exception will
+be raised in an error occurs.
+<DL><DT><DD></DL><P>
+<A NAME="setPassword"></A>
+<A NAME="DOC.99.11"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void setPassword(in string password) raises(TucanException)</B></TT>
+<DD>
+The setPassword() method will set the mail user's password to the string that it is passed.  An
+exception will be raised if an error occurs.
+<DL><DT><DD></DL><P>
+<A NAME="getPassword"></A>
+<A NAME="DOC.99.12"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>string getPassword() raises(TucanException)</B></TT>
+<DD>
+The getPassword() method will return the mail user's password.  An exception will be raised
+if an error occurs.
+<DL><DT><DD></DL><P>
+<A NAME="getMessageCount"></A>
+<A NAME="DOC.99.13"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>short getMessageCount() raises(TucanException)</B></TT>
+<DD>
+The getMessageCount() method will return the number of messages that are currently in the user's
+inbox on the mail server.  An exception will be raised if an error occurs.
+<DL><DT><DD></DL><P>
+<A NAME="getMessageSize"></A>
+<A NAME="DOC.99.14"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>short getMessageSize(in short num) raises(TucanException)</B></TT>
+<DD>
+The getMessageSize() method will return the size, in bytes, of the message specified.  An exception
+will be raised if an error occurs.
+<DL><DT><DD></DL><P>
+<A NAME="getMessageId"></A>
+<A NAME="DOC.99.15"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>string getMessageId(in short num) raises(TucanException)</B></TT>
+<DD>
+The getMessageId() method will return the Unique ID of the message specified.  An exception
+will be raised if an error occurs.
+<DL><DT><DD></DL><P>
+<A NAME="isRead"></A>
+<A NAME="DOC.99.16"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>short isRead(in short num) raises(TucanException)</B></TT>
+<DD>
+The isRead() method will return a 1 or 0 depending on whether or not a message has been
+previously transfered
+<DL><DT><DD></DL><P>
+<A NAME="transfer"></A>
+<A NAME="DOC.99.17"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>short transfer(in short num) raises(TucanException)</B></TT>
+<DD>
+The transfer() method will transfer the specified message from the mail server to the local host
+and will store it in the user's inbox.  An exception will be raised if an error occurs.
+<DL><DT><DD></DL><P>
+<A NAME="transferAll"></A>
+<A NAME="DOC.99.18"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void transferAll() raises(TucanException)</B></TT>
+<DD>
+The transferAll() method will transfer all messages from the mail server to the local host and will
+store them in the user's inbox.  An exception will be raised if an error occurs.
+<DL><DT><DD></DL><P>
+<A NAME="deleteMessage"></A>
+<A NAME="DOC.99.19"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void deleteMessage(in short num) raises(TucanException)</B></TT>
+<DD>
+The deleteMessage() method will delete the specified message from the server.  On error,
+a tucan exception will be raised.
+<DL><DT><DD></DL><P>
+<A NAME="deleteAllMessages"></A>
+<A NAME="DOC.99.20"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void deleteAllMessages() raises(TucanException)</B></TT>
+<DD>
+The deleteAllMessages() method will delete all messages from the server.  On error,
+a tucan exception will be raised.
+<DL><DT><DD></DL><P>
+<A NAME="open"></A>
+<A NAME="DOC.99.21"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void open() raises(TucanException)</B></TT>
+<DD>
+The open() method will create a connection to the mail server that the user specified.
+An exception will be raised if an error occurs
+<DL><DT><DD></DL><P>
+<A NAME="close"></A>
+<A NAME="DOC.99.22"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void close() raises(TucanException)</B></TT>
+<DD>
+The close() method will close a connection to the mail server that the user specified.
+An exception will be raised if an error occurs
+<DL><DT><DD></DL><P>
+<A NAME="destroy"></A>
+<A NAME="DOC.99.23"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void destroy() raises(TucanException)</B></TT>
+<DD>
+The destory() method removes the object reference from memory.  All clients should
+make sure that they call the destroy() method so that memory leaks do not occur. If
+an error occurs in this method then a TucanException should be raised.
+<DL><DT><DD></DL><P></DL>
+
+<HR><DL><DT><B>This class has no child classes.</B></DL>
+
+<DL><DT><DD></DL><P><P><I><A HREF="index.html">Alphabetic index</A></I> <I><A HREF="HIER.html">Hierarchy of classes</A></I></P><HR>
+<BR>
+This page was generated with the help of <A HREF="http://www.linuxsupportline.com/~doc++">DOC++</A>.
+</BODY>
+</HTML>

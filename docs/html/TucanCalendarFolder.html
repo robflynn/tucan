@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<HTML>
+<HEAD>
+   <TITLE>interface  TucanCalendarFolder</TITLE>
+   <META NAME="GENERATOR" CONTENT="DOC++ 3.4.6">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+
+<H2>interface  <A HREF="#DOC.DOCU">TucanCalendarFolder</A></H2></H2><HR>
+
+<H2>Inheritance:</H2>
+<H3>TucanCalendarFolder</H3>
+<HR><H3>Inherited from <A HREF="TucanFolder.html">TucanFolder</A>:</H3>
+<DL>
+<P><DL>
+<DT><H3>Public Methods</H3><DD><DT>
+<IMG ALT="o" SRC=icon2.gif>boolean <B>exists</B>() raises(TucanException)
+<DT>
+<IMG ALT="o" SRC=icon2.gif>boolean <B>create</B>() raises(TucanException)
+<DT>
+<IMG ALT="o" SRC=icon2.gif>boolean <B>deleteFolder</B>() raises(TucanException)
+<DT>
+<IMG ALT="o" SRC=icon2.gif>TucanMessageSeq <B>expunge</B>() raises(TucanException)
+<DT>
+<IMG ALT="o" SRC=icon2.gif><!1><A HREF="TucanFolder.html">TucanFolder</A> <B>getFolder</B>(in string <!1><A HREF="TucanAttribute.html#DOC.14.1">name</A>) raises(TucanException)
+<DT>
+<IMG ALT="o" SRC=icon2.gif>void <B>setParent</B>(in <!1><A HREF="TucanFolder.html">TucanFolder</A> folder) raises(TucanException)
+<DT>
+<IMG ALT="o" SRC=icon2.gif><!1><A HREF="TucanFolder.html">TucanFolder</A> <B>getParent</B>() raises(TucanException)
+<DT>
+<IMG ALT="o" SRC=icon2.gif><!1><A HREF="TucanFolder.html">TucanFolder</A> <B>getNewFolderObject</B>() raises(TucanException)
+<DT>
+<IMG ALT="o" SRC=icon2.gif>TucanStringList <B>listFolders</B>() raises(TucanException)
+<DT>
+<IMG ALT="o" SRC=icon2.gif>TucanFolderSeq <B>list</B>() raises(TucanException)
+<DT>
+<IMG ALT="o" SRC=icon2.gif>boolean <B>renameTo</B>(in string <!1><A HREF="TucanAttribute.html#DOC.14.1">name</A>) raises(TucanException)
+<DT>
+<IMG ALT="o" SRC=icon2.gif>string <B>getName</B>() raises(TucanException)
+<DT>
+<IMG ALT="o" SRC=icon2.gif>void <B>setName</B>(in string <!1><A HREF="TucanAttribute.html#DOC.14.1">name</A>) raises(TucanException)
+<DT>
+<IMG ALT="o" SRC=icon2.gif>string <B>getFullName</B>() raises(TucanException)
+<DT>
+<IMG ALT="o" SRC=icon2.gif>void <B>setFullName</B>(in string <!1><A HREF="TucanAttribute.html#DOC.14.1">name</A>) raises(TucanException)
+<DT>
+<IMG ALT="o" SRC=icon2.gif><!1><A HREF="TucanMessage.html">TucanMessage</A> <B>getMessage</B>(in long msgnum) raises(TucanException)
+<DT>
+<IMG ALT="o" SRC=icon2.gif>TucanMessageSeq <B>getMessages</B>() raises(TucanException)
+<DT>
+<IMG ALT="o" SRC=icon2.gif>TucanMessageSeq <B>getNewMessages</B>() raises(TucanException)
+<DT>
+<IMG ALT="o" SRC=icon2.gif>TucanMessageSeq <B>getMessagesInRange</B>(in long start, in long stop) raises(TucanException)
+<DT>
+<IMG ALT="o" SRC=icon2.gif><!1><A HREF="TucanMessage.html">TucanMessage</A> <B>getNewMessageObject</B>() raises(TucanException)
+<DT>
+<IMG ALT="o" SRC=icon2.gif>long <B>getMessageCount</B>() raises(TucanException)
+<DT>
+<IMG ALT="o" SRC=icon2.gif>long <B>getNewMessageCount</B>() raises(TucanException)
+<DT>
+<IMG ALT="o" SRC=icon2.gif>boolean <B>hasNewMessages</B>() raises(TucanException)
+<DT>
+<IMG ALT="o" SRC=icon2.gif>void <B>moveMessage</B>(in long msgnum, in <!1><A HREF="TucanFolder.html">TucanFolder</A> folder) raises(TucanException)
+<DT>
+<IMG ALT="o" SRC=icon2.gif>void <B>moveMessages</B>(in TucanLongList msgnums, in <!1><A HREF="TucanFolder.html">TucanFolder</A> folder) raises(TucanException)
+<DT>
+<IMG ALT="o" SRC=icon2.gif>void <B>copyMessage</B>(in long msgnum, in <!1><A HREF="TucanFolder.html">TucanFolder</A> folder) raises(TucanException)
+<DT>
+<IMG ALT="o" SRC=icon2.gif>void <B>copyMessages</B>(in TucanLongList msgnums, in <!1><A HREF="TucanFolder.html">TucanFolder</A> folder) raises(TucanException)
+<DT>
+<IMG ALT="o" SRC=icon2.gif>void <B>appendMessage</B>(in <!1><A HREF="TucanMessage.html">TucanMessage</A> msg) raises(TucanException)
+<DT>
+<IMG ALT="o" SRC=icon2.gif>void <B>appendMessages</B>(in TucanMessageSeq msgs) raises(TucanException)
+<DT>
+<IMG ALT="o" SRC=icon2.gif>void <B>deleteMessage</B>(in long msgnum) raises(TucanException)
+<DT>
+<IMG ALT="o" SRC=icon2.gif><!1><A HREF="TucanAuth.html">TucanAuth</A> <B>getAuth</B>() raises(TucanException)
+<DT>
+<IMG ALT="o" SRC=icon2.gif>void <B>setAuth</B>(in <!1><A HREF="TucanAuth.html">TucanAuth</A> auth) raises(TucanException)
+<DT>
+<IMG ALT="o" SRC=icon2.gif>long <B>getMessageFlags</B>(in long msgnum) raises(TucanException)
+<DT>
+<IMG ALT="o" SRC=icon2.gif>void <B>setMessageFlags</B>(in long msgnum, in long <!1><A HREF="TucanMessageHeader.html#DOC.12.5">flags</A>) raises(TucanException)
+<DT>
+<IMG ALT="o" SRC=icon2.gif>void <B>setMessageFlag</B>(in long msgnum, in long flag) raises(TucanException)
+<DT>
+<IMG ALT="o" SRC=icon2.gif>void <B>unsetMessageFlag</B>(in long msgnum, in long flag) raises(TucanException)
+<DT>
+<IMG ALT="o" SRC=icon2.gif>void <B>destroy</B>() raises(TucanException)
+</DL></P>
+
+</DL>
+
+<A NAME="DOC.DOCU"></A>
+<HR>
+<H2>Documentation</H2>
+
+<HR><DL><DT><B>This class has no child classes.</B></DL>
+
+<DL><DT><DD></DL><P><P><I><A HREF="index.html">Alphabetic index</A></I> <I><A HREF="HIER.html">Hierarchy of classes</A></I></P><HR>
+<BR>
+This page was generated with the help of <A HREF="http://www.linuxsupportline.com/~doc++">DOC++</A>.
+</BODY>
+</HTML>

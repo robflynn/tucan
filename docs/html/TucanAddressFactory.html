@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<HTML>
+<HEAD>
+   <TITLE>interface  TucanAddressFactory</TITLE>
+   <META NAME="GENERATOR" CONTENT="DOC++ 3.4.6">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+
+<H2>interface  <A HREF="#DOC.DOCU">TucanAddressFactory</A></H2></H2><BLOCKQUOTE> TucanAddressFactory provides a base factory implementation for servants to inherit from.</BLOCKQUOTE>
+<HR>
+
+<H2>Inheritance:</H2>
+<H3>TucanAddressFactory
+</H3>
+<HR>
+
+<DL>
+<P><DL>
+<DT><H3>Public Methods</H3><DD><DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif><!1><A HREF="TucanAddress.html">TucanAddress</A> <B><A HREF="#DOC.20.1">create</A></B>() raises(TucanException)
+<DD><I> The create() method will return a new reference to a TucanAddress  object.</I>
+</DL></P>
+
+</DL>
+
+<A NAME="DOC.DOCU"></A>
+<HR>
+<H2>Documentation</H2>
+<BLOCKQUOTE>
+TucanAddressFactory provides a base factory implementation for servants
+to inherit from.  This is done so that addresses can be given out by their
+base class TucanAddress.  This is handy when extending the system.</BLOCKQUOTE>
+<DL>
+
+<A NAME="create"></A>
+<A NAME="DOC.20.1"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B><!1><A HREF="TucanAddress.html">TucanAddress</A> create() raises(TucanException)</B></TT>
+<DD>
+The create() method will return a new reference to a TucanAddress 
+object.  This is so that many different addresses can exists at the
+same time.  If something strange goes wrong this method will raise a
+TucanException.
+<DL><DT><DD></DL><P></DL>
+<HR>
+<DL><DT><B>Direct child classes:
+</B><DD><A HREF="TucanVoiceAddressFactory.html">TucanVoiceAddressFactory</A><BR>
+<A HREF="TucanFaxAddressFactory.html">TucanFaxAddressFactory</A><BR>
+<A HREF="TucanEmailAddressFactory.html">TucanEmailAddressFactory</A><BR>
+<A HREF="TucanCalendarAddressFactory.html">TucanCalendarAddressFactory</A><BR>
+<A HREF="TucanBbsAddressFactory.html">TucanBbsAddressFactory</A><BR>
+<A HREF="TucanAddressBookAddressFactory.html">TucanAddressBookAddressFactory</A><BR>
+</DL>
+
+<DL><DT><DD></DL><P><P><I><A HREF="index.html">Alphabetic index</A></I> <I><A HREF="HIER.html">Hierarchy of classes</A></I></P><HR>
+<BR>
+This page was generated with the help of <A HREF="http://www.linuxsupportline.com/~doc++">DOC++</A>.
+</BODY>
+</HTML>

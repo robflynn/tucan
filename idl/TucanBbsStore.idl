@@ -1,0 +1,13 @@
+////////////////////////////////////////////////////////////
+// TucanBbsStore (idl definition)
+//
+// Copyright (C) 2000, Difinium
+////////////////////////////////////////////////////////////
+// Filename:        TucanBbsStore.idl
+// Description:     idl definition of TucanBbsStore
+// Created at:      Wed Jul  5 10:25:56 PDT 2000
+////////////////////////////////////////////////////////////
+
+interface TucanBbsStore : TucanStore {};
+
+interface TucanBbsStoreFactory : TucanStoreFactory {}; 

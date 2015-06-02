@@ -1,0 +1,164 @@
+========================================================
+TUCAN: The Unified Communications Architecture Network
+========================================================
+
+version 1.3 (Jul 10th, 2001):
+
+Not much here this time, just an emergency bug fix =)
+
+If you you have any comments or questions regarding our 
+software or want to help out, please feel free to contact us.
+
+--
+
+version 1.2 (Jul 05th, 2001):
+
+This releases includes some various goodies such as a procmail filter
+and a fix for a nasty memory leak :)
+
+If you you have any comments or questions regarding our 
+software or want to help out, please feel free to contact us.
+
+--
+
+version 1.1 (Jun 19th, 2001):
+
+This is mostly a bug fix release.  Check the change log for more info.
+
+If you you have any comments or questions regarding our 
+software or want to help out, please feel free to contact us.
+
+--
+
+
+version 1.0 (Jun 01st, 2001):
+
+Well, we finally made it.  This release was almost all bug fixes
+and implementation of features that I just didn't feel like doing
+until now, hehe.  We've hit the 1.0 mark.  I'm now in planning stages
+for TUCAN 2 so look for more fun and exciting things in the future!
+
+If you you have any comments or questions regarding our 
+software or want to help out, please feel free to contact us.
+
+--
+
+version 0.9 (Apr 27th, 2001):
+
+This release has been mostly cleaning up things and fixing some little
+bugs.  An isAdmin() method was added to TucanSession, too, to determine
+whether or not a user has administrator privledges.
+
+If you you have any comments or questions regarding our 
+software or want to help out, please feel free to contact us.
+
+--
+
+version 0.8 (Apr 20th, 2001):
+
+Yet another release!  Things are coming together very nicely thse days.
+I've implemented a flagging system for messages as well as lots of bug
+fixes.  Check out the ChangeLog.
+
+If you you have any comments or questions regarding our 
+software or want to help out, please feel free to contact us.
+
+--
+
+version 0.7 (Apr 12th, 2001):
+
+Not much to say here this time.  Everything you need to know is in the
+ChangeLog.  TUCAN development is progressing along quite nicely and we're
+hoping to hit 1.0 by the end of this month or by the first week of may. 
+There are only a few more things on our list to take care of before our
+official release.
+
+If you you have any comments or questions regarding our 
+software or want to help out, please feel free to contact us.
+
+--
+
+version 0.6 (Apr 06th, 2001):
+
+Sorry about the late release.  Our internet connection was having issues last
+week so we couldn't release on schedule.  The TucanBBS interface has been
+added in this release and is mostly complete.  The next few releases will
+be mostly filling in missing methods and getting everything ready for
+1.0.  
+
+If you you have any comments or questions regarding our 
+software or want to help out, please feel free to contact us.
+
+--
+
+version 0.5 (Mar 23rd, 2001):
+
+Fixed _a lot_ of memory leaks.  I believe that our feature freeze will be over
+after this release.  I'll be going back through the stores and implementing the
+rest of the methods and making sure that everything is good and happy.  I'll
+also begin coding on the Bulletin Board interface.  Hopefully this will go quickly.
+
+If you you have any comments or questions regarding our 
+software or want to help out, please feel free to contact us.
+
+--
+
+version 0.4 (Mar 06th, 2001):
+
+Yet another release out the door!  This release is motsly a bug fix
+release.  We fixed a few memory leaks, added some exception handling, fixed
+some segfaults, and fixed some parsing errors.  We support a few more
+email encodings and have added an AddressBook transport layer.
+
+If you you have any comments or questions regarding our 
+software or want to help out, please feel free to contact us.
+
+--
+
+
+version 0.3 (Feb 27th, 2001):
+
+Howdy!  TUCAN version 0.3 is now ready for the masses.  It
+now has a base set of voice mail, fax, and address book
+implementations.  I've also fixed a problem or two with the
+pop3 library.  I added IMAP support, too.  Hopefully we'll
+start seeing things come together even more for next
+week's release.
+
+If you you have any comments or questions regarding our 
+software or want to help out, please feel free to contact us.
+
+--
+
+version 0.2 (Feb 15th, 2001):
+
+The TucanCalendar implementation now has a completed base set
+of methods and functionality.  TucanData now has support for
+multipart datatypes which TucanEmailTransport makes use of.
+More functionality, including new Stores, will be implemented
+in next week's release.
+
+If you you have any comments or questions regarding our 
+software or want to help out, please feel free to contact us.
+
+--
+
+version 0.1 (Feb 6th, 2001):
+	
+Hello, and welcome to the initial release of TUCAN.  
+We've tried to lay things out in a some what easy
+manner for you.  You can find all of the documentation, 
+in html format, in the docs subdirectory.  In this release
+we have implemented a base set of methods for Email 
+and Calendaring.  We will continue to add more features and 
+implement more message types as development continues.  
+Voice mail and faxes as well as a bulletin board are planned
+in the future. 
+
+If you you have any comments or questions regarding our 
+software or want to help out, please feel free to contact us.
+
+========================================================
+(c) 2000, 2001 Difinium
+if you you have any comments or questions regarding our 
+

@@ -1,0 +1,244 @@
+////////////////////////////////////////////////////////////
+// TucanMessage (idl definition)
+// Copyright (C) 2000, Difinium
+////////////////////////////////////////////////////////////
+// Filename:        TucanMessage.idl
+// Description:     idl definition of TucanMessage
+// Created at:      Thu Jun 29 16:23:12 PDT 2000
+////////////////////////////////////////////////////////////
+
+/**
+	The TucanMessage interface provides a base message for use on
+	the TUCAN messaging system.  By itself it provides absolutely
+	no functionality but instead it must be implemented and extended
+	by a chlid to provide functionality.  Ideally most implementation
+	would at least implement the base methods so that those messages
+	could then be passed to other services on the system and actually
+	be handled properly.
+*/
+interface TucanMessage 
+{
+	//Methods
+	/**
+		The getData() method returns the raw data for the message.  What
+		this data is totally depends on the implementation.  It could be
+		sound data or text etc... If an error occurs in this method then
+		a TucanException should be raised.
+	*/
+	TucanRawData getData()
+		raises(TucanException);
+	/**
+		The getDataObject() method is another way to get access to the data 
+		encapsulated in the message.  The method will return a data object that
+		can then give the client the message data in various formats like mime,
+		xml, etc... If an error occurs within this method then a TucanException
+		should be raised.
+	*/
+	TucanData getDataObject()
+		raises(TucanException);
+
+	/**
+		The setDataObject() method allows you to set the data object of
+		a message.  This is where all data associated with a message
+		will be stored. If an error occurs a TucanException should be raised.
+	*/
+
+	void setDataObject(in TucanData data)
+		raises(TucanException);
+
+
+	/**
+		The getNewDataObject() method will return a new data object for use by
+		a the message or the client wichever it may be.  If an error occurs in this
+		method then a TucanException will be raised.
+	*/
+
+	TucanData getNewDataObject()
+		raises(TucanException);
+	/**
+		The getFrom() method will return a TucanAddress object that simply wraps
+		the from address of the message.  This address could be an email address
+		or some other string etc... If am error occurs in this method then a 
+		TucanException should be raised.
+	*/
+
+	TucanAddress getFrom()
+		raises(TucanException);
+	/**
+		The setFrom() method will set the from address of the message based upon
+		the TucanAddress that is passed to it.  If an error occurs in this method
+		then a TucanException should be raised.
+	*/
+	void setFrom(in TucanAddress fromname)
+		raises(TucanException);
+	/**
+		the getNewAddressObject() method will return a new address object for use by
+		a the message or the client wichever it may be.  If an error occurs in this
+		method then a TucanException will be raised.
+	*/
+	TucanAddress getNewAddressObject()
+		raises(TucanException);
+	/**
+		The getRecipients() method will return a list of TucanAddress representing the
+		recipients based upon the type passed to it.  Type would be "TO", "CC", etc..
+		If an error occurs this method should raise a TucanException.
+	*/
+	TucanAddressSeq getRecipients(in string type)
+		raises(TucanException);
+	/**
+		The setRecipients() method will set the recipient address denoted by type to
+		the addresses that are passed to it.  If an error occurs then a TucanException
+		should be raised.
+	*/
+	void setRecipients(in string type, in TucanAddressSeq addresses)
+		raises(TucanException);
+	/**
+		The setRecipient() method will set the recipient address denoted by type to the
+		address that is passed to it.  If an error occurs then a TucanException should
+		be raised.
+	*/
+	void setRecipient(in string type, in TucanAddress address)
+		raises(TucanException);
+	/**
+		The getAllRecipients() method will return a list of TucanAddresses representing
+		all of the recipients address for the message.  If an error occurs then a
+		TucanException will be raised.
+	*/
+	TucanAddressSeq getAllRecipients()
+		raises(TucanException);
+	/**
+		The addRecipient() method will append the address that is passed to it to the
+		recipient type that is passed.  If an error occurs then a TucanException should
+		be raised.
+	*/
+	void addRecipient(in string type, in TucanAddress address)
+		raises(TucanException);
+	/**
+		The addRecipients() method will append the addresses passed to it to the recipient
+		type that is passed to it.  If an error occurs then this method should raise a
+		TucanException.
+	*/
+	void addRecipients(in string type, in TucanAddressSeq addresses)
+		raises(TucanException);
+	/**
+		The getReplyTo() method will return a list of address that represent the reply
+		to address or addresses for the message.  If an error occurs then a TucanException
+		should be raised.
+	*/
+	TucanAddress getReplyTo()
+		raises(TucanException);
+	/**
+		The setReplyTo() method will set the reply to address to the address that is passed
+		to it.  If an error occurs then a TucanException should be raised.
+	*/
+	void setReplyTo(in TucanAddress address)
+		raises(TucanException);
+	/**
+		The getSubject() method will return the the subject of the message.  If an error
+		occurs in this method a TucanException should be raised.
+	*/
+	string getSubject()
+		raises(TucanException);
+	/**
+		The setSubject() method sets the subject of the message to the string that is
+		passed to it.  If an error occurs in this method a TucanException should be raised.
+	*/
+	void setSubject(in string subject)
+		raises(TucanException);
+	/**
+		The getSentDate() method returns the sentDate of the message.  This method will
+		format the date based upon the format string passed to it.  If an error occurs
+		in this method then a TucanException should be raised.
+	*/
+	string getSentDate(in string format)
+		raises(TucanException);
+	/**
+		The setSentDate() method will set the sent date for the message to the string that
+		is passed to it.  If an error occurs in this method a TucanException should be
+		raised.
+	*/
+	void setSentDate(in string date)
+		raises(TucanException);
+	/**
+		The getRecievedDate() method will return the recieved date for the message.  This
+		method will format the date based upon the stirng that is passed to it.  If
+		an error occurs then a TucanException should be raised.
+	*/
+	string getReceivedDate(in string format)
+		raises(TucanException);
+	/**
+		The setRecievedDate() method will set the recieved date for the message to the
+		string that is passed to it.  If an error occurs then a TucanException will be
+		raised.
+	*/
+	void setReceivedDate(in string date)
+		raises(TucanException);
+
+	long getMessageNumber()
+		raises(TucanException);
+	/**
+		The setMessageNumber() method wii set the message number for the message.  This
+		method is meant mainly for internal use.  If an error occurs then a TucanException
+		should be raised.
+	*/
+	void setMessageNumber(in long msgnum)
+		raises(TucanException);
+	/**
+		The isFlagSet() method will return a boolean value as to whether or not the message has
+		a specific flag set.  If an error occurs then a TucanException should be
+		raised.
+	*/
+
+	boolean isFlagSet(in long flag)
+		raises(TucanException);
+
+	/** The setFlags() method will set the messages flags to the flags specified.  A Tucan
+      	exception will be raised if an error occurs, 
+	*/
+
+	void setFlags(in long flags)
+		raises(TucanException);
+
+	/** The setFlagOn() method will set specified flag as on for the message.  A TucanException
+	    will be raised if an error occurs,
+	*/
+
+	void setFlagOn(in long flag)
+		raises(TucanException);
+
+	/** The setFlagOff() method will disable a  specified flag as on for the message.  A TucanException
+	    will be raised if an error occurs,
+	*/
+
+	void setFlagOff(in long flag)
+		raises(TucanException);
+
+	/**
+		The reply() method will return a new message object that is set to be a reply to the
+		current message.  If am error occurs then a TucanException should be raised.
+	*/
+	TucanMessage reply(in boolean replytoall)
+		raises(TucanException);
+	/**
+		The destroy() method removes the object from memory.  All clients need to make sure
+		that the destroy() method is being called when they are done with the message so that
+		memory leaks do not occur.  If an error occurs in this method a TucanException should
+		be raised.
+	*/
+	void destroy()
+		raises(TucanException);
+};
+/**
+	The TucanMessageFactory interface is a base implementation of a message factory for
+	services to inherit from and implement.
+*/
+interface TucanMessageFactory
+{
+	/**
+		The create() method returns references to new message object for use.  This approach
+		is used so that multiple instances of messages can exist at the same time.  If an
+		error occurs then a TucanException should be raised.
+	*/
+	TucanMessage create()
+		raises(TucanException);
+};

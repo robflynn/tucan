@@ -1,0 +1,13 @@
+////////////////////////////////////////////////////////////
+// TucanCalendarFolder (idl definition)
+//
+// Copyright (C) 2000, Difinium
+////////////////////////////////////////////////////////////
+// Filename:        TucanCalendarFolder.idl
+// Description:     idl definition of TucanCalendarFolder
+// Created at:      Thu Jul 27 15:57:28 PDT 2000
+////////////////////////////////////////////////////////////
+
+interface TucanCalendarFolder : TucanFolder {};
+
+interface TucanCalendarFolderFactory : TucanFolderFactory {}; 

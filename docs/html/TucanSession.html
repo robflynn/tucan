@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<HTML>
+<HEAD>
+   <TITLE>interface  TucanSession</TITLE>
+   <META NAME="GENERATOR" CONTENT="DOC++ 3.4.6">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+
+<H2>interface  <A HREF="#DOC.DOCU">TucanSession</A></H2></H2><BLOCKQUOTE> TucanSession is the class that acts as the starting point for all messaging on the TUCAN system.</BLOCKQUOTE>
+<HR>
+
+<DL>
+<P><DL>
+<DT><H3>Public Methods</H3><DD><DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif><!1><A HREF="TucanAuth.html">TucanAuth</A> <B><A HREF="#DOC.33.1">getAuth</A></B>() raises(TucanException)
+<DD><I> The getAuth() method returns TucanAuth objects.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.33.2">authorize</A></B>(in <!1><A HREF="TucanAuth.html">TucanAuth</A> auth) raises(TucanException, TucanAuthException)
+<DD><I> The authorize() method takes a TucanAuth object as a parameter so that it can use the attributes in the TucanAuth object to try and authorize the session.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif><!1><A HREF="TucanStore.html">TucanStore</A> <B><A HREF="#DOC.33.3">getDefaultStore</A></B>() raises(TucanException, TucanAuthException)
+<DD><I> The getDefaultStore() method returns a servant object of the default tucan store.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif><!1><A HREF="TucanStore.html">TucanStore</A> <B><A HREF="#DOC.33.4">getStoreByProtocol</A></B>(in string proto) raises(TucanException, TucanAuthException)
+<DD><I> The getStoreByProtocol() method returns a servant store object based upon the value of the protocol that is passed to it.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif><!1><A HREF="TucanTransport.html">TucanTransport</A> <B><A HREF="#DOC.33.5">getDefaultTransport</A></B>() raises(TucanException, TucanAuthException)
+<DD><I> The getDefaultTransport() method returns a servant object of the default  transport.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif><!1><A HREF="TucanTransport.html">TucanTransport</A> <B><A HREF="#DOC.33.6">getTransportByProtocol</A></B>(in string proto) raises(TucanException, TucanAuthException)
+<DD><I> The getTransportByProtocol() method returns a servant transport object based upon the value of the protocol that is passed to it.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>boolean <B><A HREF="#DOC.33.7">isAdmin</A></B>() raises(TucanException, TucanAuthException)
+<DD><I> The isAdmin() method will return a boolean value denoting whether or not the user has administration privledges on the system.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.33.8">setNewPinNumber</A></B>(in long newpin) raises(TucanException, TucanAuthException)
+<DD><I> The setNewPinNumber() method will change the pin number for the currently  authorized user.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.33.9">destroy</A></B>() raises(TucanException)
+<DD><I> The destroy() method simply removes the session servant object out of memory.</I>
+</DL></P>
+
+</DL>
+
+<A NAME="DOC.DOCU"></A>
+<HR>
+<H2>Documentation</H2>
+<BLOCKQUOTE>
+TucanSession is the class that acts as the starting point
+for all messaging on the TUCAN system.  It handles authentication
+and other things that are critical to the functionality of
+TUCAN.  It is very important to note that a client must obtain 
+a TucanAuth object and set the values for it correctly before 
+a session can be authorized.  If a session is not authorized 
+then none of the methods for obtaining messages will work.</BLOCKQUOTE>
+<DL>
+
+<A NAME="getAuth"></A>
+<A NAME="DOC.33.1"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B><!1><A HREF="TucanAuth.html">TucanAuth</A> getAuth() raises(TucanException)</B></TT>
+<DD>
+The getAuth() method returns TucanAuth objects.  The client 
+can then go and set the attributes for the the auth object 
+so that they can authorize the session.  If for 
+some reason an error in the method occurs then it will raise 
+a TucanException.
+<DL><DT><DD></DL><P>
+<A NAME="authorize"></A>
+<A NAME="DOC.33.2"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void authorize(in <!1><A HREF="TucanAuth.html">TucanAuth</A> auth) raises(TucanException, TucanAuthException)</B></TT>
+<DD>
+The authorize() method takes a TucanAuth object as a parameter
+so that it can use the attributes in the TucanAuth object to
+try and authorize the session.  If for some reason the username,
+password, or pin number are incorrect then the session will not
+be authorized and the client will not be able to retrieve messages
+until the session has been authorized.  It is important to note
+that both a password and pin number are not required but one must
+be present.  This method can raise two different exceptions.  
+If there is an error authenticating then it will raise a 
+TucanAuthException, but if for some reason some other strange error 
+occurs it will raise a TucanException.
+<DL><DT><DD></DL><P>
+<A NAME="getDefaultStore"></A>
+<A NAME="DOC.33.3"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B><!1><A HREF="TucanStore.html">TucanStore</A> getDefaultStore() raises(TucanException, TucanAuthException)</B></TT>
+<DD>
+The getDefaultStore() method returns a servant object of the default tucan store.
+The default store is determined by the default entry in the tucan
+configuration data which is stored in TucanConfig.xml.  If you
+are using a default TUCAN setup then this method should return
+a TucanEmailStore object.  This method can raise two different
+exceptions.  If the client is trying to get a store but has not yet
+authorized then it will raise a TucanAuthException, but if something
+else strange happens then it will raise a TucanException.
+<DL><DT><DD></DL><P>
+<A NAME="getStoreByProtocol"></A>
+<A NAME="DOC.33.4"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B><!1><A HREF="TucanStore.html">TucanStore</A> getStoreByProtocol(in string proto) raises(TucanException, TucanAuthException)</B></TT>
+<DD>
+The getStoreByProtocol() method returns a servant store object based
+upon the value of the protocol that is passed to it.  This protocol
+dirrectly relates to entries in the TUCAN config data which is in
+TucanConfig.xml.  For example if I wanted a Bulletin Board store then
+I would pass the protocol value of "bbs" based upon the TucanConfig.xml
+file.  This is handy so that the system can be extended with new capabilities
+but the same session code will still work.  This method can raise two
+exceptions.  If the client is trying to get a store but has not yet
+authorized then a TucanAuthException will be raised, but if something else
+strange happens then a TucanException will be raised.
+<DL><DT><DD></DL><P>
+<A NAME="getDefaultTransport"></A>
+<A NAME="DOC.33.5"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B><!1><A HREF="TucanTransport.html">TucanTransport</A> getDefaultTransport() raises(TucanException, TucanAuthException)</B></TT>
+<DD>
+The getDefaultTransport() method returns a servant object of the default 
+transport.  The default transport is determined by the default entry
+in the tucan configuration data which is stored in TucanConfig.xml.
+If you are using a default TUCAN setup then this method should return
+a TucanEmailTransport object.  This method can raise two different
+exceptions.  If the client is trying to get a transport but has not
+yet authorized then a TucanAuthException will be raised, but if something
+else strange happens then a TucanEception will be raised.
+<DL><DT><DD></DL><P>
+<A NAME="getTransportByProtocol"></A>
+<A NAME="DOC.33.6"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B><!1><A HREF="TucanTransport.html">TucanTransport</A> getTransportByProtocol(in string proto) raises(TucanException, TucanAuthException)</B></TT>
+<DD>
+The getTransportByProtocol() method returns a servant transport object
+based upon the value of the protocol that is passed to it.  This protocol
+directly relates to entries in the TUCAN configuration data which is in
+TucanConfig.xml.  This method can raise two different exceptions.  If the
+client is trying to get a transport but has not yet authorized then a
+TucanAuthException will be raised, but if something else strange takes place
+then a TucanException will be raised.
+<DL><DT><DD></DL><P>
+<A NAME="isAdmin"></A>
+<A NAME="DOC.33.7"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>boolean isAdmin() raises(TucanException, TucanAuthException)</B></TT>
+<DD>
+The isAdmin() method will return a boolean value denoting whether or not the user
+has administration privledges on the system.  A TucanException will be raised if an
+error occurs. 
+<DL><DT><DD></DL><P>
+<A NAME="setNewPinNumber"></A>
+<A NAME="DOC.33.8"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void setNewPinNumber(in long newpin) raises(TucanException, TucanAuthException)</B></TT>
+<DD>
+The setNewPinNumber() method will change the pin number for the currently 
+authorized user.  A TucanException will be raised if an error occurs.
+<DL><DT><DD></DL><P>
+<A NAME="destroy"></A>
+<A NAME="DOC.33.9"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void destroy() raises(TucanException)</B></TT>
+<DD>
+The destroy() method simply removes the session servant object out of memory.
+It is important that all clients call this method when they are done so
+that memory leaks do not occur.
+<DL><DT><DD></DL><P></DL>
+
+<HR><DL><DT><B>This class has no child classes.</B></DL>
+
+<DL><DT><DD></DL><P><P><I><A HREF="index.html">Alphabetic index</A></I> <I><A HREF="HIER.html">Hierarchy of classes</A></I></P><HR>
+<BR>
+This page was generated with the help of <A HREF="http://www.linuxsupportline.com/~doc++">DOC++</A>.
+</BODY>
+</HTML>

@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<HTML>
+<HEAD>
+   <TITLE>interface  TucanFolderFactory</TITLE>
+   <META NAME="GENERATOR" CONTENT="DOC++ 3.4.6">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+
+<H2>interface  <A HREF="#DOC.DOCU">TucanFolderFactory</A></H2></H2><BLOCKQUOTE> The TucanFolderFactory provides a base implementation for services to inherit from.</BLOCKQUOTE>
+<HR>
+
+<H2>Inheritance:</H2>
+<H3>TucanFolderFactory
+</H3>
+<HR>
+
+<DL>
+<P><DL>
+<DT><H3>Public Methods</H3><DD><DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif><!1><A HREF="TucanFolder.html">TucanFolder</A> <B><A HREF="#DOC.26.1">create</A></B>() raises(TucanException)
+<DD><I> The create() method returns a new reference to a folder object.</I>
+</DL></P>
+
+</DL>
+
+<A NAME="DOC.DOCU"></A>
+<HR>
+<H2>Documentation</H2>
+<BLOCKQUOTE>
+The TucanFolderFactory provides a base implementation for services to inherit from.
+This is so that the system can be extended and base functionality still insured.</BLOCKQUOTE>
+<DL>
+
+<A NAME="create"></A>
+<A NAME="DOC.26.1"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B><!1><A HREF="TucanFolder.html">TucanFolder</A> create() raises(TucanException)</B></TT>
+<DD>
+The create() method returns a new reference to a folder object.  The factory is
+used so that multiple folders can exists at the same time on the system.  If an error
+occurs in this method it should raise a TucanException.
+<DL><DT><DD></DL><P></DL>
+<HR>
+<DL><DT><B>Direct child classes:
+</B><DD><A HREF="TucanVoiceFolderFactory.html">TucanVoiceFolderFactory</A><BR>
+<A HREF="TucanFaxFolderFactory.html">TucanFaxFolderFactory</A><BR>
+<A HREF="TucanEmailFolderFactory.html">TucanEmailFolderFactory</A><BR>
+<A HREF="TucanCalendarFolderFactory.html">TucanCalendarFolderFactory</A><BR>
+<A HREF="TucanBbsFolderFactory.html">TucanBbsFolderFactory</A><BR>
+<A HREF="TucanAddressBookFolderFactory.html">TucanAddressBookFolderFactory</A><BR>
+</DL>
+
+<DL><DT><DD></DL><P><P><I><A HREF="index.html">Alphabetic index</A></I> <I><A HREF="HIER.html">Hierarchy of classes</A></I></P><HR>
+<BR>
+This page was generated with the help of <A HREF="http://www.linuxsupportline.com/~doc++">DOC++</A>.
+</BODY>
+</HTML>

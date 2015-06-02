@@ -1,0 +1,68 @@
+////////////////////////////////////////////////////////////
+// TucanTypes (idl definition)
+// Copyright (C) 2000, Difinium
+////////////////////////////////////////////////////////////
+// Filename:        TucanTypes.idl
+// Description:    	idl definition for the exceptions 
+// Created at:      Thu Jun 29 16:40:51 PDT 2000
+////////////////////////////////////////////////////////////
+
+typedef sequence<string> TucanStringList;
+typedef sequence<long> TucanLongList;
+typedef sequence<short> TucanShortList;
+interface TucanAddress;
+typedef sequence<TucanAddress> TucanAddressSeq;
+interface TucanFolder;
+typedef sequence<TucanFolder> TucanFolderSeq;
+interface TucanMessage;
+typedef sequence<TucanMessage> TucanMessageSeq;
+typedef sequence<octet> TucanRawData;
+
+const long MESSAGE_READ      = 0x00000001;
+const long MESSAGE_EXPUNGED  = 0x00000002;
+const long MESSAGE_IMPORTANT = 0x00000004;
+const long MESSAGE_REPLIED   = 0x00000008;
+
+// I really hate to do this. I consider it a hack, but due to the way CORBA is working
+// right now, it causes some major slow downs if we don't.  Perhaps I'll come up with
+// a better implementation for this in TUCAN 2. 
+
+struct TucanMessageHeader
+{
+	string fromaddr;
+	string subject;
+	long size;
+	long date;
+	short flags;
+	short attach;
+};
+
+typedef sequence<TucanMessageHeader> TucanMessageHeaderSeq;
+
+struct TucanAttribute
+{
+        string name;
+        string value;
+};
+
+typedef sequence<TucanAttribute> TucanAttributeSeq;
+
+interface TucanStore;
+
+exception TucanMsgException 
+{
+	string number;
+	string folder;
+	string exString;
+};
+exception TucanAuthException 
+{
+	string username;
+	string password;
+	long pinnumber;
+	string exString;
+};
+exception TucanException 
+{
+	string exString;
+};

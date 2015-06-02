@@ -1,0 +1,145 @@
+#!/usr/bin/python
+
+###############################
+# Tucan BBS
+#
+# This script test Tucan's BBS
+###############################
+
+from omniORB import CORBA
+import sys, time, string
+sys.path.insert(0, "/usr/local/tucan")
+import _GlobalIDL
+
+# Valid user name and password
+username = "username"
+password = "password"
+
+# Number of posts that will be created
+NUM_OF_POSTS = 100
+
+# Create a session
+orb = CORBA.ORB_init(sys.argv, CORBA.ORB_ID)
+ior = open('/tmp/tucan_session.ior').readline()
+myFactory = orb.string_to_object(ior)
+
+try:
+	mySession = myFactory.create()
+
+	# Authorize the session
+	myAuth = mySession.getAuth()
+	myAuth.setUserName(username)
+	myAuth.setPassword(password)
+	mySession.authorize(myAuth)
+
+	# Get a BBS store
+	myStore = mySession.getStoreByProtocol('bbs')
+	myTransport = mySession.getTransportByProtocol('bbs')
+
+	# Find the number of forums
+	myForums = myStore.listFolders()
+	numForums = len(myForums)
+
+	# Create a new forum
+	myNewFolder = myStore.getNewFolderObject()
+	myNewFolder.setName("New Folder")
+	myNewForum = myNewFolder.getNewMessageObject()
+	myNewForum.setSubject("TUCAN/SAM")
+	myNewForum.setPid(0)
+	myNewForum.setBid(numForums + 1)
+	myData = myNewForum.getNewDataObject()
+	myData.setText("This is a test forum")
+	myData.setContentType("text/plain")
+	myNewForum.setDataObject(myData)
+	myAddress = myNewForum.getNewAddressObject()
+	myAddress.setAddress(username)
+	myNewForum.setRecipient('to', myAddress)
+	myFrom = myNewForum.getNewAddressObject()
+	myFrom.setAddress('TucanTestSystem2000')
+	myNewForum.setFrom(myFrom)
+	myTransport.send(myNewForum)
+	myNewForum.destroy()
+	myNewFolder.destroy()
+
+	# Get the last forum
+	myForums = myStore.listFolders()
+	numForums = len(myForums)
+	myForum = myStore.getFolder(myForums[numForums - 1])
+	forumId = myForum.getBid()
+	forumPid = myForum.getPid()
+
+	for count in range(NUM_OF_POSTS):	
+		myNewPost = myForum.getNewMessageObject()
+		myNewPost.setSubject("This is a new post")
+		myNewPost.setPid(string.atoi(myForums[numForums - 1]))
+		myNewPost.setBid(1)
+		myData = myNewPost.getNewDataObject()
+		myData.setText("This is a TUCAN test message")
+		myData.setContentType("text/plain")
+		myNewPost.setDataObject(myData)
+		myAddress = myNewPost.getNewAddressObject()
+		myAddress.setAddress(username)
+		myNewPost.setRecipient('to', myAddress)
+		myFrom = myNewPost.getNewAddressObject()
+		myFrom.setAddress('TucanTestSystem2000')
+		myNewPost.setFrom(myFrom)
+		myTransport.send(myNewPost)
+		myNewPost.destroy()
+
+	# Get a list of all the posts
+	allPosts = myForum.listFolders()
+
+	# Delete the posts
+	for post in allPosts:
+		myForum.deleteMessage(string.atoi(post))
+
+	# Delete the forum
+	myForum.deleteFolder()
+
+	# Now check different TucanBbs Functions
+	if myForum.exists():
+		allPosts = myForum.listFolders()
+
+	defaultForum = myStore.getDefaultFolder()
+	folderList = defaultForum.listFolders()
+
+	if folderList != []:
+		myPostFolder = defaultForum.getFolder(folderList[0])
+		myPostFolder.setParent(defaultForum)
+		myParent = myPostFolder.getParent()
+		myPostFolder.destroy()
+
+		myPostMsg = defaultForum.getMessage(string.atoi(folderList[0]))
+		myPostMsgBid = myPostMsg.getBid()
+		myPostMsgPid = myPostMsg.getPid()
+		myPostMsg.setAccessType(0)
+		accessType = myPostMsg.getAccessType()
+		recps = myPostMsg.getRecipients("to")
+		allRecps = myPostMsg.getAllRecipients()
+		myPostMsg.destroy()
+
+		myMessages = defaultForum.getMessages()
+		for i in myMessages:
+			i.destroy()
+
+	testFolder = defaultForum.getNewFolderObject()
+	testFolder.setName(testFolder.getName())
+	testFolder.setFullName(testFolder.getFullName())
+	testFolder.destroy()
+	defaultForumId = defaultForum.getBid()
+	defaultForumPid = defaultForum.getPid()
+	defaultForum.destroy()	
+
+	myForum.destroy()
+	myTransport.destroy()
+	myStore.destroy()
+	mySession.destroy()
+	myAuth.destroy()
+
+except _GlobalIDL.TucanAuthException, ex:
+	print "Username: %s" % (ex[0])
+	print "Password: %s" % (ex[1])
+	print "Pinnumber: %d" % (ex[2])
+	print ex[3]
+	myAuth.destroy()
+	mySession.destroy()

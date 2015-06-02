@@ -1,0 +1,79 @@
+/**
+  	TucanUserPrefs is the class that surrounds user preferences.  It contains a few very simple 
+	features: retrieving an item by key, retrieving all items, setting an item, and deleting
+	and item.  To get a TucanUserPrefs object you first need to instantiate a TucanUserPrefsFactory
+	object and then call the create() method.
+*/
+
+interface TucanUserPrefs {
+
+	/** 
+		getAllAttributes() takes a user name as a string and returns  TucanAttributeSeq containing all preferences 
+		for the user.   A TucanException will be raised on error
+	*/
+	TucanAttributeSeq getAllAttributes() 
+		raises (TucanException);
+
+	/** 
+		getAttribute() takes a user name and a key as a string and returns a value as a string.  
+		It raises an exception on error.
+	*/
+	string getAttribute(in string key) 
+		raises (TucanException);
+
+	/**
+		setAttribute() takes a user name, key, and value as a string.  It sets the desired prefernece in the
+		database.  If the preference previouisly exists it will be updated with the new information.  A
+		TucanException will be raised on error.
+	*/
+
+	void setAttribute(in string key, in string value) 
+		raises (TucanException);
+
+	/**
+		deleteAttribute() takes a name and key as a string.  It attempts to delete the preference
+		entry from the database.  A TucanException will be raised on error.
+	*/
+	void deleteAttribute(in string key) 
+		raises (TucanException);
+
+	/**
+		setAuth() takes an Auth object and sets it as the current auth object for the
+		UserPrefs object
+	*/
+
+	void setAuth(in TucanAuth myAuth)
+		raises (TucanException);
+
+	/**
+		getAuth() returns the TucanUserPrefs object's current Auth Object.
+	*/
+
+	TucanAuth getAuth()
+		raises (TucanException);
+	
+	/**
+		destroy() removes the TucanUserPrefs object and frees the memory associated with it.  YA
+		client should always call this method in order to prevent memory leaks.
+	*/
+
+	void destroy();
+};
+
+
+
+/**
+	The TucanUserPrefsFactory provides us with a factory for generating TucanUserPrefs objects.
+	Objects created by this factory will be of type TucanUserPrefs. This allows us to ensure 
+	that our system will be extensible
+*/
+
+interface TucanUserPrefsFactory
+{
+	/**
+		The create() method will return a new reference to a TucanUserPrefs object.  This will
+		allow us to have multiple TucanUserPrefs objects at a time.
+	*/
+
+	TucanUserPrefs create();
+};

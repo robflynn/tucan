@@ -1,0 +1,380 @@
+#!/usr/bin/python
+
+from omniORB import CORBA
+import sys, os, mimetools, time, utils
+import _GlobalIDL
+
+# Please set these values
+USERNAME = "username"
+PASSWORD = "password"
+
+orb = CORBA.ORB_init(sys.argv, CORBA.ORB_ID)
+ior = open('/tmp/tucan_session.ior').readline()
+fact = orb.string_to_object(ior)
+
+# Get a Session
+mySession = fact.create()
+print "mySession created"
+
+# Get an empty auth object
+myAuth = mySession.getAuth()
+print "myAuth created"
+
+# Put in the proper values
+myAuth.setUserName( USERNAME )
+myAuth.setPassword( PASSWORD )
+print "username and password set"
+
+# Authorize the session
+try:
+	mySession.authorize(myAuth)
+	print "session authorized"
+except:
+	print "session not authorized"
+
+# Get our store
+myStore = mySession.getStoreByProtocol("addressbook")
+print "addressbook store created"
+
+# Get our store's name
+storeName = myStore.getName()
+print "store's name: " + storeName
+
+# Change the store's name
+myStore.setName("New Name")
+print "store's name changed"
+
+# Get the name again
+storeName = myStore.getName()
+print "store's name: " + storeName
+
+# Get a list of folders and print it
+folder_list = myStore.listFolders()
+print "folder list created"
+
+# Get a default folder
+myFolder1 = myStore.getDefaultFolder()
+print "myFolder1 created"
+
+# Give it a name
+myFolder1.setName("buddies")
+myFolder1Name = myFolder1.getName()
+print "myFolder1's name: " + myFolder1Name
+
+# Get a folder
+myFolder2 = myStore.getNewFolderObject()
+print "myFolder2 created"
+
+# Give it a name
+myFolder2.setName("family")
+myFolder2Name = myFolder2.getName()
+print "myFolder2's name: " + myFolder2Name
+
+# Get a new folder from myFolder1
+myFolder3 = myFolder1.getNewFolderObject()
+print "myFolder3 created"
+
+# Give it a name
+myFolder3.setName("soccer team")
+myFolder3Name = myFolder3.getName()
+print "myFolder3's name: " + myFolder3Name
+
+# Get new message objects and set their groups
+myMessage1 = myFolder1.getNewMessageObject()
+print "myMessage1 created"
+myMessage1.setGroup(myFolder1.getName())
+myMessage1Group = myMessage1.getGroup()
+print "myMessage1's group: " + myMessage1Group
+
+myMessage2 = myFolder2.getNewMessageObject()
+print "myMessage2 created"
+myMessage2.setGroup(myFolder2.getName())
+myMessage2Group = myMessage2.getGroup()
+print "myMessage2's group: " + myMessage2Group
+
+myMessage3 = myFolder3.getNewMessageObject()
+print "myMessage3 created"
+myMessage3.setGroup(myFolder3.getName())
+myMessage3Group = myMessage3.getGroup()
+print "myMessage3's group: " + myMessage3Group
+
+# Set messages' subjects and print them out
+myMessage1.setSubject("My Buddy")
+print "myMessage1's subject: " + myMessage1.getSubject()
+
+myMessage2.setSubject("My Family")
+print "myMessage2's subject: " + myMessage2.getSubject()
+
+myMessage3.setSubject("My Team")
+print "myMessage3's subject: " + myMessage3.getSubject()
+
+# Get new data objects and set content type
+myData1 = myMessage1.getNewDataObject()
+print "myData1 created"
+myData1.setContentType("text/html")
+myData1Type = myData1.getContentType()
+print "myData1's content type: " + myData1Type
+
+myData2 = myMessage2.getNewDataObject()
+print "myData2 created"
+myData2.setContentType("text/html")
+myData2Type = myData2.getContentType()
+print "myData1's content type: " + myData2Type
+
+myData3 = myMessage3.getNewDataObject()
+print "myData3 created"
+myData3.setContentType("text/html")
+myData3Type = myData1.getContentType()
+print "myData1's content type: " + myData3Type
+
+# Load the data objects into the message objects
+myMessage1.setDataObject(myData1)
+print "myData1 loaded into myMessage1"
+
+myMessage2.setDataObject(myData2)
+print "myData2 loaded into myMessage2"
+
+myMessage3.setDataObject(myData3)
+print "myData3 loaded into myMessage3"
+print ""
+
+# Now lets load some attributes
+myMessage1.setAttribute("firstname", "Matt")
+myMessage1.setAttribute("lastname", "Davis")
+myMessage1.setAttribute("email", "mattd@tgflinux.com")
+myMessage1.setAttribute("cell", "205-555-1010")
+myMessage1.setAttribute("IP", "192.168.1.115")
+
+myMessage2.setAttribute("firstname", "Mom")
+myMessage2.setAttribute("phone", "205-555-7070")
+myMessage2.setAttribute("email", "mom@home.com")
+myMessage2.setAttribute("address", "123 Main St.")
+myMessage2.setAttribute("cell", "205-862-1111")
+
+myMessage3.setAttribute("firstname", "Nick")
+myMessage3.setAttribute("number", "10")
+myMessage3.setAttribute("position", "forward")
+myMessage3.setAttribute("cell", "205-555-2222")
+myMessage3.setAttribute("city", "Homewood")
+
+# Get the attributes and print them out
+print "myMessage1's attributes:"
+for attribute in myMessage1.getAttributes():
+	print " " + attribute.name + ": " + myMessage1.getAttribute(attribute.name)
+print ""
+
+print "myMessage2's attributes:"
+for attribute in myMessage2.getAttributes():
+	print " " + attribute.name + ": " + myMessage2.getAttribute(attribute.name)
+print ""
+
+print "myMessage3's attributes:"
+for attribute in myMessage3.getAttributes():
+	print " " + attribute.name + ": " + myMessage3.getAttribute(attribute.name)
+print ""
+
+# Get the data objects out of the messages
+myData1 = myMessage1.getDataObject()
+myText1 = myData1.getText()
+print "Text loaded into myData1:"
+print myText1
+
+myData2 = myMessage2.getDataObject()
+myText2 = myData2.getText()
+print "Text loaded into myData2:"
+print myText2
+
+myData3 = myMessage3.getDataObject()
+myText3 = myData3.getText()
+print "Text loaded into myData3:"
+print myText3
+
+# Create some new address objects and set them
+myAddress1 = myMessage1.getNewAddressObject()
+myAddress1.setAddress("matt@tgflinux.com")
+myAddress2 = myMessage1.getNewAddressObject()
+myAddress2.setAddress("jared@tgflinux.com")
+myAddress3 = myMessage1.getNewAddressObject()
+myAddress3.setAddress("rob@tgflinux.com")
+
+myAddress4 = myMessage2.getNewAddressObject()
+myAddress4.setAddress("matt@tgflinux.com")
+myAddress5 = myMessage2.getNewAddressObject()
+myAddress5.setAddress("jared@tgflinux.com")
+
+myAddress6 = myMessage3.getNewAddressObject()
+myAddress6.setAddress("matt@tgflinux.com")
+
+# Load the addresses into message objects
+myMessage1.setRecipient("to", myAddress1)
+AddrSeq = [myAddress2, myAddress3]
+myMessage1.addRecipients("to", AddrSeq)
+
+myMessage2.setRecipient("to", myAddress4)
+myMessage2.addRecipient("to", myAddress5)
+
+myMessage3.setRecipient("to", myAddress6)
+
+# Print out the recipients
+print "myMessage1's \'to\' recipients:"
+for address in myMessage1.getRecipients("to"):
+	print address.getAddress()
+print ""
+
+print "myMessage1's recipients:"
+for address in myMessage1.getAllRecipients():
+	print address.getAddress()
+print ""
+
+print "myMessage2's \'to\' recipients:"
+for address in myMessage2.getRecipients("to"):
+	print address.getAddress()
+print ""
+
+print "myMessage2's recipients:"
+for address in myMessage2.getAllRecipients():
+	print address.getAddress()
+print ""
+
+print "myMessage3's \'to\' recipients:"
+for address in myMessage3.getRecipients("to"):
+	print address.getAddress()
+print ""
+
+print "myMessage3's recipients:"
+for address in myMessage3.getAllRecipients():
+	print address.getAddress()
+print ""
+
+# Create some transport objects
+myTransport1 = mySession.getTransportByProtocol("addressbook")
+myTransport2 = mySession.getTransportByProtocol("addressbook")
+myTransport3 = mySession.getTransportByProtocol("addressbook")
+print "addressbook transports created"
+print ""
+
+# Send the messages multiple times to the DB
+count = 50
+
+while count:
+	try:
+		myTransport1.send(myMessage1)
+		print "myMessage1 sent"
+	except:
+		print "myMessage1 failed to be sent"
+	
+	try:
+		myTransport2.send(myMessage2)
+		print "myMessage2 sent"
+	except:
+		print "myMessage2 failed to be sent"
+	
+	try:
+		myTransport3.send(myMessage3)
+		print "myMessage3 sent"
+	except:
+		print "myMessage3 failed to be sent"
+
+	count = count - 1
+print ""
+
+#Destroy the old objects
+myTransport1.destroy()
+myTransport2.destroy()
+myTransport3.destroy()
+myMessage1.destroy()
+myMessage2.destroy()
+myMessage3.destroy()
+myFolder1.destroy()
+myFolder2.destroy()
+myFolder3.destroy()
+
+# Now that our DB is full, lets play!
+
+FolderList = myStore.listFolders()
+print "Folder list: "
+print FolderList
+print ""
+
+for folder in FolderList:
+
+	# Get the folder
+	myFolder = myStore.getFolder(folder)
+
+	# See if it actually exists
+	if myFolder.exists():
+		print "Folder " + myFolder.getName() + " exists"
+		print "and contains"
+		print myFolder.getMessageCount()
+		print "entries"
+	else:
+		print "Folder " + myFolder.getName() + " does not exist"
+	print ""
+
+	# Get message number #2 and its attributes
+	myMessage = myFolder.getMessage(2)
+	myAttributes = myMessage.getAttributes()
+
+	for attribute in myAttributes:
+		print attribute.name + ": " + attribute.value
+	print ""
+
+	myMessage.destroy()
+
+	i = myFolder.getMessageCount()
+
+	# Delete the odd numbered entries
+	while i:
+		if i % 2 == 1:
+			myFolder.deleteMessage(i)
+		i = i - 1
+
+	print "Folder " + myFolder.getName() + " now contains"
+	print myFolder.getMessageCount()
+	print "entries"
+	print ""
+
+	myMessages = myFolder.getMessages()
+
+	# Loop through all the messages
+	for message in myMessages:
+
+		message.getAttribute("someAttribute")
+
+		myGroup = message.getGroup()
+		print myGroup
+
+		myNumber = message.getMessageNumber()
+		print myNumber
+
+	print ""
+		
+	j = myFolder.getMessageCount()
+
+	while j:
+		myFolder.deleteMessage(j)
+		j = j - 1
+
+	if myFolder.exists():
+		print "Folder " + myFolder.getName() + " now contains"
+		print myFolder.getMessageCount()
+		print "entries"
+		print ""
+	else:
+		print "Folder " + myFolder.getName() + " is now empty"
+		print ""
+
+	myFolder.destroy()
+
+myFolder = myStore.getFolder("EmptyFolder")
+
+if myFolder.exists():
+	print "Folder " + myFolder.getName() + " exists"
+else:
+	print "Folder " + myFolder.getName() + " does not exist"
+
+# Clean up the memory
+myFolder.destroy()
+myStore.destroy()
+myAuth.destroy()
+mySession.destroy()

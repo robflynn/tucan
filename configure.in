@@ -1,0 +1,55 @@
+dnl Process this file with autoconf to produce a configure script.
+AC_INIT(src/TucanSK.cc)
+AM_INIT_AUTOMAKE(tucan, 1.4)
+
+dnl Checks for programs.
+AC_PROG_CC
+AC_PROG_CXX
+AC_PROG_INSTALL
+
+dnl Checks for libraries.
+
+AC_CHECK_LIB(crypt, main,LIBCRYPT="-lcrypt", AC_MSG_ERROR([Please install crypt before continuing]))
+AC_CHECK_LIB(pq, main, LIBS="$LIBS -lpq", AC_MSG_ERROR([Please install postgresql before continuing]))
+AC_CHECK_LIB(pthread, main, LIBS="$LIBS -lpthread", AC_MSG_ERROR([Please install pthreads before continuing]))
+XERCESC_CHECK
+OMNIORB_CHECK
+
+if test "$has_omniORB3" = ""; then 
+	AC_MSG_ERROR([
+	Please download and install omniORB3.  TUCAN will not function without it])
+fi
+
+dnl Checks for header files.
+AC_HEADER_STDC
+
+AC_CHECK_HEADERS(signal.h)
+
+dnl Checks for typedefs, structures, and compiler characteristics.
+AC_C_CONST
+AC_C_INLINE
+AC_TYPE_SIZE_T
+
+AC_SUBST(LIBS)
+AC_SUBST(LIBCRYPT)
+
+dnl Checks for library functions.
+
+AC_OUTPUT(Makefile
+	tucan.spec
+	src/Makefile 
+	idl/Makefile 
+	init/tucan
+	init/Makefile
+	config/Makefile 
+		config/procmail.tucan
+	docs/Makefile 
+		docs/html/Makefile
+	db/Makefile
+	utils/Makefile
+	m4/Makefile
+	examples/Makefile
+		examples/clients/Makefile
+	test/Makefile
+		test/TucanAddressBook/Makefile
+		test/TucanEmail/Makefile)

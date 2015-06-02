@@ -1,0 +1,87 @@
+#!/bin/sh -norc
+# chkconfig: 2345 20 80
+# description: Starts the 'tucan' service as user tucan. 
+#
+. /etc/rc.d/init.d/functions
+user="tucan"
+uid=`id -un`
+if test "$1" = ""; then
+	echo "usage: $0 [start|stop|restart|status]"
+	exit
+else
+	cmd="@prefix@/bin/tucan"
+fi
+if [ "$uid" != "root" ] && [ "$uid" != "$user" ]; then
+	echo "Only $user can run $0"
+	exit -1
+fi
+
+start() {
+		echo -n "Starting tucan:"
+		if [ "$uid" = "root" ]; then
+			 su - $user -c "$cmd &";
+		elif [ "$uid" = "$user" ]; then
+			"$cmd &"
+		else
+			echo "Only $user can run $0"
+			failure
+		fi
+
+		if test "$?" = "0"; then
+			success
+		else
+			failure
+		fi
+		
+		echo
+}
+
+stop() {
+		echo -n "Stopping tucan:"
+
+		pid=`pidof tucan | awk '{print $1}'`
+	
+		if [ ! $pid ]; then
+			failure
+		else
+			
+			for x in `ps auxw | grep $cmd | awk '{print $2}'` ; do kill -9 $x >/dev/null 2>&1 ; done
+			
+			pid=`pidof tucan | awk '{print $1}'`
+			
+			if [ ! $pid ]; then
+				success
+			else
+				failure
+			fi
+		fi
+
+		echo
+}
+
+
+case "$1" in
+
+	start)
+		start
+		;;
+		
+	stop)
+		stop
+		;;
+
+	restart)
+		stop
+		start
+		;;
+	
+	status)
+		status $PROG
+		;;
+
+	*)
+		echo "usage: $0 [start|stop|restart|status]"
+		exit 1
+		;;
+esac
+exit $?

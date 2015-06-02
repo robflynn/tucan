@@ -1,0 +1,13 @@
+////////////////////////////////////////////////////////////
+// TucanVoiceAddress (idl definition)
+//
+// Copyright (C) 2000, Difinium
+////////////////////////////////////////////////////////////
+// Filename:        TucanVoiceAddress.idl
+// Description:     idl definition of TucanVoiceAddress
+// Created at:      Thu Jul 27 15:57:28 PDT 2000
+////////////////////////////////////////////////////////////
+
+interface TucanVoiceAddress : TucanAddress {};
+
+interface TucanVoiceAddressFactory : TucanAddressFactory {}; 

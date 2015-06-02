@@ -1,0 +1,13 @@
+////////////////////////////////////////////////////////////
+// TucanEmailStore (idl definition)
+//
+// Copyright (C) 2000, Difinium
+////////////////////////////////////////////////////////////
+// Filename:        TucanEmailStore.idl
+// Description:     idl definition of TucanEmailStore
+// Created at:      Thu Jul 27 15:57:28 PDT 2000
+////////////////////////////////////////////////////////////
+
+interface TucanEmailStore : TucanStore {};
+
+interface TucanEmailStoreFactory : TucanStoreFactory {}; 

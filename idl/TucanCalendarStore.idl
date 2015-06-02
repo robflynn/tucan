@@ -1,0 +1,13 @@
+////////////////////////////////////////////////////////////
+// TucanCalendarStore (idl definition)
+//
+// Copyright (C) 2000, Difinium
+////////////////////////////////////////////////////////////
+// Filename:        TucanCalendarStore.idl
+// Description:     idl definition of TucanCalendarStore
+// Created at:      Thu Jul 27 15:57:28 PDT 2000
+////////////////////////////////////////////////////////////
+
+interface TucanCalendarStore : TucanStore {};
+
+interface TucanCalendarStoreFactory : TucanStoreFactory {}; 

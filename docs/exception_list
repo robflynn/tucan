@@ -1,0 +1,33 @@
+TucanException
+
+	General Exceptions -
+		Error: Unknown error in method_name_here().
+		Error: Method method_name_here() has not been implemented.
+		Error: Error creating object_name_here object in method_name_here().
+
+	Database Exceptions -
+		Error: Error in database connection in method_name_here().
+		Error: Error in database query in method_name_here().
+
+	Folder Exceptions - 
+		Error: Folder folder_name_here does not exist.
+		Error: Cannot create folder folder_name_here in method_name_here().
+		Error: Error modifying folder object im method_name_here().
+		Error: Default folder cannot be deleted.
+		Error: Error renaming folder in method_name_here().
+		Error: Error opening folder in method_name_here().
+		Error: Folder folder_name_here does not contain the folder other_folder_name_here.
+		Error: Folder folder_name_here does not contain folders.
+
+	Message Exceptions -
+		Error: Requested message out of range.
+		Error: Data object can not be retrieved.
+		Error: Please set the content-type for the message.
+		Error: Error retrieving attribute.
+
+	Address Exceptions -
+		Error: Address of type type_here does not exist.
+
+	Config Exceptions -
+		Error: Error getting ior filename from TucanConfig in method_name_here().
+		Error: Error reading ior file file_name_here

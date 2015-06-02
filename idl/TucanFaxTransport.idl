@@ -1,0 +1,13 @@
+////////////////////////////////////////////////////////////
+// TucanFaxTransport (idl definition)
+//
+// Copyright (C) 2000, Difinium
+////////////////////////////////////////////////////////////
+// Filename:        TucanFaxTransport.idl
+// Description:     idl definition of TucanFaxFolder
+// Created at:      Wed Aug  9 16:51:39 PDT 2000
+////////////////////////////////////////////////////////////
+
+interface TucanFaxTransport : TucanTransport {};
+
+interface TucanFaxTransportFactory : TucanTransportFactory {}; 

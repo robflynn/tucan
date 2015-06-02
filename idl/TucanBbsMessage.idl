@@ -1,0 +1,26 @@
+////////////////////////////////////////////////////////////
+// TucanBbsMessage (idl definition)
+//
+// Copyright (C) 2000, Difinium
+////////////////////////////////////////////////////////////
+// Filename:        TucanBbsMessage.idl
+// Description:     idl definition of TucanBbsMessage
+// Created at:      Mon Jul 17 11:21:07 PDT 2000 
+////////////////////////////////////////////////////////////
+
+interface TucanBbsMessage : TucanMessage 
+{
+	//Methods
+	short getBid();	
+	void setBid(in short bid);
+	long getPid();
+	void setPid(in long pid);
+	string getAuthor();
+	void setAuthor(in string author);
+	short getAccessType();
+	void setAccessType(in short accesstype);
+	void updateSubject(in string subject);
+	void updateBody(in string body);
+};
+
+interface TucanBbsMessageFactory : TucanMessageFactory {}; 

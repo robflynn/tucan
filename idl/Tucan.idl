@@ -1,0 +1,1639 @@
+typedef sequence<string> TucanStringList;
+typedef sequence<long> TucanLongList;
+typedef sequence<short> TucanShortList;
+interface TucanAddress;
+typedef sequence<TucanAddress> TucanAddressSeq;
+interface TucanFolder;
+typedef sequence<TucanFolder> TucanFolderSeq;
+interface TucanMessage;
+typedef sequence<TucanMessage> TucanMessageSeq;
+typedef sequence<octet> TucanRawData;
+
+const long MESSAGE_READ      = 0x00000001;
+const long MESSAGE_EXPUNGED  = 0x00000002;
+const long MESSAGE_IMPORTANT = 0x00000004;
+const long MESSAGE_REPLIED   = 0x00000008;
+
+// I really hate to do this. I consider it a hack, but due to the way CORBA is working
+// right now, it causes some major slow downs if we don't.  Perhaps I'll come up with
+// a better implementation for this in TUCAN 2. 
+
+struct TucanMessageHeader
+{
+	string fromaddr;
+	string subject;
+	long size;
+	long date;
+	short flags;
+	short attach;
+};
+
+typedef sequence<TucanMessageHeader> TucanMessageHeaderSeq;
+
+struct TucanAttribute
+{
+        string name;
+        string value;
+};
+
+typedef sequence<TucanAttribute> TucanAttributeSeq;
+
+interface TucanStore;
+
+exception TucanMsgException 
+{
+	string number;
+	string folder;
+	string exString;
+};
+exception TucanAuthException 
+{
+	string username;
+	string password;
+	long pinnumber;
+	string exString;
+};
+exception TucanException 
+{
+	string exString;
+};
+/**
+	TucanAddress provides a base class for different services
+	to inherit from and implement.  Each service needs to 
+	implement it own address so that messages from that service
+	can be passed to other services and be handled properly.
+*/
+interface TucanAddress 
+{
+	/**
+		The getAddress() method returns the current
+		address that is being held by the servant.  If something
+		strange happens then this method will raise a TucanException.
+	*/
+	string getAddress()
+		raises(TucanException);
+	/**
+		The setAddress() method provides a way for the client to
+		set the address that is being held by the servant.  If something
+		strange takes place then a TucanException will be raised.
+	*/
+	void setAddress(in string address)
+		raises(TucanException);
+	/**
+		The equals() method provides an interface for comparing the
+		current address that is being wrapped by this servant object
+		to the address being wrapped by another servant.  If something
+		strange takes place in this method then a TucanException will be
+		raised.
+	*/
+	boolean equals(in TucanAddress address)
+		raises(TucanException);
+	/**
+		The destroy() method removes the servant from memory and should
+		always be called by the client when they are finished with the
+		address servant so that memory leaks do not occur.
+	*/
+	void destroy()
+		raises(TucanException);
+};
+
+/**
+	TucanAddressFactory provides a base factory implementation for servants
+	to inherit from.  This is done so that addresses can be given out by their
+	base class TucanAddress.  This is handy when extending the system.
+*/
+interface TucanAddressFactory
+{
+	/** 
+		The create() method will return a new reference to a TucanAddress 
+		object.  This is so that many different addresses can exists at the
+		same time.  If something strange goes wrong this method will raise a
+		TucanException.
+	*/
+	TucanAddress create()
+		raises(TucanException);
+};
+/**
+	TucanAuth is the class wrapper for user data that is needed
+	for the authentication process.  It has the capabilty of
+	taking a pin number or a password for authentication but
+	both are not needed.  So if you only want to use the passward
+	capabilites then do so and do not concern yourself with the
+	pin numbers.  A TucanAuth object is generally only gotten
+	from a TucanSession object so make sure that you have become
+	familar with that interface as well.
+*/
+interface TucanAuth 
+{
+	///The getUid() method returns the uid of the current user.
+	string getUid()
+		raises(TucanException, TucanAuthException);
+	///The setUid() method is used internally to set the uid of user.
+	void setUid(in string uid)
+		raises(TucanException, TucanAuthException);
+	///The getUserName() method returns the username for the current user.
+	string getUserName()
+		raises(TucanException, TucanAuthException);
+	///The setUserName() method allows for clients to set the username.
+	void setUserName(in string name)
+		raises(TucanException, TucanAuthException);
+	///The getPassword() method returns the password of the current user.
+	string getPassword()
+		raises(TucanException, TucanAuthException);
+	///The setPassword() method allows for clients to set the password.
+	void setPassword(in string password)
+		raises(TucanException, TucanAuthException);
+	///The getPinNumber() method returns the pin number of the current user.
+	long getPinNumber()
+		raises(TucanException, TucanAuthException);
+	///The setPinNumber() method allows for clients to set the pin number.
+	void setPinNumber(in long pin)
+		raises(TucanException, TucanAuthException);
+	/**
+		The destroy() method removes the TucanAuth servant object from
+		memory.  Clients should always call the destroy method so that
+		memory leaks do not take place.
+	*/
+	void destroy()
+		raises(TucanException);
+};
+/**
+	The TucanAuthFactory class provides an interface for getting TucanAuth
+	servants.  This is done so that all TucanAuth objects are different
+	references.
+*/
+interface TucanAuthFactory 
+{
+	///The create() method returns a new instance of a TucanAuth servant
+	TucanAuth create()
+		raises(TucanException);
+};
+/** 
+	TucanData is a wrapper class for storing the data for a
+	message in different formats.  This is handy so that clients
+	can get access to the data in formats that might be better
+	suited for different presentation mediums.  So of the methods
+	may not be supported just yet but if that is the case they will
+	throw a TucanException reporting that the method is not implemented.
+*/
+
+interface TucanData 
+{
+
+	/**
+		TucanPart is a struct that contains two attributes: type and data.
+		Both attributes are of type string and represent one part of a multipart
+		data object.
+	*/
+	
+	struct TucanPart
+	{
+		string type;
+		TucanRawData data;
+		string encoding;
+		TucanStringList header;
+	};
+
+	/**
+		The getText() method will send back the only the normal text in
+		the body of the message.  So this would be used if a client only
+		wanted the text and wished to disregard anything else that might
+		be attached to the message.
+	*/
+	string getText()
+		raises(TucanException);
+	void setText(in string text)
+		raises(TucanException);
+	/**
+		The getXML() method will return the data of the message marked up
+		in a standard way for all Tucan Messages.  This format has not yet
+		been determined but when it is it will be documented for all to see.
+		If anything strange takes place then this method will raise a 
+		TucanException.
+	*/
+	string getXML()
+		raises(TucanException);
+	void setXML(in string xml)
+		raises(TucanException);
+	/**
+		The getMime() method will return the data of the message in mime format.
+		This is used mainly for email and such but can also be used for other
+		messages on the system.  If something strange takes place then this method
+		will raise a TucanException.
+	*/
+	string getMime()
+		raises(TucanException);
+	void setMime(in string mime)
+		raises(TucanException);
+
+	/**
+		The getData() method returns the raw data for the message.  What
+		this data is totally depends on the implementation.  It could be
+		sound data or text etc... If an error occurs in this method then
+		a TucanException should be raised.
+	*/
+	TucanRawData getData()
+		raises(TucanException);
+
+	/**
+		The setData() method allows for the raw data of the message to be
+		set.  In most cases this would only be used internally but it is
+		possible that a client would need to use this as well.  If an error
+		occurs then this method should raise a TucanException.
+	*/
+	void setData(in TucanRawData data)
+		raises(TucanException);
+
+	/**
+		The getPath() method is a method that will simply return the path to the
+		message on the system.  This is handy because it may be helpful for the client
+		to know were a message resides.  This could be in a user directory or in a
+		database on the system or somewhere else.  If something strange takes place
+		this method will raise a TucanException.
+	*/
+
+	string getPath()
+		raises(TucanException);
+
+	void setPath(in string path)
+		raises(TucanException);
+
+	string getSize()
+		raises(TucanException);
+
+	void setSize(in string size)
+		raises(TucanException);
+
+	string getContentType()
+		raises(TucanException);
+
+	void setContentType(in string type)
+		raises(TucanException);
+
+	/**
+		The getPartCount() method will return an integer representing the total number of
+		parts that belongs to the current data object.  A TucanException will be raised if
+		an error occurs
+	*/
+
+	long getPartCount()
+		raises(TucanException);
+
+	/**
+		The addPart() method takes two arguments of type string: a content type, and the message
+		data.  It will increase the part count for the message and will store the information for
+		later retrieval.  A TucanException will be raised if an error occurs,
+	*/
+
+	void addPart(in string type, in TucanStringList header, in TucanRawData data)
+		raises(TucanException);
+
+	/**
+		The listParts() method will return a TucanStringList of the content types of each part
+		that belongs to a data object.  A TucanException will be raised if an error occurs.
+	*/
+
+	TucanStringList listParts()
+		raises(TucanException);
+
+	/**
+		The getPart() method takes an integer and returns a TucanPart struct that represents
+		the part requested.  A TucanException will be raised if an error occurs
+	*/
+		
+	TucanPart getPart(in long num)
+		raises(TucanException);
+	
+	/**
+		The destroy() method removes the object from memory.  All clients need to make sure
+		that the destroy() method is being called when they are done with the data object so that
+		memory leaks do not occur.  If an error occurs in this method a TucanException should
+		be raised.
+	*/
+
+	void destroy()
+		raises(TucanException);
+};
+
+/**
+	The TucanMessageFactory interface is a base implementation of a message factory for
+	services to inherit from and implement.
+*/
+
+interface TucanDataFactory
+{
+	/** The create() method returns a reference to a new data object for use.  This approach
+	    is used so that multiple instances of data objects can exist at the same time.  If an
+	    error occurs then a TucanException should be raised.
+	 */
+	
+	TucanData create()
+		raises(TucanException);
+};
+/**
+	The TucanFolder interface provides a base implementation for a
+	folder in the Tucan architecture.  By itself it provides absolutley
+	no functionality.  It must be inherited from and the the methods
+	implemented in the child.  Folder are a more detailed container of
+	messages than a store which is more general.  Folders do not actually
+	have to pyhsically exist on the system they can be virtual.  Also
+	folder could contain messages in a database or in a directory etc...
+*/
+interface TucanFolder 
+{
+	//Methods
+	/**
+		The exists() method returns a boolean value telling the client whether or not
+		the folder actually exists on the system.  If something strange happens then
+		this method will raise a TucanException.
+	*/
+	boolean exists()
+		raises(TucanException);
+	/**
+		The create() method is used to actually create the folder on the 
+		system if it does not exist.  This would be used to make a virtual
+		folder permanent.  If something strange occurs in this method then
+		a TucanException will be raised.
+	*/
+	boolean create()
+		raises(TucanException);
+	/**
+		The deleteFolder() method is used to remove the folder from the system.  If
+		a folder containing folders is deleted then all of the folders in the folder
+		will be deleted as well.  If something strange takes place in this method then
+		a TucanException will be raised.
+	*/
+	boolean deleteFolder()
+		raises(TucanException);
+	/**
+		The expunge method will expung all messages in the folder that are marked for
+		deletion.  A message's flags are how a folder determines whether or not a message
+		should be deleted.  For more on the flags Look at TucanMessage or TucanFlags.  If
+		something strange happens then this method will raise a TucanException.
+	*/
+	TucanMessageSeq expunge()
+		raises(TucanException);
+	/**
+		The getFolder() method allows for a client to get folders that exist within the
+		current folder if there are any.  If the client needs to discover what folders
+		exist then they can use the listFolders() method which will return a list of the
+		names that can then be used to retrieve the desired folder.  If an error occurs in
+		this method then a TucanException will be raised.
+	*/
+	TucanFolder getFolder(in string name)
+		raises(TucanException);
+
+	/**
+		The setParent() method allows you to set the parent folder of the current folder.
+		This will allow your applications to support folder's within folders.  If an error
+		occurs, a TucanException will be raised.
+	*/
+
+	void setParent(in TucanFolder folder)
+		raises(TucanException);
+
+	/**
+		The getParent() method will return, if possible, the parent folder of the current
+		folder.  If a client needs to determine which folder the current folder belongs in,
+		they should use this method.  If an error occurs, a TucanException will be raised.
+	*/
+
+	TucanFolder getParent()
+		raises(TucanException);
+
+	/**
+		The getNewFolderObject() method will return an empty folder object.  This method
+		is mainly intended for internal uses but there may be a time when you need to grab
+		a new folder object from within a folder.  If an error occurs a TucanExcpetion will
+		be raised.
+	*/
+
+	TucanFolder getNewFolderObject()
+		raises(TucanException);
+	/**
+		The listFolders() method returns a list of strings that represent the names of the
+		folder that exist within the current folder if there are any. If an error occurs
+		within this folder then a TucanException will be raised.
+	*/
+	TucanStringList listFolders()
+		raises(TucanException);
+	/**
+		The list() method will return a list of folder objects that represent the folders
+		in the current folder if there are any.  This method is different from listFolders
+		in that it actually returns a list if the objects instead of the name.  If an error
+		occurs in this method then a TucanException will be raised.
+	*/
+	TucanFolderSeq list()
+		raises(TucanException);
+	/**
+		The renameTo() method will change the current name of the folder to the name that is
+		passed to the method.  If something strange occurs then a TucanException will be
+		raised.
+	*/
+	boolean renameTo(in string name)
+		raises(TucanException);
+	/**
+		The getName() method will return the current name of the folder.  If an error occurs
+		in this method then a TucanException will be raised.
+	*/
+	string getName()
+		raises(TucanException);
+	/**
+		The setName() method is used to set the name of the folder.  If an error occurs while
+		trying to do this then a TucanException will be raised.
+	*/
+	void setName(in string name)
+		raises(TucanException);
+	/**
+		The getFullName() method should return the pathname to the current folder.  This
+		could be a path ot an actual directory or a path to an database etc... If an
+		error occurs in this method then a TucanException will be raised.
+	*/
+	string getFullName()
+		raises(TucanException);
+	/**
+		The setFullName() method sets the current path to the folder.  This should be a
+		proper pathname.  If an error occurs then a TucanException will be raised.
+	*/
+	void setFullName(in string name)
+		raises(TucanException);
+	/**
+		The getMessage() method will retreive the message in the folder corresponding to 
+		the message number that is passed to it.  If that message does not exist or if an
+		error occurs then a TucanException will be raised.
+	*/
+	TucanMessage getMessage(in long msgnum)
+		raises(TucanException);
+	/**
+		The getMessages() method returns a list of all of the messages in the folder new and
+		old.  If an error occurs this method should raise a TucanException.
+	*/
+	TucanMessageSeq getMessages()
+		raises(TucanException);
+	/**
+		The getNewMessages() method will return a list of all of the new messages in that
+		folder.  It is up to the implementation to decide what is considered as a new 
+		message because that could be different for different services.  If an error occurs
+		this method should raise a TucanException.
+	*/
+	TucanMessageSeq getNewMessages()
+		raises(TucanException);
+	/**
+		The getMessagesInRange() method will return a list of messages which is determined
+		by the start and stop range that is passed to it.  This method should raise a
+		TucanException if any error occur.
+	*/
+	TucanMessageSeq getMessagesInRange(in long start, in long stop)
+		raises(TucanException);
+	/**
+		The getNewMessageObject() method returns a message object that can then be edited
+		and handled in whatever way desired.  If there is a problem then a TucanException
+		will be raised.
+	*/
+	TucanMessage getNewMessageObject()
+		raises(TucanException);
+	/**
+		The getMessageCount() method will return the number of messages in the folder.  If
+		an erro occurs then a TucanException should be raised.
+	*/
+	long getMessageCount()
+		raises(TucanException);
+	/**
+		The getNewMessageCount() method will return the number of new messages in the folder.
+		If an error occurs this folder should raise a TucanException.
+	*/
+	long getNewMessageCount()
+		raises(TucanException);
+	/** 
+		The hasNewMessages() method will return a boolean value as to whether or not the 
+		folder contains new messages.  If an error occurs then this method should raise a
+		TucanException.
+	*/
+	boolean hasNewMessages()
+		raises(TucanException);
+	/**
+		The moveMessage() method moves a message between folders in a store.  If an error
+		occurs while moving a message then a TucanException should be raised.
+	*/
+	void moveMessage(in long msgnum, in TucanFolder folder)
+		raises(TucanException);
+	/**
+		The moveMessages() method will move the messages in the list to the denoted folder.
+		If an error occurs then a TucanException should be raised.
+	*/
+	void moveMessages(in TucanLongList msgnums, in TucanFolder folder)
+		raises(TucanException);
+	/**
+		The copyMessage() method will copy the message denoted by the msg number sent to it to the
+		desired folder in the store.  If an error occurs in this method then a TucanException
+		should be raised.
+	*/
+	void copyMessage(in long msgnum, in TucanFolder folder)
+		raises(TucanException);
+	/**
+		The copyMessages() method will copy the messages denoted by the list sent to it to the
+		desired folder.  If an error occurs while copying this folder should raise a TucanException.
+	*/
+	void copyMessages(in TucanLongList msgnums, in TucanFolder folder)
+		raises(TucanException);
+	/**
+		The appendMessage() method will add the message that it is passed to the current folder.
+		If an error occurs in this method then a TucanException should be raised.
+	*/
+	void appendMessage(in TucanMessage msg)
+		raises(TucanException);
+	/**
+		The appendMessages() method will add the messages passed to it to the current folder.
+		If an error occurs this method should raise a TucanException.
+	*/
+	void appendMessages(in TucanMessageSeq msgs)
+		raises(TucanException);
+
+	/**
+		The deleteMessage() method will delete the specified message from the folder.  It is up
+		to the client to store a backup copy of this message if they so desire.  If an error occurs,
+		a TucanException will be raised.
+	*/
+	
+	void deleteMessage(in long msgnum)
+		raises(TucanException);
+
+	/**
+		The getAuth() method will return a copy of the folders auth object which can then
+		be used if a folder needs access to that information.  If an error occurs in this
+		method then a TucanException should be raised.
+	*/
+	TucanAuth getAuth()
+		raises(TucanException);
+	/**
+		The setAuth() method allows for the auth object for the folder to be set.  This is
+		method is intended for internal use and should not be used by clients because
+		proper authentication is required for proper functionality.  If an error occurs this
+		method should raise a TucanException.
+	*/
+	void setAuth(in TucanAuth auth)
+		raises(TucanException);
+
+	/**
+		The getFlags() method will return the flags that a message contains.
+	*/
+
+	long  getMessageFlags(in long msgnum)
+		raises(TucanException);
+
+	/** The setFlags() method will set the messages flags to the flags specified.  A Tucan
+      	exception will be raised if an error occurs, 
+	*/
+
+	void setMessageFlags(in long msgnum, in long flags)
+		raises(TucanException);
+
+	/** The setMessageFlag() method will set specified flag as on for the message.  A TucanException
+	    will be raised if an error occurs,
+	*/
+
+	void setMessageFlag(in long msgnum, in long flag)
+		raises(TucanException);
+
+	/** The unsetMessageFlag() method will disable a  specified flag as on for the message.  A TucanException
+	    will be raised if an error occurs,
+	*/
+
+	void unsetMessageFlag(in long msgnum, in long flag)
+		raises(TucanException);
+	/**
+		The destory() method removes the object reference from memory.  All clients should
+		make sure that they call the destroy() method so that memory leaks do not occur. If
+		an error occurs in this method then a TucanException should be raised.
+	*/
+	void destroy()
+		raises(TucanException);
+};
+
+/**
+	The TucanFolderFactory provides a base implementation for services to inherit from.
+	This is so that the system can be extended and base functionality still insured.
+*/
+interface TucanFolderFactory
+{
+	/**
+		The create() method returns a new reference to a folder object.  The factory is
+		used so that multiple folders can exists at the same time on the system.  If an error
+		occurs in this method it should raise a TucanException.
+	*/
+	TucanFolder create()
+		raises(TucanException);
+};
+/**
+	The TucanMessage interface provides a base message for use on
+	the TUCAN messaging system.  By itself it provides absolutely
+	no functionality but instead it must be implemented and extended
+	by a chlid to provide functionality.  Ideally most implementation
+	would at least implement the base methods so that those messages
+	could then be passed to other services on the system and actually
+	be handled properly.
+*/
+interface TucanMessage 
+{
+	//Methods
+	/**
+		The getData() method returns the raw data for the message.  What
+		this data is totally depends on the implementation.  It could be
+		sound data or text etc... If an error occurs in this method then
+		a TucanException should be raised.
+	*/
+	TucanRawData getData()
+		raises(TucanException);
+	/**
+		The getDataObject() method is another way to get access to the data 
+		encapsulated in the message.  The method will return a data object that
+		can then give the client the message data in various formats like mime,
+		xml, etc... If an error occurs within this method then a TucanException
+		should be raised.
+	*/
+	TucanData getDataObject()
+		raises(TucanException);
+
+	/**
+		The setDataObject() method allows you to set the data object of
+		a message.  This is where all data associated with a message
+		will be stored. If an error occurs a TucanException should be raised.
+	*/
+
+	void setDataObject(in TucanData data)
+		raises(TucanException);
+
+
+	/**
+		The getNewDataObject() method will return a new data object for use by
+		a the message or the client wichever it may be.  If an error occurs in this
+		method then a TucanException will be raised.
+	*/
+
+	TucanData getNewDataObject()
+		raises(TucanException);
+	/**
+		The getFrom() method will return a TucanAddress object that simply wraps
+		the from address of the message.  This address could be an email address
+		or some other string etc... If am error occurs in this method then a 
+		TucanException should be raised.
+	*/
+
+	TucanAddress getFrom()
+		raises(TucanException);
+	/**
+		The setFrom() method will set the from address of the message based upon
+		the TucanAddress that is passed to it.  If an error occurs in this method
+		then a TucanException should be raised.
+	*/
+	void setFrom(in TucanAddress fromname)
+		raises(TucanException);
+	/**
+		the getNewAddressObject() method will return a new address object for use by
+		a the message or the client wichever it may be.  If an error occurs in this
+		method then a TucanException will be raised.
+	*/
+	TucanAddress getNewAddressObject()
+		raises(TucanException);
+	/**
+		The getRecipients() method will return a list of TucanAddress representing the
+		recipients based upon the type passed to it.  Type would be "TO", "CC", etc..
+		If an error occurs this method should raise a TucanException.
+	*/
+	TucanAddressSeq getRecipients(in string type)
+		raises(TucanException);
+	/**
+		The setRecipients() method will set the recipient address denoted by type to
+		the addresses that are passed to it.  If an error occurs then a TucanException
+		should be raised.
+	*/
+	void setRecipients(in string type, in TucanAddressSeq addresses)
+		raises(TucanException);
+	/**
+		The setRecipient() method will set the recipient address denoted by type to the
+		address that is passed to it.  If an error occurs then a TucanException should
+		be raised.
+	*/
+	void setRecipient(in string type, in TucanAddress address)
+		raises(TucanException);
+	/**
+		The getAllRecipients() method will return a list of TucanAddresses representing
+		all of the recipients address for the message.  If an error occurs then a
+		TucanException will be raised.
+	*/
+	TucanAddressSeq getAllRecipients()
+		raises(TucanException);
+	/**
+		The addRecipient() method will append the address that is passed to it to the
+		recipient type that is passed.  If an error occurs then a TucanException should
+		be raised.
+	*/
+	void addRecipient(in string type, in TucanAddress address)
+		raises(TucanException);
+	/**
+		The addRecipients() method will append the addresses passed to it to the recipient
+		type that is passed to it.  If an error occurs then this method should raise a
+		TucanException.
+	*/
+	void addRecipients(in string type, in TucanAddressSeq addresses)
+		raises(TucanException);
+	/**
+		The getReplyTo() method will return a list of address that represent the reply
+		to address or addresses for the message.  If an error occurs then a TucanException
+		should be raised.
+	*/
+	TucanAddress getReplyTo()
+		raises(TucanException);
+	/**
+		The setReplyTo() method will set the reply to address to the address that is passed
+		to it.  If an error occurs then a TucanException should be raised.
+	*/
+	void setReplyTo(in TucanAddress address)
+		raises(TucanException);
+	/**
+		The getSubject() method will return the the subject of the message.  If an error
+		occurs in this method a TucanException should be raised.
+	*/
+	string getSubject()
+		raises(TucanException);
+	/**
+		The setSubject() method sets the subject of the message to the string that is
+		passed to it.  If an error occurs in this method a TucanException should be raised.
+	*/
+	void setSubject(in string subject)
+		raises(TucanException);
+	/**
+		The getSentDate() method returns the sentDate of the message.  This method will
+		format the date based upon the format string passed to it.  If an error occurs
+		in this method then a TucanException should be raised.
+	*/
+	string getSentDate(in string format)
+		raises(TucanException);
+	/**
+		The setSentDate() method will set the sent date for the message to the string that
+		is passed to it.  If an error occurs in this method a TucanException should be
+		raised.
+	*/
+	void setSentDate(in string date)
+		raises(TucanException);
+	/**
+		The getRecievedDate() method will return the recieved date for the message.  This
+		method will format the date based upon the stirng that is passed to it.  If
+		an error occurs then a TucanException should be raised.
+	*/
+	string getReceivedDate(in string format)
+		raises(TucanException);
+	/**
+		The setRecievedDate() method will set the recieved date for the message to the
+		string that is passed to it.  If an error occurs then a TucanException will be
+		raised.
+	*/
+	void setReceivedDate(in string date)
+		raises(TucanException);
+
+	long getMessageNumber()
+		raises(TucanException);
+	/**
+		The setMessageNumber() method wii set the message number for the message.  This
+		method is meant mainly for internal use.  If an error occurs then a TucanException
+		should be raised.
+	*/
+	void setMessageNumber(in long msgnum)
+		raises(TucanException);
+	/**
+		The isFlagSet() method will return a boolean value as to whether or not the message has
+		a specific flag set.  If an error occurs then a TucanException should be
+		raised.
+	*/
+
+	boolean isFlagSet(in long flag)
+		raises(TucanException);
+
+	/** The setFlags() method will set the messages flags to the flags specified.  A Tucan
+      	exception will be raised if an error occurs, 
+	*/
+
+	void setFlags(in long flags)
+		raises(TucanException);
+
+	/** The setFlagOn() method will set specified flag as on for the message.  A TucanException
+	    will be raised if an error occurs,
+	*/
+
+	void setFlagOn(in long flag)
+		raises(TucanException);
+
+	/** The setFlagOff() method will disable a  specified flag as on for the message.  A TucanException
+	    will be raised if an error occurs,
+	*/
+
+	void setFlagOff(in long flag)
+		raises(TucanException);
+
+	/**
+		The reply() method will return a new message object that is set to be a reply to the
+		current message.  If am error occurs then a TucanException should be raised.
+	*/
+	TucanMessage reply(in boolean replytoall)
+		raises(TucanException);
+	/**
+		The destroy() method removes the object from memory.  All clients need to make sure
+		that the destroy() method is being called when they are done with the message so that
+		memory leaks do not occur.  If an error occurs in this method a TucanException should
+		be raised.
+	*/
+	void destroy()
+		raises(TucanException);
+};
+/**
+	The TucanMessageFactory interface is a base implementation of a message factory for
+	services to inherit from and implement.
+*/
+interface TucanMessageFactory
+{
+	/**
+		The create() method returns references to new message object for use.  This approach
+		is used so that multiple instances of messages can exist at the same time.  If an
+		error occurs then a TucanException should be raised.
+	*/
+	TucanMessage create()
+		raises(TucanException);
+};
+/**
+	The TucanStore interface provides a base class for services
+	on the system to inherit from.  By itself it provides
+	absolutely no functionality.  It must be inherited from and
+	the methods implemetned to provide functionality.  A Store is
+	meant to be a container for a certain type of message.  So
+	for example email message would typically reside in an email
+	folder and calendar messages in a calendar folder etc...
+*/
+interface TucanStore
+{
+	//Methods
+	/**
+		The getName() methods returns the name of the store object.  If 
+		something strange happens then this method will raise a TucanException.
+	*/
+	string getName()
+		raises(TucanException);
+	/**
+		The setName() method is used internally to set the name of the store.
+		Most clients should not interact with this method.  If something strange
+		happens then this method will raise a TucanException.
+	*/
+	void setName(in string name)
+		raises(TucanException);
+	/**
+		The getDefaultFolder() method will return the default folder for this
+		store.  This method could return a different folders based on the 
+		implementation.  If something strange occurs then a TucanException 
+		will be raised.
+	*/
+	TucanFolder getDefaultFolder()
+		raises(TucanException);
+	/**
+		The getFolder() method provides a way for a client to get access to a
+		particular folder that they might need.  Of course in order to request
+		a particular folder the client needs to know what folders exist so the
+		client may wish to use the listFolders() method to discover what folders
+		exist.  If something strange occurs while getting the folder a TucanException
+		will be raised.
+	*/
+	TucanFolder getFolder(in string name)
+		raises(TucanException);
+	/**
+		The getNewFolderObject() method is mainly used internally for the generation
+		of folder objects but it could also be used by clients that desire to create
+		a new folder in the store.  If there is a error in this method then a 
+		TucanException will be raised.
+	*/
+	TucanFolder getNewFolderObject()
+		raises(TucanException);
+	/**
+		The listFolders() method returns a list of the current folders in the store.
+		This method is provide so that clients can discover what folders exist before
+		they request a folder.  If something strange occurs then this method will raise
+		a TucanException.
+	*/
+	TucanStringList listFolders()
+		raises(TucanException);
+	/**
+		The getAuth() method is provided so that the current auth object for the store may be
+		retrieved.  This is there in case a user info needs to be access and the username
+		and password are required.  If there is a error in this method then a TucanException
+		will be raised.
+	*/
+	TucanAuth getAuth()
+		raises(TucanException);
+	/**
+		The setAuth()  method is provided so the the auth object for the store may be set.  
+		This method is primarily used internally and it would be foolish for a client to use
+		this method seeing as proper authentication is necessary for proper functionality.
+		If an error occurs then a TucanException will be raised.
+	*/
+	void setAuth(in TucanAuth auth)
+		raises(TucanException);
+	/**
+		The destroy() method is used to remove thecurrent object from memory.  It is wise
+		for all clients to ensure that the destroy() method is always being called when an
+		client is finished with the store so that memory leaks do not occur.  If something
+		goes wrong in this method then a TucanException will be raised.
+	*/
+	void destroy()
+		raises(TucanException);
+};
+
+/**
+	The TucanStoreFactory is a base class for actual store implementations to inherit
+	from.  This is done so that the system may be extended with ease.
+*/
+interface TucanStoreFactory
+{
+	/**
+		The create() method returns a new reference to a store object.  This is so that
+		multiple stores can exist on the same system at the same time.  If something 
+		strange happens then this method will raise a TucanException.
+	*/
+	TucanStore create()
+		raises(TucanException);
+};
+/**
+	The TucanTranport interface is a base definition for children
+	to inherit from and inplement.  This is a so that all messages
+	can be sent via multiple transport as long as base functionality
+	is preserved.  This is what really allows for Unified Messaging.
+*/
+interface TucanTransport 
+{
+	//Methods
+	/**
+		The send() method is what delivers the message to the proper
+		place.  It is important to note while implemetning this method
+		that the programmer take in to account that the message being
+		sent could be of another service but is still a TucanMessage.
+		If an error occurs then this methos should raise a TucanException.
+	*/
+	void send(in TucanMessage msg)
+		raises(TucanException);
+	/**
+		The destroy() method will remove the reference out of memory.  It
+		is important that all clients call the destroy() method when they
+		are done with the transport so that memory leaks do not occur.  If
+		an error occurs in this method it should raise a TucanException.
+	*/
+	void destroy()
+		raises(TucanException);
+};
+
+/**
+	The TucanTransportFactory interface is a base definition for services
+	to inherit from and implement.  It handles the creation of new object
+	references.
+*/
+interface TucanTransportFactory
+{
+	/**
+		The create() method will create a new reference to a transport object
+		and return it.  This is useful so that multiple transports can exist
+		at the same time.  If an error occurs in this method a TucanException
+		should be raised.
+	*/
+	TucanTransport create();
+};
+/**
+	TucanSession is the class that acts as the starting point
+	for all messaging on the TUCAN system.  It handles authentication
+	and other things that are critical to the functionality of
+	TUCAN.  It is very important to note that a client must obtain 
+	a TucanAuth object and set the values for it correctly before 
+	a session can be authorized.  If a session is not authorized 
+	then none of the methods for obtaining messages will work.
+*/
+interface TucanSession 
+{
+	/**
+		The getAuth() method returns TucanAuth objects.  The client 
+		can then go and set the attributes for the the auth object 
+		so that they can authorize the session.  If for 
+		some reason an error in the method occurs then it will raise 
+		a TucanException.
+       */
+	TucanAuth getAuth()
+		raises(TucanException);
+	/**
+		The authorize() method takes a TucanAuth object as a parameter
+		so that it can use the attributes in the TucanAuth object to
+		try and authorize the session.  If for some reason the username,
+		password, or pin number are incorrect then the session will not
+		be authorized and the client will not be able to retrieve messages
+		until the session has been authorized.  It is important to note
+		that both a password and pin number are not required but one must
+		be present.  This method can raise two different exceptions.  
+		If there is an error authenticating then it will raise a 
+		TucanAuthException, but if for some reason some other strange error 
+		occurs it will raise a TucanException.
+	*/
+	void authorize(in TucanAuth auth)
+		raises(TucanException, TucanAuthException);
+	/**
+		The getDefaultStore() method returns a servant object of the default tucan store.
+		The default store is determined by the default entry in the tucan
+		configuration data which is stored in TucanConfig.xml.  If you
+		are using a default TUCAN setup then this method should return
+		a TucanEmailStore object.  This method can raise two different
+		exceptions.  If the client is trying to get a store but has not yet
+		authorized then it will raise a TucanAuthException, but if something
+		else strange happens then it will raise a TucanException.
+	*/
+	TucanStore getDefaultStore()
+		raises(TucanException, TucanAuthException);
+	/**
+		The getStoreByProtocol() method returns a servant store object based
+		upon the value of the protocol that is passed to it.  This protocol
+		dirrectly relates to entries in the TUCAN config data which is in
+		TucanConfig.xml.  For example if I wanted a Bulletin Board store then
+		I would pass the protocol value of "bbs" based upon the TucanConfig.xml
+		file.  This is handy so that the system can be extended with new capabilities
+		but the same session code will still work.  This method can raise two
+		exceptions.  If the client is trying to get a store but has not yet
+		authorized then a TucanAuthException will be raised, but if something else
+		strange happens then a TucanException will be raised.
+	*/
+	TucanStore getStoreByProtocol(in string proto)
+		raises(TucanException, TucanAuthException);
+	/**
+		The getDefaultTransport() method returns a servant object of the default 
+		transport.  The default transport is determined by the default entry
+		in the tucan configuration data which is stored in TucanConfig.xml.
+		If you are using a default TUCAN setup then this method should return
+		a TucanEmailTransport object.  This method can raise two different
+		exceptions.  If the client is trying to get a transport but has not
+		yet authorized then a TucanAuthException will be raised, but if something
+		else strange happens then a TucanEception will be raised.
+	*/
+	TucanTransport getDefaultTransport()
+		raises(TucanException, TucanAuthException);
+	/**
+		The getTransportByProtocol() method returns a servant transport object
+		based upon the value of the protocol that is passed to it.  This protocol
+		directly relates to entries in the TUCAN configuration data which is in
+		TucanConfig.xml.  This method can raise two different exceptions.  If the
+		client is trying to get a transport but has not yet authorized then a
+		TucanAuthException will be raised, but if something else strange takes place
+		then a TucanException will be raised.
+	*/
+	TucanTransport getTransportByProtocol(in string proto)
+		raises(TucanException, TucanAuthException);
+
+
+	/**
+	   The isAdmin() method will return a boolean value denoting whether or not the user
+	   has administration privledges on the system.  A TucanException will be raised if an
+	   error occurs. 
+	*/
+
+	boolean isAdmin()
+		raises(TucanException, TucanAuthException);
+
+	/**
+		The setNewPinNumber() method will change the pin number for the currently 
+		authorized user.  A TucanException will be raised if an error occurs.
+	*/
+
+	void setNewPinNumber(in long newpin)
+		raises(TucanException, TucanAuthException);
+
+	/**
+		The destroy() method simply removes the session servant object out of memory.
+		It is important that all clients call this method when they are done so
+		that memory leaks do not occur.
+	*/
+	void destroy()
+		raises(TucanException);
+};
+/**
+	TucanSessionFactory is an object that is responsible for handing out TucanSession
+	servants.  This is done so that one server can hand out many of the same type of
+	servants and know that all servants will be different object references.
+*/
+interface TucanSessionFactory 
+{
+	/**
+		The create() method returns a TucanSession servant.  This is so that many 
+		different sessions can be held by multiple users at the same time.  If
+		something strange takes place then this method will raise a TucanException.
+	*/
+	TucanSession create()
+		raises(TucanException);
+};
+interface TucanAddressBookAddress : TucanAddress {};
+
+interface TucanAddressBookAddressFactory : TucanAddressFactory {};
+interface TucanAddressBookFolder : TucanFolder {};
+
+interface TucanAddressBookFolderFactory : TucanFolderFactory {};
+interface TucanAddressBookMessage : TucanMessage 
+{
+	string getAttribute(in string name);
+	void setAttribute(in string name, in string value);
+	TucanStringList listAttributes();
+	TucanAttributeSeq getAttributes();
+	string getGroup();
+	void setGroup(in string group);
+
+};
+
+interface TucanAddressBookMessageFactory : TucanMessageFactory {}; 
+
+interface TucanAddressBookStore : TucanStore {};
+
+interface TucanAddressBookStoreFactory : TucanStoreFactory {}; 
+interface TucanAddressBookTransport : TucanTransport {};
+
+interface TucanAddressBookTransportFactory : TucanTransportFactory {}; 
+interface TucanBbsAddress : TucanAddress {};
+
+interface TucanBbsAddressFactory : TucanAddressFactory {};
+interface TucanBbsFolder : TucanFolder 
+{
+	long getPid();
+	void setPid(in long pid);
+	short getBid();
+	void setBid(in short bid);
+};
+
+interface TucanBbsFolderFactory : TucanFolderFactory {}; 
+interface TucanBbsMessage : TucanMessage 
+{
+	//Methods
+	short getBid();	
+	void setBid(in short bid);
+	long getPid();
+	void setPid(in long pid);
+	string getAuthor();
+	void setAuthor(in string author);
+	short getAccessType();
+	void setAccessType(in short accesstype);
+	void updateSubject(in string subject);
+	void updateBody(in string body);
+};
+
+interface TucanBbsMessageFactory : TucanMessageFactory {}; 
+interface TucanBbsStore : TucanStore {};
+
+interface TucanBbsStoreFactory : TucanStoreFactory {}; 
+interface TucanBbsTransport : TucanTransport {};
+
+interface TucanBbsTransportFactory : TucanTransportFactory {}; 
+interface TucanCalendarAddress : TucanAddress {};
+
+interface TucanCalendarAddressFactory : TucanAddressFactory {}; 
+interface TucanCalendarFolder : TucanFolder {};
+
+interface TucanCalendarFolderFactory : TucanFolderFactory {}; 
+interface TucanCalendarMessage : TucanMessage 
+{
+	string getTime();
+	void setTime(in string time);
+	string getNotifyDate();
+	void setNotifyDate(in string date);
+	string getNotifyTime();
+	void setNotifyTime(in string time);
+	void setNotified(in boolean notified);
+	boolean isNotified();	
+	string getNotification();
+	void setNotification(in string notification);
+};
+
+interface TucanCalendarMessageFactory : TucanMessageFactory {}; 
+interface TucanCalendarStore : TucanStore {};
+
+interface TucanCalendarStoreFactory : TucanStoreFactory {}; 
+interface TucanCalendarTransport : TucanTransport {};
+
+interface TucanCalendarTransportFactory : TucanTransportFactory {}; 
+interface TucanDirectory 
+{
+	struct AddressCard 
+	{
+		string uid;
+		string FirstName;
+		string LastName;
+		string NickName;
+		string Title;
+		string Email;
+		string Street;
+		string City;
+		string State;
+		string Zip;
+		string Country;
+		string Phone;
+		string Homepage;
+		string Org;
+		string Other;
+	};
+	
+	typedef sequence<AddressCard> AddressCardSeq;
+
+	//Attributes
+	readonly attribute short handle;
+	readonly attribute short port;
+	readonly attribute short jobnum;
+	readonly attribute string myServerName;
+	readonly attribute string myServerRoot;
+	readonly attribute AddressCardSeq myResults;
+	
+	//Methods
+	void setAuth(in TucanAuth myAuth);
+	TucanAuth getAuth();
+	boolean open();
+	boolean close();
+	void setServerName(in string name);
+	string getServerName();
+	void setPort(in short port);
+	short getPort();
+	void setServerRoot(in string root);
+	string getServerRoot();
+	void setTimeLimit(in short limit);
+	short getTimeLimit();
+	void setSizeLimit(in short limit);
+	short getSizeLimit();
+	boolean search(in string searchstring);
+	AddressCardSeq result();
+	void setField(in string uid, in string field, in string value);
+	string getField(in string uid, in string field);
+	void destroy(); 
+};
+
+interface TucanDirectoryFactory 
+{
+	TucanDirectory create();
+};
+interface TucanEmailAddress : TucanAddress {};
+
+interface TucanEmailAddressFactory : TucanAddressFactory {}; 
+interface TucanEmailFolder : TucanFolder {
+
+	/// The getMessageHeaders() method will return a TucanMessageHeaderSeq of the headers of
+	/// all messages in the current mail box.  This is kind of hackish, but it speeds things up a lot. 
+
+	TucanMessageHeaderSeq getMessageHeaders();
+};
+
+interface TucanEmailFolderFactory : TucanFolderFactory {}; 
+interface TucanEmailMessage : TucanMessage {};
+
+interface TucanEmailMessageFactory : TucanMessageFactory {};
+interface TucanEmailStore : TucanStore {};
+
+interface TucanEmailStoreFactory : TucanStoreFactory {}; 
+interface TucanEmailTransport : TucanTransport {};
+
+interface TucanEmailTransportFactory : TucanTransportFactory {}; 
+interface TucanSMTPTransport : TucanTransport {
+/**
+	The setPort method will set the port associated with 
+	the SMTP transport object. 
+*/
+
+	void setPort(in short port);
+
+/**
+	The setServer method will set the server that the
+	SMTP transport object will connect to.  A server must
+	be given before a send() command will work. A TucanException
+	will be raised if an error occurs.
+*/
+
+	void setServer(in string server);
+};
+
+interface TucanSMTPTransportFactory : TucanTransportFactory {}; 
+interface TucanFaxAddress : TucanAddress {};
+
+interface TucanFaxAddressFactory : TucanAddressFactory {}; 
+interface TucanFaxFolder : TucanFolder {
+
+	/// The getMessageHeaders() method will return a TucanMessageHeaderSeq of the headers of
+	/// all messages in the current mail box.  This is kind of hackish, but it speeds things up a lot. 
+
+	TucanMessageHeaderSeq getMessageHeaders();
+
+};
+
+interface TucanFaxFolderFactory : TucanFolderFactory {}; 
+interface TucanFaxMessage : TucanMessage {};
+
+interface TucanFaxMessageFactory : TucanMessageFactory {}; 
+interface TucanFaxStore : TucanStore {};
+
+interface TucanFaxStoreFactory : TucanStoreFactory {};
+interface TucanFaxTransport : TucanTransport {};
+
+interface TucanFaxTransportFactory : TucanTransportFactory {}; 
+interface TucanVoiceAddress : TucanAddress {};
+
+interface TucanVoiceAddressFactory : TucanAddressFactory {}; 
+interface TucanVoiceFolder : TucanFolder {
+
+	/// The getMessageHeaders() method will return a TucanMessageHeaderSeq of the headers of
+	/// all messages in the current mail box.  This is kind of hackish, but it speeds things up a lot. 
+
+	TucanMessageHeaderSeq getMessageHeaders();
+
+};
+
+interface TucanVoiceFolderFactory : TucanFolderFactory {}; 
+interface TucanVoiceMessage : TucanMessage {};
+
+interface TucanVoiceMessageFactory : TucanMessageFactory {}; 
+interface TucanVoiceStore : TucanStore {};
+
+interface TucanVoiceStoreFactory : TucanStoreFactory {}; 
+interface TucanVoiceTransport : TucanTransport {};
+
+interface TucanVoiceTransportFactory : TucanTransportFactory {}; 
+/**
+	The TucanEmailFetcher interface provides a way for downloading E-mail messages
+	over a standard POP3 connection.
+*/
+
+interface TucanEmailFetcher
+{
+	/**
+		The getAuth() method will return a copy of the objects auth object.  If an error 
+		occurs in this method then a TucanException should be raised.
+	*/
+
+	TucanAuth getAuth()
+		raises(TucanException);
+
+	/**
+		The setAuth() method allows for the auth object for the object to be set.  This is
+		method is intended for internal use and should not be used by clients because
+		proper authentication is required for proper functionality.  If an error occurs this
+		method should raise a TucanException.
+	*/
+	void setAuth(in TucanAuth myAuth)
+		raises(TucanException);
+	
+
+	/**
+		The setServer() method will set the mail server to the string that it is passed.  An exception
+		will be raised if an error occurs.
+	*/
+
+	void setServer(in string server)
+		raises(TucanException);
+
+	/** 
+		The getServer() method will return the current mail server for the object.  An exception
+		will be raised if an error occurs.
+	*/
+
+	string getServer()
+		raises(TucanException);
+
+	/**
+		The setPort() method will set the mail port to the string that it is passed.  An exception
+		will be raised if an error occurs.
+	*/
+
+	void setPort(in short port)
+		raises(TucanException);
+
+	/** 
+		The getPort() method will return the current mail port for the object.  An exception
+		will be raised if an error occurs.
+	*/
+
+	short getPort()
+		raises(TucanException);
+
+	/**
+		The setProtocol() method will set the current protocol of the mail checker. 
+		An excpetion will be raised if an error occurs.
+	*/
+
+	void setProtocol(in string proto)
+		raises(TucanException);
+
+	/**
+		The getProtocol() method will return the current protocol of the mail checker. 
+		An excpetion will be raised if an error occurs.
+	*/
+
+	string getProtocol()
+		raises(TucanException);
+
+	
+
+	/**
+		The getName() method will set the mail user name to the string that it is passed.  An exception
+		will be raised if an error occurs.
+	*/
+
+	void setName(in string name)
+		raises(TucanException);
+
+	/**
+		The getName() method will return the current object's mail user name.  An exception will
+		be raised in an error occurs.
+	*/
+
+	string getName()
+		raises(TucanException);
+
+	
+	/**	
+		The setPassword() method will set the mail user's password to the string that it is passed.  An
+		exception will be raised if an error occurs.
+	*/
+
+	void setPassword(in string password)
+		raises(TucanException);
+
+	/**
+		The getPassword() method will return the mail user's password.  An exception will be raised
+		 if an error occurs.
+	*/
+
+	string getPassword()
+		raises(TucanException);
+
+	/**
+		The getMessageCount() method will return the number of messages that are currently in the user's
+		inbox on the mail server.  An exception will be raised if an error occurs.
+	*/
+
+	short getMessageCount()
+		raises(TucanException);
+	
+	/**
+		The getMessageSize() method will return the size, in bytes, of the message specified.  An exception
+		will be raised if an error occurs.
+	*/
+
+	short getMessageSize(in short num)
+		raises(TucanException);
+	/**
+		The getMessageId() method will return the Unique ID of the message specified.  An exception
+		will be raised if an error occurs.
+	*/
+
+	string getMessageId(in short num)
+		raises(TucanException);
+
+	/**
+		The isRead() method will return a 1 or 0 depending on whether or not a message has been
+		previously transfered.
+	*/
+
+	short isRead(in short num)
+		raises(TucanException);
+
+	/**
+		The transfer() method will transfer the specified message from the mail server to the local host
+		and will store it in the user's inbox.  An exception will be raised if an error occurs.
+	*/
+
+	short transfer(in short num)
+		raises(TucanException);
+
+	/**
+		The transferAll() method will transfer all messages from the mail server to the local host and will
+		store them in the user's inbox.  An exception will be raised if an error occurs.
+	*/
+
+	void transferAll()
+		raises(TucanException);
+
+	/** 
+		The deleteMessage() method will delete the specified message from the server.  On error,
+		a tucan exception will be raised.
+	*/
+	
+	void deleteMessage(in short num)
+	    raises(TucanException);
+
+	/** 
+		The deleteAllMessages() method will delete all messages from the server.  On error,
+		a tucan exception will be raised.
+	*/
+	
+	void deleteAllMessages()
+	    raises(TucanException);
+
+
+	/**
+		The open() method will create a connection to the mail server that the user specified.
+		An exception will be raised if an error occurs
+	*/
+	
+	void open()
+		raises(TucanException);
+
+	/**
+		The close() method will close a connection to the mail server that the user specified.
+		An exception will be raised if an error occurs
+	*/
+	
+	void close()
+		raises(TucanException);
+
+
+	/**
+		The destory() method removes the object reference from memory.  All clients should
+		make sure that they call the destroy() method so that memory leaks do not occur. If
+		an error occurs in this method then a TucanException should be raised.
+	*/
+
+	void destroy()
+		raises(TucanException);
+};
+
+interface TucanEmailFetcherFactory
+{
+	/**
+		The create() method returns a new reference to a mail checking object.  The factory is
+		used so that multiple folders can exists at the same time on the system.  If an error
+		occurs in this method it should raise a TucanException.
+	*/
+
+	TucanEmailFetcher create()
+		raises(TucanException);
+
+};
+interface TucanUserPrefs {
+
+	/** 
+		getAllAttributes() takes a user name as a string and returns  TucanAttributeSeq containing all preferences 
+		for the user.   A TucanException will be raised on error
+	*/
+	TucanAttributeSeq getAllAttributes() 
+		raises (TucanException);
+
+	/** 
+		getAttribute() takes a user name and a key as a string and returns a value as a string.  
+		It raises an exception on error.
+	*/
+	string getAttribute(in string key) 
+		raises (TucanException);
+
+	/**
+		setAttribute() takes a user name, key, and value as a string.  It sets the desired prefernece in the
+		database.  If the preference previouisly exists it will be updated with the new information.  A
+		TucanException will be raised on error.
+	*/
+
+	void setAttribute(in string key, in string value) 
+		raises (TucanException);
+
+	/**
+		deleteAttribute() takes a name and key as a string.  It attempts to delete the preference
+		entry from the database.  A TucanException will be raised on error.
+	*/
+	void deleteAttribute(in string key) 
+		raises (TucanException);
+
+	/**
+		setAuth() takes an Auth object and sets it as the current auth object for the
+		UserPrefs object
+	*/
+
+	void setAuth(in TucanAuth myAuth)
+		raises (TucanException);
+
+	/**
+		getAuth() returns the TucanUserPrefs object's current Auth Object.
+	*/
+
+	TucanAuth getAuth()
+		raises (TucanException);
+	
+	/**
+		destroy() removes the TucanUserPrefs object and frees the memory associated with it.  YA
+		client should always call this method in order to prevent memory leaks.
+	*/
+
+	void destroy();
+};
+
+
+
+/**
+	The TucanUserPrefsFactory provides us with a factory for generating TucanUserPrefs objects.
+	Objects created by this factory will be of type TucanUserPrefs. This allows us to ensure 
+	that our system will be extensible
+*/
+
+interface TucanUserPrefsFactory
+{
+	/**
+		The create() method will return a new reference to a TucanUserPrefs object.  This will
+		allow us to have multiple TucanUserPrefs objects at a time.
+	*/
+
+	TucanUserPrefs create();
+};

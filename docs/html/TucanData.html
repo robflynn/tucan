@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<HTML>
+<HEAD>
+   <TITLE>interface  TucanData</TITLE>
+   <META NAME="GENERATOR" CONTENT="DOC++ 3.4.6">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+
+<H2>interface  <A HREF="#DOC.DOCU">TucanData</A></H2></H2><BLOCKQUOTE> TucanData is a wrapper class for storing the data for a message in different formats.</BLOCKQUOTE>
+<HR>
+
+<DL>
+<P><DL>
+<DT><H3>Public Classes</H3><DD><DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>struct  <B><A HREF="#DOC.23.1">TucanPart</A></B>
+<DD><I> TucanPart is a struct that contains two attributes: type and data.</I>
+</DL></P>
+
+<P><DL>
+<DT><H3>Public Methods</H3><DD><DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>string <B><A HREF="#DOC.23.2">getText</A></B>() raises(TucanException)
+<DD><I> The getText() method will send back the only the normal text in the body of the message.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>string <B><A HREF="#DOC.23.3">getXML</A></B>() raises(TucanException)
+<DD><I> The getXML() method will return the data of the message marked up in a standard way for all Tucan Messages.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>string <B><A HREF="#DOC.23.4">getMime</A></B>() raises(TucanException)
+<DD><I> The getMime() method will return the data of the message in mime format.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>TucanRawData <B><A HREF="#DOC.23.5">getData</A></B>() raises(TucanException)
+<DD><I> The getData() method returns the raw data for the message.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.23.6">setData</A></B>(in TucanRawData data) raises(TucanException)
+<DD><I> The setData() method allows for the raw data of the message to be set.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>string <B><A HREF="#DOC.23.7">getPath</A></B>() raises(TucanException)
+<DD><I> The getPath() method is a method that will simply return the path to the message on the system.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>long <B><A HREF="#DOC.23.8">getPartCount</A></B>() raises(TucanException)
+<DD><I> The getPartCount() method will return an integer representing the total number of parts that belongs to the current data object.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.23.9">addPart</A></B>(in string type, in TucanStringList header, in TucanRawData data) raises(TucanException)
+<DD><I> The addPart() method takes two arguments of type string: a content type, and the message data.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>TucanStringList <B><A HREF="#DOC.23.10">listParts</A></B>() raises(TucanException)
+<DD><I> The listParts() method will return a TucanStringList of the content types of each part that belongs to a data object.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif><!1><A HREF="TucanData.html#DOC.23.1">TucanPart</A> <B><A HREF="#DOC.23.11">getPart</A></B>(in long num) raises(TucanException)
+<DD><I> The getPart() method takes an integer and returns a TucanPart struct that represents the part requested.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.23.12">destroy</A></B>() raises(TucanException)
+<DD><I> The destroy() method removes the object from memory.</I>
+</DL></P>
+
+</DL>
+
+<A NAME="DOC.DOCU"></A>
+<HR>
+<H2>Documentation</H2>
+<BLOCKQUOTE>
+TucanData is a wrapper class for storing the data for a
+message in different formats.  This is handy so that clients
+can get access to the data in formats that might be better
+suited for different presentation mediums.  So of the methods
+may not be supported just yet but if that is the case they will
+throw a TucanException reporting that the method is not implemented.</BLOCKQUOTE>
+<DL>
+
+<A NAME="TucanPart"></A>
+<A NAME="DOC.23.1"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>struct  TucanPart</B></TT>
+<DD>
+TucanPart is a struct that contains two attributes: type and data.
+Both attributes are of type string and represent one part of a multipart
+data object.
+<DL><DT><DD></DL><P>
+<A NAME="getText"></A>
+<A NAME="DOC.23.2"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>string getText() raises(TucanException)</B></TT>
+<DD>
+The getText() method will send back the only the normal text in
+the body of the message.  So this would be used if a client only
+wanted the text and wished to disregard anything else that might
+be attached to the message.
+<DL><DT><DD></DL><P>
+<A NAME="getXML"></A>
+<A NAME="DOC.23.3"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>string getXML() raises(TucanException)</B></TT>
+<DD>
+The getXML() method will return the data of the message marked up
+in a standard way for all Tucan Messages.  This format has not yet
+been determined but when it is it will be documented for all to see.
+If anything strange takes place then this method will raise a 
+TucanException.
+<DL><DT><DD></DL><P>
+<A NAME="getMime"></A>
+<A NAME="DOC.23.4"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>string getMime() raises(TucanException)</B></TT>
+<DD>
+The getMime() method will return the data of the message in mime format.
+This is used mainly for email and such but can also be used for other
+messages on the system.  If something strange takes place then this method
+will raise a TucanException.
+<DL><DT><DD></DL><P>
+<A NAME="getData"></A>
+<A NAME="DOC.23.5"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>TucanRawData getData() raises(TucanException)</B></TT>
+<DD>
+The getData() method returns the raw data for the message.  What
+this data is totally depends on the implementation.  It could be
+sound data or text etc... If an error occurs in this method then
+a TucanException should be raised.
+<DL><DT><DD></DL><P>
+<A NAME="setData"></A>
+<A NAME="DOC.23.6"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void setData(in TucanRawData data) raises(TucanException)</B></TT>
+<DD>
+The setData() method allows for the raw data of the message to be
+set.  In most cases this would only be used internally but it is
+possible that a client would need to use this as well.  If an error
+occurs then this method should raise a TucanException.
+<DL><DT><DD></DL><P>
+<A NAME="getPath"></A>
+<A NAME="DOC.23.7"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>string getPath() raises(TucanException)</B></TT>
+<DD>
+The getPath() method is a method that will simply return the path to the
+message on the system.  This is handy because it may be helpful for the client
+to know were a message resides.  This could be in a user directory or in a
+database on the system or somewhere else.  If something strange takes place
+this method will raise a TucanException.
+<DL><DT><DD></DL><P>
+<A NAME="getPartCount"></A>
+<A NAME="DOC.23.8"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>long getPartCount() raises(TucanException)</B></TT>
+<DD>
+The getPartCount() method will return an integer representing the total number of
+parts that belongs to the current data object.  A TucanException will be raised if
+an error occurs
+<DL><DT><DD></DL><P>
+<A NAME="addPart"></A>
+<A NAME="DOC.23.9"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void addPart(in string type, in TucanStringList header, in TucanRawData data) raises(TucanException)</B></TT>
+<DD>
+The addPart() method takes two arguments of type string: a content type, and the message
+data.  It will increase the part count for the message and will store the information for
+later retrieval.  A TucanException will be raised if an error occurs,
+<DL><DT><DD></DL><P>
+<A NAME="listParts"></A>
+<A NAME="DOC.23.10"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>TucanStringList listParts() raises(TucanException)</B></TT>
+<DD>
+The listParts() method will return a TucanStringList of the content types of each part
+that belongs to a data object.  A TucanException will be raised if an error occurs.
+<DL><DT><DD></DL><P>
+<A NAME="getPart"></A>
+<A NAME="DOC.23.11"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B><!1><A HREF="TucanData.html#DOC.23.1">TucanPart</A> getPart(in long num) raises(TucanException)</B></TT>
+<DD>
+The getPart() method takes an integer and returns a TucanPart struct that represents
+the part requested.  A TucanException will be raised if an error occurs
+<DL><DT><DD></DL><P>
+<A NAME="destroy"></A>
+<A NAME="DOC.23.12"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void destroy() raises(TucanException)</B></TT>
+<DD>
+The destroy() method removes the object from memory.  All clients need to make sure
+that the destroy() method is being called when they are done with the data object so that
+memory leaks do not occur.  If an error occurs in this method a TucanException should
+be raised.
+<DL><DT><DD></DL><P></DL>
+
+<HR><DL><DT><B>This class has no child classes.</B></DL>
+
+<DL><DT><DD></DL><P><P><I><A HREF="index.html">Alphabetic index</A></I> <I><A HREF="HIER.html">Hierarchy of classes</A></I></P><HR>
+<BR>
+This page was generated with the help of <A HREF="http://www.linuxsupportline.com/~doc++">DOC++</A>.
+</BODY>
+</HTML>

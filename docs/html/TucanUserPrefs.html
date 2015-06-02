@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<HTML>
+<HEAD>
+   <TITLE>interface  TucanUserPrefs</TITLE>
+   <META NAME="GENERATOR" CONTENT="DOC++ 3.4.6">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+
+<H2>interface  <A HREF="#DOC.DOCU">TucanUserPrefs</A></H2></H2><HR>
+
+<DL>
+<P><DL>
+<DT><H3>Public Methods</H3><DD><DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>TucanAttributeSeq <B><A HREF="#DOC.101.1">getAllAttributes</A></B>() raises(TucanException)
+<DD><I> getAllAttributes() takes a user name as a string and returns  TucanAttributeSeq containing all preferences  for the user.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>string <B><A HREF="#DOC.101.2">getAttribute</A></B>(in string key) raises(TucanException)
+<DD><I> getAttribute() takes a user name and a key as a string and returns a value as a string.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.101.3">setAttribute</A></B>(in string key, in string <!1><A HREF="TucanAttribute.html#DOC.14.2">value</A>) raises(TucanException)
+<DD><I> setAttribute() takes a user name, key, and value as a string.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.101.4">deleteAttribute</A></B>(in string key) raises(TucanException)
+<DD><I> deleteAttribute() takes a name and key as a string.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.101.5">setAuth</A></B>(in <!1><A HREF="TucanAuth.html">TucanAuth</A> myAuth) raises(TucanException)
+<DD><I> setAuth() takes an Auth object and sets it as the current auth object for the UserPrefs object</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif><!1><A HREF="TucanAuth.html">TucanAuth</A> <B><A HREF="#DOC.101.6">getAuth</A></B>() raises(TucanException)
+<DD><I> getAuth() returns the TucanUserPrefs object's current Auth Object</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.101.7">destroy</A></B>()
+<DD><I> destroy() removes the TucanUserPrefs object and frees the memory associated with it.</I>
+</DL></P>
+
+</DL>
+
+<A NAME="DOC.DOCU"></A>
+<HR>
+<H2>Documentation</H2>
+<DL>
+
+<A NAME="getAllAttributes"></A>
+<A NAME="DOC.101.1"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>TucanAttributeSeq getAllAttributes() raises(TucanException)</B></TT>
+<DD>
+getAllAttributes() takes a user name as a string and returns  TucanAttributeSeq containing all preferences 
+for the user.   A TucanException will be raised on error
+<DL><DT><DD></DL><P>
+<A NAME="getAttribute"></A>
+<A NAME="DOC.101.2"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>string getAttribute(in string key) raises(TucanException)</B></TT>
+<DD>
+getAttribute() takes a user name and a key as a string and returns a value as a string.  
+It raises an exception on error.
+<DL><DT><DD></DL><P>
+<A NAME="setAttribute"></A>
+<A NAME="DOC.101.3"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void setAttribute(in string key, in string <!1><A HREF="TucanAttribute.html#DOC.14.2">value</A>) raises(TucanException)</B></TT>
+<DD>
+setAttribute() takes a user name, key, and value as a string.  It sets the desired prefernece in the
+database.  If the preference previouisly exists it will be updated with the new information.  A
+TucanException will be raised on error.
+<DL><DT><DD></DL><P>
+<A NAME="deleteAttribute"></A>
+<A NAME="DOC.101.4"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void deleteAttribute(in string key) raises(TucanException)</B></TT>
+<DD>
+deleteAttribute() takes a name and key as a string.  It attempts to delete the preference
+entry from the database.  A TucanException will be raised on error.
+<DL><DT><DD></DL><P>
+<A NAME="setAuth"></A>
+<A NAME="DOC.101.5"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void setAuth(in <!1><A HREF="TucanAuth.html">TucanAuth</A> myAuth) raises(TucanException)</B></TT>
+<DD>
+setAuth() takes an Auth object and sets it as the current auth object for the
+UserPrefs object
+<DL><DT><DD></DL><P>
+<A NAME="getAuth"></A>
+<A NAME="DOC.101.6"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B><!1><A HREF="TucanAuth.html">TucanAuth</A> getAuth() raises(TucanException)</B></TT>
+<DD>
+getAuth() returns the TucanUserPrefs object's current Auth Object
+<DL><DT><DD></DL><P>
+<A NAME="destroy"></A>
+<A NAME="DOC.101.7"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void destroy()</B></TT>
+<DD>
+destroy() removes the TucanUserPrefs object and frees the memory associated with it.  YA
+client should always call this method in order to prevent memory leaks.
+<DL><DT><DD></DL><P></DL>
+
+<HR><DL><DT><B>This class has no child classes.</B></DL>
+
+<DL><DT><DD></DL><P><P><I><A HREF="index.html">Alphabetic index</A></I> <I><A HREF="HIER.html">Hierarchy of classes</A></I></P><HR>
+<BR>
+This page was generated with the help of <A HREF="http://www.linuxsupportline.com/~doc++">DOC++</A>.
+</BODY>
+</HTML>

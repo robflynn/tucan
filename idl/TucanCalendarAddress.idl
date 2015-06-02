@@ -1,0 +1,12 @@
+////////////////////////////////////////////////////////////
+// TucanCalendarAddress (idl definition)
+// Copyright (C) 2000, Difinium
+////////////////////////////////////////////////////////////
+// Filename:        TucanCalendarAddress.idl
+// Description:     idl definition of TucanCalendarAddress
+// Created at:      Mon Nov 20 15:44:00 PST 2000 
+////////////////////////////////////////////////////////////
+
+interface TucanCalendarAddress : TucanAddress {};
+
+interface TucanCalendarAddressFactory : TucanAddressFactory {}; 

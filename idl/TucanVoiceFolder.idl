@@ -1,0 +1,20 @@
+////////////////////////////////////////////////////////////
+// TucanVoiceFolder (idl definition)
+//
+// Copyright (C) 2000, Difinium
+////////////////////////////////////////////////////////////
+// Filename:        TucanVoiceFolder.idl
+// Description:     idl definition of TucanVoiceFolder
+// Created at:      Thu Jul 27 16:03:25 PDT 2000 
+////////////////////////////////////////////////////////////
+
+interface TucanVoiceFolder : TucanFolder {
+
+	/// The getMessageHeaders() method will return a TucanMessageHeaderSeq of the headers of
+	/// all messages in the current mail box.  This is kind of hackish, but it speeds things up a lot. 
+
+	TucanMessageHeaderSeq getMessageHeaders();
+
+};
+
+interface TucanVoiceFolderFactory : TucanFolderFactory {}; 

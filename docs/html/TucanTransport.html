@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<HTML>
+<HEAD>
+   <TITLE>interface  TucanTransport</TITLE>
+   <META NAME="GENERATOR" CONTENT="DOC++ 3.4.6">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+
+<H2>interface  <A HREF="#DOC.DOCU">TucanTransport</A></H2></H2><BLOCKQUOTE> The TucanTranport interface is a base definition for children to inherit from and inplement.</BLOCKQUOTE>
+<HR>
+
+<H2>Inheritance:</H2>
+<H3>TucanTransport
+</H3>
+<HR>
+
+<DL>
+<P><DL>
+<DT><H3>Public Methods</H3><DD><DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.31.1">send</A></B>(in <!1><A HREF="TucanMessage.html">TucanMessage</A> msg) raises(TucanException)
+<DD><I> The send() method is what delivers the message to the proper place.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.31.2">destroy</A></B>() raises(TucanException)
+<DD><I> The destroy() method will remove the reference out of memory.</I>
+</DL></P>
+
+</DL>
+
+<A NAME="DOC.DOCU"></A>
+<HR>
+<H2>Documentation</H2>
+<BLOCKQUOTE>
+The TucanTranport interface is a base definition for children
+to inherit from and inplement.  This is a so that all messages
+can be sent via multiple transport as long as base functionality
+is preserved.  This is what really allows for Unified Messaging.</BLOCKQUOTE>
+<DL>
+
+<A NAME="send"></A>
+<A NAME="DOC.31.1"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void send(in <!1><A HREF="TucanMessage.html">TucanMessage</A> msg) raises(TucanException)</B></TT>
+<DD>
+The send() method is what delivers the message to the proper
+place.  It is important to note while implemetning this method
+that the programmer take in to account that the message being
+sent could be of another service but is still a TucanMessage.
+If an error occurs then this methos should raise a TucanException.
+<DL><DT><DD></DL><P>
+<A NAME="destroy"></A>
+<A NAME="DOC.31.2"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void destroy() raises(TucanException)</B></TT>
+<DD>
+The destroy() method will remove the reference out of memory.  It
+is important that all clients call the destroy() method when they
+are done with the transport so that memory leaks do not occur.  If
+an error occurs in this method it should raise a TucanException.
+<DL><DT><DD></DL><P></DL>
+<HR>
+<DL><DT><B>Direct child classes:
+</B><DD><A HREF="TucanVoiceTransport.html">TucanVoiceTransport</A><BR>
+<A HREF="TucanSMTPTransport.html">TucanSMTPTransport</A><BR>
+<A HREF="TucanFaxTransport.html">TucanFaxTransport</A><BR>
+<A HREF="TucanEmailTransport.html">TucanEmailTransport</A><BR>
+<A HREF="TucanCalendarTransport.html">TucanCalendarTransport</A><BR>
+<A HREF="TucanBbsTransport.html">TucanBbsTransport</A><BR>
+<A HREF="TucanAddressBookTransport.html">TucanAddressBookTransport</A><BR>
+</DL>
+
+<DL><DT><DD></DL><P><P><I><A HREF="index.html">Alphabetic index</A></I> <I><A HREF="HIER.html">Hierarchy of classes</A></I></P><HR>
+<BR>
+This page was generated with the help of <A HREF="http://www.linuxsupportline.com/~doc++">DOC++</A>.
+</BODY>
+</HTML>

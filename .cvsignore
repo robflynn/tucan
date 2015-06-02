@@ -1,0 +1,10 @@
+Makefile.in
+Makefile
+configure
+config.cache
+config.log
+config.status
+tucan.spec
+aclocal.m4
+.deps
+.libs

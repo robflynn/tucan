@@ -1,0 +1,12 @@
+////////////////////////////////////////////////////////////
+// TucanBbsAddress (idl definition)
+// Copyright (C) 2000, Difinium
+////////////////////////////////////////////////////////////
+// Filename:        TucanBbsAddress.idl
+// Description:     idl definition of TucanBbsAddress
+// Created at:      Mon Nov 20 15:32:49 PST 2000 
+////////////////////////////////////////////////////////////
+
+interface TucanBbsAddress : TucanAddress {};
+
+interface TucanBbsAddressFactory : TucanAddressFactory {};

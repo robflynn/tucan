@@ -1,0 +1,13 @@
+////////////////////////////////////////////////////////////
+// TucanEmailAddress (idl definition)
+//
+// Copyright (C) 2000, Difinium
+////////////////////////////////////////////////////////////
+// Filename:        TucanEmailAddress.idl
+// Description:     idl definition of TucanEmailAddress
+// Created at:      Thu Jul 27 15:57:28 PDT 2000
+//////////////////////////////////////////////////////////// 
+
+interface TucanEmailAddress : TucanAddress {};
+
+interface TucanEmailAddressFactory : TucanAddressFactory {}; 

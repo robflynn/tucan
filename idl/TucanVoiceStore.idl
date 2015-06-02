@@ -1,0 +1,13 @@
+////////////////////////////////////////////////////////////
+// TucanVoiceStore (idl definition)
+//
+// Copyright (C) 2000, Difinium
+////////////////////////////////////////////////////////////
+// Filename:        TucanVoiceStore.idl
+// Description:     idl definition of TucanVoiceStore
+// Created at:      Thu Jul 27 15:57:28 PDT 2000
+////////////////////////////////////////////////////////////
+
+interface TucanVoiceStore : TucanStore {};
+
+interface TucanVoiceStoreFactory : TucanStoreFactory {}; 

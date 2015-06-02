@@ -1,0 +1,13 @@
+////////////////////////////////////////////////////////////
+// TucanAddressBookStore (idl definition)
+//
+// Copyright (C) 2000, Difinium
+////////////////////////////////////////////////////////////
+// Filename:        TucanAddressBookStore.idl
+// Description:     idl definition of TucanAddressBookStore
+// Created at:      Thu Jul 27 15:57:28 PDT 2000
+////////////////////////////////////////////////////////////
+
+interface TucanAddressBookStore : TucanStore {};
+
+interface TucanAddressBookStoreFactory : TucanStoreFactory {}; 

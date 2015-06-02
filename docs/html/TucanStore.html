@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<HTML>
+<HEAD>
+   <TITLE>interface  TucanStore</TITLE>
+   <META NAME="GENERATOR" CONTENT="DOC++ 3.4.6">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+
+<H2>interface  <A HREF="#DOC.DOCU">TucanStore</A></H2></H2><BLOCKQUOTE> The TucanStore interface provides a base class for services on the system to inherit from.</BLOCKQUOTE>
+<HR>
+
+<H2>Inheritance:</H2>
+<H3>TucanStore
+</H3>
+<HR>
+
+<DL>
+<P><DL>
+<DT><H3>Public Methods</H3><DD><DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>string <B><A HREF="#DOC.29.1">getName</A></B>() raises(TucanException)
+<DD><I> The getName() methods returns the name of the store object.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.29.2">setName</A></B>(in string <!1><A HREF="TucanAttribute.html#DOC.14.1">name</A>) raises(TucanException)
+<DD><I> The setName() method is used internally to set the name of the store.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif><!1><A HREF="TucanFolder.html">TucanFolder</A> <B><A HREF="#DOC.29.3">getDefaultFolder</A></B>() raises(TucanException)
+<DD><I> The getDefaultFolder() method will return the default folder for this store.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif><!1><A HREF="TucanFolder.html">TucanFolder</A> <B><A HREF="#DOC.29.4">getFolder</A></B>(in string <!1><A HREF="TucanAttribute.html#DOC.14.1">name</A>) raises(TucanException)
+<DD><I> The getFolder() method provides a way for a client to get access to a particular folder that they might need.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif><!1><A HREF="TucanFolder.html">TucanFolder</A> <B><A HREF="#DOC.29.5">getNewFolderObject</A></B>() raises(TucanException)
+<DD><I> The getNewFolderObject() method is mainly used internally for the generation of folder objects but it could also be used by clients that desire to create a new folder in the store.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>TucanStringList <B><A HREF="#DOC.29.6">listFolders</A></B>() raises(TucanException)
+<DD><I> The listFolders() method returns a list of the current folders in the store.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif><!1><A HREF="TucanAuth.html">TucanAuth</A> <B><A HREF="#DOC.29.7">getAuth</A></B>() raises(TucanException)
+<DD><I> The getAuth() method is provided so that the current auth object for the store may be retrieved.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.29.8">setAuth</A></B>(in <!1><A HREF="TucanAuth.html">TucanAuth</A> auth) raises(TucanException)
+<DD><I> The setAuth()  method is provided so the the auth object for the store may be set.</I>
+<DT>
+<IMG ALT="[more]" BORDER=0 SRC=icon1.gif>void <B><A HREF="#DOC.29.9">destroy</A></B>() raises(TucanException)
+<DD><I> The destroy() method is used to remove thecurrent object from memory.</I>
+</DL></P>
+
+</DL>
+
+<A NAME="DOC.DOCU"></A>
+<HR>
+<H2>Documentation</H2>
+<BLOCKQUOTE>
+The TucanStore interface provides a base class for services
+on the system to inherit from.  By itself it provides
+absolutely no functionality.  It must be inherited from and
+the methods implemetned to provide functionality.  A Store is
+meant to be a container for a certain type of message.  So
+for example email message would typically reside in an email
+folder and calendar messages in a calendar folder etc...</BLOCKQUOTE>
+<DL>
+
+<A NAME="getName"></A>
+<A NAME="DOC.29.1"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>string getName() raises(TucanException)</B></TT>
+<DD>
+The getName() methods returns the name of the store object.  If 
+something strange happens then this method will raise a TucanException.
+<DL><DT><DD></DL><P>
+<A NAME="setName"></A>
+<A NAME="DOC.29.2"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void setName(in string <!1><A HREF="TucanAttribute.html#DOC.14.1">name</A>) raises(TucanException)</B></TT>
+<DD>
+The setName() method is used internally to set the name of the store.
+Most clients should not interact with this method.  If something strange
+happens then this method will raise a TucanException.
+<DL><DT><DD></DL><P>
+<A NAME="getDefaultFolder"></A>
+<A NAME="DOC.29.3"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B><!1><A HREF="TucanFolder.html">TucanFolder</A> getDefaultFolder() raises(TucanException)</B></TT>
+<DD>
+The getDefaultFolder() method will return the default folder for this
+store.  This method could return a different folders based on the 
+implementation.  If something strange occurs then a TucanException 
+will be raised.
+<DL><DT><DD></DL><P>
+<A NAME="getFolder"></A>
+<A NAME="DOC.29.4"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B><!1><A HREF="TucanFolder.html">TucanFolder</A> getFolder(in string <!1><A HREF="TucanAttribute.html#DOC.14.1">name</A>) raises(TucanException)</B></TT>
+<DD>
+The getFolder() method provides a way for a client to get access to a
+particular folder that they might need.  Of course in order to request
+a particular folder the client needs to know what folders exist so the
+client may wish to use the listFolders() method to discover what folders
+exist.  If something strange occurs while getting the folder a TucanException
+will be raised.
+<DL><DT><DD></DL><P>
+<A NAME="getNewFolderObject"></A>
+<A NAME="DOC.29.5"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B><!1><A HREF="TucanFolder.html">TucanFolder</A> getNewFolderObject() raises(TucanException)</B></TT>
+<DD>
+The getNewFolderObject() method is mainly used internally for the generation
+of folder objects but it could also be used by clients that desire to create
+a new folder in the store.  If there is a error in this method then a 
+TucanException will be raised.
+<DL><DT><DD></DL><P>
+<A NAME="listFolders"></A>
+<A NAME="DOC.29.6"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>TucanStringList listFolders() raises(TucanException)</B></TT>
+<DD>
+The listFolders() method returns a list of the current folders in the store.
+This method is provide so that clients can discover what folders exist before
+they request a folder.  If something strange occurs then this method will raise
+a TucanException.
+<DL><DT><DD></DL><P>
+<A NAME="getAuth"></A>
+<A NAME="DOC.29.7"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B><!1><A HREF="TucanAuth.html">TucanAuth</A> getAuth() raises(TucanException)</B></TT>
+<DD>
+The getAuth() method is provided so that the current auth object for the store may be
+retrieved.  This is there in case a user info needs to be access and the username
+and password are required.  If there is a error in this method then a TucanException
+will be raised.
+<DL><DT><DD></DL><P>
+<A NAME="setAuth"></A>
+<A NAME="DOC.29.8"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void setAuth(in <!1><A HREF="TucanAuth.html">TucanAuth</A> auth) raises(TucanException)</B></TT>
+<DD>
+The setAuth()  method is provided so the the auth object for the store may be set.  
+This method is primarily used internally and it would be foolish for a client to use
+this method seeing as proper authentication is necessary for proper functionality.
+If an error occurs then a TucanException will be raised.
+<DL><DT><DD></DL><P>
+<A NAME="destroy"></A>
+<A NAME="DOC.29.9"></A>
+<DT><IMG ALT="o" BORDER=0 SRC=icon2.gif><TT><B>void destroy() raises(TucanException)</B></TT>
+<DD>
+The destroy() method is used to remove thecurrent object from memory.  It is wise
+for all clients to ensure that the destroy() method is always being called when an
+client is finished with the store so that memory leaks do not occur.  If something
+goes wrong in this method then a TucanException will be raised.
+<DL><DT><DD></DL><P></DL>
+<HR>
+<DL><DT><B>Direct child classes:
+</B><DD><A HREF="TucanVoiceStore.html">TucanVoiceStore</A><BR>
+<A HREF="TucanFaxStore.html">TucanFaxStore</A><BR>
+<A HREF="TucanEmailStore.html">TucanEmailStore</A><BR>
+<A HREF="TucanCalendarStore.html">TucanCalendarStore</A><BR>
+<A HREF="TucanBbsStore.html">TucanBbsStore</A><BR>
+<A HREF="TucanAddressBookStore.html">TucanAddressBookStore</A><BR>
+</DL>
+
+<DL><DT><DD></DL><P><P><I><A HREF="index.html">Alphabetic index</A></I> <I><A HREF="HIER.html">Hierarchy of classes</A></I></P><HR>
+<BR>
+This page was generated with the help of <A HREF="http://www.linuxsupportline.com/~doc++">DOC++</A>.
+</BODY>
+</HTML>

@@ -1,0 +1,13 @@
+////////////////////////////////////////////////////////////
+// TucanVoiceTransport (idl definition)
+//
+// Copyright (C) 2000, Difinium
+////////////////////////////////////////////////////////////
+// Filename:        TucanVoiceTransport.idl
+// Description:     idl definition of TucanVoiceTransport
+// Created at:      Thu Jul 27 15:57:28 PDT 2000
+////////////////////////////////////////////////////////////
+
+interface TucanVoiceTransport : TucanTransport {};
+
+interface TucanVoiceTransportFactory : TucanTransportFactory {}; 

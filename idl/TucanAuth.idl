@@ -1,0 +1,64 @@
+////////////////////////////////////////////////////////////
+// TucanAuth (idl definition)
+// Copyright (C) 2000, Difinium
+////////////////////////////////////////////////////////////
+// Filename:        TucanAuth.idl
+// Description:     idl definition of TucanAuth
+// Created at:      Fri Jun 30 10:22:58 PDT 2000
+////////////////////////////////////////////////////////////
+
+/**
+	TucanAuth is the class wrapper for user data that is needed
+	for the authentication process.  It has the capabilty of
+	taking a pin number or a password for authentication but
+	both are not needed.  So if you only want to use the passward
+	capabilites then do so and do not concern yourself with the
+	pin numbers.  A TucanAuth object is generally only gotten
+	from a TucanSession object so make sure that you have become
+	familar with that interface as well.
+*/
+interface TucanAuth 
+{
+	///The getUid() method returns the uid of the current user.
+	string getUid()
+		raises(TucanException, TucanAuthException);
+	///The setUid() method is used internally to set the uid of user.
+	void setUid(in string uid)
+		raises(TucanException, TucanAuthException);
+	///The getUserName() method returns the username for the current user.
+	string getUserName()
+		raises(TucanException, TucanAuthException);
+	///The setUserName() method allows for clients to set the username.
+	void setUserName(in string name)
+		raises(TucanException, TucanAuthException);
+	///The getPassword() method returns the password of the current user.
+	string getPassword()
+		raises(TucanException, TucanAuthException);
+	///The setPassword() method allows for clients to set the password.
+	void setPassword(in string password)
+		raises(TucanException, TucanAuthException);
+	///The getPinNumber() method returns the pin number of the current user.
+	long getPinNumber()
+		raises(TucanException, TucanAuthException);
+	///The setPinNumber() method allows for clients to set the pin number.
+	void setPinNumber(in long pin)
+		raises(TucanException, TucanAuthException);
+	/**
+		The destroy() method removes the TucanAuth servant object from
+		memory.  Clients should always call the destroy method so that
+		memory leaks do not take place.
+	*/
+	void destroy()
+		raises(TucanException);
+};
+/**
+	The TucanAuthFactory class provides an interface for getting TucanAuth
+	servants.  This is done so that all TucanAuth objects are different
+	references.
+*/
+interface TucanAuthFactory 
+{
+	///The create() method returns a new instance of a TucanAuth servant
+	TucanAuth create()
+		raises(TucanException);
+};

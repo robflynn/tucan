@@ -1,0 +1,24 @@
+This is the layout for the backends for the test_tucan script.
+The script will look in the its current directory for subdirectories.
+These subdirectories are consider to be its available backends for testing.
+The script will attempt to execute a script in that directory that is the
+same name of the directory.  So for example lets say that you want to add
+a script for testing the TucanAddressBook backend.  The first step would
+be to create a directory by the name of TucanAddressBook and to then put an
+executable script in that directory by the name of TucanAddressBook. So now
+you could run:
+
+	./test_tucan -b TucanAddressBook -i 10
+
+this would run your backend script 10 times.  Or you could do this:
+
+	./test_tucan -i 10
+
+this will run every backend currently available in the directory 10 times.
+Or you could just do this:
+
+	./test_tucan
+
+this would run all the backend tests available one time.  This is all the
+functionality that the script has at the moment but we will be adding lots
+of things as we go along.
