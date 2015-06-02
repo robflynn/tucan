@@ -8,6 +8,9 @@ The code was written to be a unified communication
 system. It makes use of C++ and Corba to do its
 thing.
 
+Don't judge me for the bad code, this was 15 years ago
+(and now I feel old.)
+
 ========================================================
 TUCAN: The Unified Communications Architecture Network
 ========================================================
